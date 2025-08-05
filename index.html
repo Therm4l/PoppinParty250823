@@ -178,12 +178,12 @@
                 <!-- 图 1 -->
                 <div class="card-hover bg-gray-50 p-4 rounded-lg shadow-md">
                     <img src="https://placehold.co/600x400/dbeafe/3b82f6?text=现场照片+1" 
-                         alt="花篮主视觉图" 
+                         alt="主视觉图" 
                          class="w-full rounded-md mb-4"
                          onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=Image+Not+Found';">
                     <p class="text-gray-700">
-                        <span class="lang-zh">花篮主视觉图</span>
-                        <span class="lang-en">Flower Basket Main Visual Image</span>
+                        <span class="lang-zh">主视觉图</span>
+                        <span class="lang-en">Main Visual Image</span>
                     </p>
                 </div>
                 <!-- 图 2 -->
@@ -413,23 +413,26 @@
             const volumeIcon = document.getElementById('volume-icon');
             const muteIcon = document.getElementById('mute-icon');
 
-            let isAudioInitialized = true;
+            let isAudioInitialized = false;
 
             // 音乐初始化函数：在用户首次交互时播放并取消静音
             const initializeAudio = () => {
-                if (isAudioInitialized) return;
-
-                audio.play().then(() => {
-                    audio.muted = false; // 成功播放后取消静音
-                    updatePlayPauseIcon();
-                    updateMuteIcon();
-                    isAudioInitialized = true;
-                    // 成功后移除监听器
-                    document.body.removeEventListener('click', initializeAudio);
-                    document.body.removeEventListener('touchstart', initializeAudio);
-                }).catch(error => {
-                    console.log("Audio playback failed until user interaction:", error);
-                });
+                // 尝试播放（在某些情况下，即使是静音播放也可能需要用户交互来启动）
+                // 并且取消静音
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // 播放成功后，取消静音
+                        audio.muted = false;
+                        console.log("音频已在用户交互后成功播放并取消静音。");
+                        // 更新所有图标状态
+                        updatePlayPauseIcon();
+                        updateMuteIcon();
+                    }).catch(error => {
+                        console.error("在用户交互后播放音频失败:", error);
+                    });
+                }
+                // 【重要】用 { once: true } 选项，这个监听器在执行一次后会自动移除，无需手动管理
             };
 
             // 监听用户首次交互以启动音频
@@ -466,8 +469,9 @@
             });
             
             // 监听音频本身的播放/暂停事件，以同步UI
-            audio.onplay = updatePlayPauseIcon;
-            audio.onpause = updatePlayPauseIcon;
+            audio.addEventListener('play', updatePlayPauseIcon);
+            audio.addEventListener('pause', updatePlayPauseIcon);
+            audio.addEventListener('volumechange', updateMuteIcon); // 当muted属性改变时会触发
             
             // 初始化图标状态
             updatePlayPauseIcon();
