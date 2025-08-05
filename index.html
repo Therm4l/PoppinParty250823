@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEU Bang Dream Club PPP 2025 Shanghai</title>
+    <title>SEU Bang Dream Club for PPP Live in Shanghai, 2025</title>
     
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -64,6 +64,14 @@
         .lightbox-btn:hover {
             background-color: #2563eb;
         }
+        /* MODIFIED: Helper class to hide scrollbar for mobile nav */
+        .mobile-nav-scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .mobile-nav-scrollbar-hide {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -78,7 +86,8 @@
                         <span class="lang-en">SEU Bang Dream Club</span>
                     </h1>
                 </div>
-                <div class="hidden md:flex items-center space-x-4">
+                <!-- MODIFIED: Nav links container for mobile scroll -->
+                <div class="flex items-center space-x-4 overflow-x-auto whitespace-nowrap mobile-nav-scrollbar-hide ml-4 flex-shrink">
                     <a href="#info" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
                         <span class="lang-zh">活动介绍</span>
                         <span class="lang-en">Info</span>
@@ -96,7 +105,6 @@
                         <span class="lang-en">中文</span>
                     </button>
                 </div>
-                 <!-- Mobile menu can be added here -->
             </div>
         </nav>
     </header>
@@ -140,6 +148,7 @@
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>
+        </section>
 
         <!-- 3. 实物模块 (现场图集) -->
         <section id="gallery" class="section-container bg-white">
@@ -254,7 +263,8 @@
     </footer>
 
     <!-- 6. 浮动音乐播放器 -->
-    <div id="music-player" class="fixed bottom-5 right-5 bg-white/80 backdrop-blur-md shadow-xl rounded-full p-3 flex items-center space-x-3 text-gray-700">
+    <!-- MODIFIED: Player is now draggable, shrinkable, and better positioned -->
+    <div id="music-player" class="fixed bottom-8 right-5 md:bottom-5 bg-white/80 backdrop-blur-md shadow-xl rounded-full p-3 flex items-center space-x-3 text-gray-700 transition-transform duration-300 ease-in-out scale-50 hover:scale-100 transform-origin-bottom-right cursor-grab">
         <audio id="background-audio" loop>
             <source src="assets/audios/kzn_music.flac" type="audio/mpeg">
         </audio>
@@ -269,12 +279,12 @@
     </div>
 
     <!-- NEW: Lightbox / Modal -->
-    <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 p-4">
+    <!-- MODIFIED: Lightbox is now scrollable on mobile -->
+    <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-80 hidden items-start justify-center z-50 p-4 pt-16 overflow-y-auto md:items-center md:pt-4">
         <span id="close-lightbox" class="absolute top-5 right-8 text-white text-5xl font-bold cursor-pointer hover:text-gray-300 transition-colors">&times;</span>
         <div class="text-center">
-            <img id="lightbox-img" class="max-w-[90vw] 
-            
-            -h-[80vh] mx-auto rounded-lg shadow-2xl">
+            <!-- MODIFIED: Corrected image class and adjusted max height -->
+            <img id="lightbox-img" class="max-w-[90vw] max-h-[70vh] mx-auto rounded-lg shadow-2xl">
             <div id="download-container" class="mt-6 space-x-4">
                 <!-- Download buttons will be injected here by JS -->
             </div>
@@ -374,6 +384,7 @@
             showSlide(0);
 
             // --- 音乐播放器逻辑 ---
+            const musicPlayer = document.getElementById('music-player');
             const audio = document.getElementById('background-audio');
             const playPauseBtn = document.getElementById('play-pause-btn');
             const playIcon = document.getElementById('play-icon');
@@ -381,6 +392,19 @@
             const muteUnmuteBtn = document.getElementById('mute-unmute-btn');
             const volumeIcon = document.getElementById('volume-icon');
             const muteIcon = document.getElementById('mute-icon');
+
+            // MODIFIED: Attempt to autoplay music on page load
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Autoplay started successfully
+                    playIcon.classList.add('hidden');
+                    pauseIcon.classList.remove('hidden');
+                }).catch(error => {
+                    // Autoplay was prevented by the browser.
+                    console.log("Autoplay was prevented by the browser.");
+                });
+            }
 
             playPauseBtn.addEventListener('click', () => {
                 if (audio.paused) {
@@ -399,6 +423,80 @@
                 volumeIcon.classList.toggle('hidden', audio.muted);
                 muteIcon.classList.toggle('hidden', !audio.muted);
             });
+
+            // MODIFIED: Make the music player draggable
+            makeDraggable(musicPlayer);
+
+            function makeDraggable(elmnt) {
+                let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+                
+                elmnt.onmousedown = dragMouseDown;
+                elmnt.ontouchstart = dragMouseDown;
+
+                function dragMouseDown(e) {
+                    // Do not drag if a button was clicked
+                    if (e.target.closest('button')) {
+                        return;
+                    }
+                    e = e || window.event;
+                    e.preventDefault();
+                    
+                    pos3 = e.clientX || e.touches[0].clientX;
+                    pos4 = e.clientY || e.touches[0].clientY;
+                    
+                    document.onmouseup = closeDragElement;
+                    document.ontouchend = closeDragElement;
+                    document.onmousemove = elementDrag;
+                    document.ontouchmove = elementDrag;
+
+                    elmnt.classList.remove('cursor-grab');
+                    elmnt.classList.add('cursor-grabbing');
+                    elmnt.classList.remove('transform-origin-bottom-right');
+                }
+
+                function elementDrag(e) {
+                    e = e || window.event;
+                    e.preventDefault();
+                    
+                    const currentX = e.clientX || e.touches[0].clientX;
+                    const currentY = e.clientY || e.touches[0].clientY;
+
+                    pos1 = pos3 - currentX;
+                    pos2 = pos4 - currentY;
+                    pos3 = currentX;
+                    pos4 = currentY;
+                    
+                    let newTop = elmnt.offsetTop - pos2;
+                    let newLeft = elmnt.offsetLeft - pos1;
+
+                    // Constrain movement within the viewport
+                    const viewportWidth = window.innerWidth;
+                    const viewportHeight = window.innerHeight;
+                    const elmntWidth = elmnt.offsetWidth;
+                    const elmntHeight = elmnt.offsetHeight;
+
+                    if (newLeft < 0) newLeft = 0;
+                    if (newTop < 0) newTop = 0;
+                    if (newLeft + elmntWidth > viewportWidth) newLeft = viewportWidth - elmntWidth;
+                    if (newTop + elmntHeight > viewportHeight) newTop = viewportHeight - elmntHeight;
+
+                    elmnt.style.top = newTop + "px";
+                    elmnt.style.left = newLeft + "px";
+                    elmnt.style.bottom = 'auto';
+                    elmnt.style.right = 'auto';
+                }
+
+                function closeDragElement() {
+                    document.onmouseup = null;
+                    document.ontouchend = null;
+                    document.onmousemove = null;
+                    document.ontouchmove = null;
+
+                    elmnt.classList.remove('cursor-grabbing');
+                    elmnt.classList.add('cursor-grab');
+                    elmnt.classList.add('transform-origin-bottom-right');
+                }
+            }
         });
     </script>
 </body>
