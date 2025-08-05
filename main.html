@@ -1,93 +1,566 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>欢迎 - SEU Bang Dream Club</title>
-
+    <title>SEU Bang Dream Club for PPP Live in Shanghai, 2025</title>
+    
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- Google Fonts: Inter (可选，保持字体一致) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
+        /* Custom styles */
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Light gray background */
         }
-
-        /* 主容器，用于设置背景图 */
-        .splash-container {
-            /* 
-               重要：请将这里的背景图路径替换为你自己的图片路径！
-            */
-            background-image: url('assets/images/ppp_shanghai.jpg'); /* <-- 修改这里 */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+        h1, h2 {
+            font-weight: 700;
         }
-
-        /* 黑色半透明遮罩层，让文字更清晰 */
-        .overlay {
-            background-color: rgba(25, 28, 66, 0.6); /* 深蓝色调的遮罩，可按喜好调整 */
+        .section-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #3b82f6; /* Blue-500 */
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        /* Hide elements by default for language switching */
+        .lang-en {
+            display: none;
+        }
+        /* Carousel and Lightbox Styles */
+        .carousel-slide {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .lightbox-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: #3b82f6;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s;
+        }
+        .lightbox-btn:hover {
+            background-color: #2563eb;
+        }
+        /* MODIFIED: Helper class to hide scrollbar for mobile nav */
+        .mobile-nav-scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .mobile-nav-scrollbar-hide {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        /* --- MODIFIED: z-index fix for carousel buttons --- */
+        /* 确保轮播按钮的层级高于音乐播放器，以解决移动端点击问题 */
+        #prev-btn, #next-btn {
+            z-index: 30;
         }
         
-        /* 文字阴影，增强在复杂背景下的可读性 */
-        .text-shadow {
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        /* --- MODIFIED: z-index for music player --- */
+        /* 为音乐播放器设置一个明确的、较低的z-index */
+        #music-player {
+            z-index: 20; 
+            user-select: none; /* 防止拖动时选中文本 */
         }
-
-        /* 自定义进入按钮的样式和悬停效果 */
-        #enter-button {
-            transition: background-color 0.3s ease, transform 0.3s ease;
+        #music-player button, #music-player i {
+            pointer-events: auto; /* 确保播放器内部的按钮可以被点击 */
         }
-
-        #enter-button:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-            transform: scale(1.1);
+        #music-player i {
+             pointer-events: none; /* 让事件穿透到父级按钮 */
         }
     </style>
 </head>
-<body class="bg-gray-900">
+<body class="text-gray-800">
 
-    <!-- 主容器，占据整个屏幕 -->
-    <main class="splash-container h-screen w-screen">
-        <!-- 半透明遮罩层 -->
-        <div class="overlay h-full w-full flex flex-col items-center justify-center p-4">
+    <!-- 1. 顶部固定导航栏 -->
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <nav class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-gray-900">
+                        <span class="lang-zh">东南大学邦邦同好会</span>
+                        <span class="lang-en">SEU Bang Dream Club</span>
+                    </h1>
+                </div>
+                <!-- MODIFIED: Nav links container for mobile scroll -->
+                <div class="flex items-center space-x-4 overflow-x-auto whitespace-nowrap mobile-nav-scrollbar-hide ml-4 flex-shrink">
+                    <a href="#info" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                        <span class="lang-zh">活动介绍</span>
+                        <span class="lang-en">Info</span>
+                    </a>
+                    <a href="#gallery" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                        <span class="lang-zh">活动图集</span>
+                        <span class="lang-en">Gallery</span>
+                    </a>
+                    <a href="#links" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                        <span class="lang-zh">相关链接</span>
+                        <span class="lang-en">Links</span>
+                    </a>
+                    <button id="lang-switch-btn" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-3 py-1 rounded-full text-xs transition-colors">
+                        <span class="lang-zh">EN</span>
+                        <span class="lang-en">中文</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-            <!-- 内容容器 -->
-            <div class="text-center text-white">
-                <!-- 主标题 -->
-                <h1 class="text-4xl md:text-6xl font-bold text-shadow mb-3">
-                    SEU Bang Dream Club
-                </h1>
-                
-                <!-- 副标题 -->
-                <p class="text-lg md:text-2xl text-shadow mb-16">
-                    Poppin' Party Global LIVE 2025 in Shanghai
-                </p>
-
-                <!-- 
-                     进入按钮
-                     点击后会跳转到你的主页面 (main.html)
-                -->
-                <a id="enter-button" 
-                   href="index.html"  /* <-- 确保这里链接到你的主页面文件 */
-                   class="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center"
-                   aria-label="进入网站">
-                   
-                   <!-- 按钮内的图标，使用 Font Awesome -->
-                   <i class="fa-solid fa-angles-right text-2xl animate-pulse"></i>
+    <main>
+        <!-- 2. 信息模块 (活动介绍) -->
+        <section id="info" class="section-container text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <span class="lang-zh">Poppin' Party Global LIVE 2025<br>「Shiny High-Five!!」</span>
+                <span class="lang-en">Poppin' Party Global LIVE 2025<br>"Shiny High-Five!!"</span>
+            </h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-6">
+                <span class="lang-zh">BanG Dream! 上海公演2025<br>
+                    Poppin' Party Global LIVE 2025「Shiny High-Five!!」将于8月23日开幕！<br>
+                    那些让你眼眶发热的瞬间，那些改变你人生的音符，将点亮这片夜空！</span>
+                <span class="lang-en">BanG Dream! Shanghai Performance 2025<br>
+                    Poppin' Party Global LIVE 2025 "Shiny High-Five!!" opens on August 23rd!<br>
+                    Moments that will make your eyes melt, and notes that will change your life, will light up the night sky!</span>
+            </p>
+            <div class="flex justify-center space-x-4 mb-8">
+                <a href="https://www.google.com/maps/place/Shanghai+Oriental+Sports+Center/@31.1553068,121.4776243,17z/data=!4m14!1m7!3m6!1s0x35b27b16a397911f:0x38fff885e6c9d84f!2sShanghai+Oriental+Sports+Center!8m2!3d31.155555!4d121.47303!16s%2Fm%2F06_v4mf!3m5!1s0x35b27b0f97160303:0xb55cbf032d2fbed1!8m2!3d31.155315!4d121.477966!16s%2Fg%2F11gzxpxwb?entry=ttu&g_ep=EgoyMDI1MDczMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="bg-gray-800 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:bg-gray-900 transition-colors">
+                    <span class="lang-zh">查看地图</span>
+                    <span class="lang-en">View Map</span>
                 </a>
             </div>
-            
-        </div>
+            <!-- NEW: Image Carousel -->
+            <div id="image-carousel" class="relative w-full max-w-4xl mx-auto rounded-lg shadow-lg overflow-hidden group cursor-pointer">
+                <!-- Slide 1 -->
+                <div class="carousel-slide">
+                    <img src="assets/images/ppp_shanghai.jpg" alt="活动主视觉 A" class="w-full h-full object-cover">
+                </div>
+                <!-- Slide 2 -->
+                <div class="carousel-slide hidden">
+                    <img src="assets/images/ppp_10_preview.jpg" alt="活动主视觉 B" class="w-full h-full object-cover">
+                </div>
+                <!-- Prev/Next Buttons -->
+                <button id="prev-btn" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/50 hover:bg-white/80 rounded-full w-10 h-10 flex items-center justify-center text-gray-800 transition opacity-0 group-hover:opacity-100">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button id="next-btn" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/50 hover:bg-white/80 rounded-full w-10 h-10 flex items-center justify-center text-gray-800 transition opacity-0 group-hover:opacity-100">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- 3. 实物模块 (现场图集) -->
+        <section id="gallery" class="section-container bg-white">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
+                <span class="lang-zh">花篮与无料</span>
+                <span class="lang-en">Flower Basket & Free Gift</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 图 1 -->
+                <div class="card-hover bg-gray-50 p-4 rounded-lg shadow-md">
+                    <img src="https://placehold.co/600x400/dbeafe/3b82f6?text=现场照片+1" 
+                         alt="主视觉图" 
+                         class="w-full rounded-md mb-4"
+                         onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=Image+Not+Found';">
+                    <p class="text-gray-700">
+                        <span class="lang-zh">主视觉图</span>
+                        <span class="lang-en">Main Visual Image</span>
+                    </p>
+                </div>
+                <!-- 图 2 -->
+                <div class="card-hover bg-gray-50 p-4 rounded-lg shadow-md">
+                    <img src="https://placehold.co/600x400/dbeafe/3b82f6?text=现场照片+2" 
+                         alt="花篮设计图" 
+                         class="w-full rounded-md mb-4"
+                         onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=Image+Not+Found';">
+                    <p class="text-gray-700">
+                        <span class="lang-zh">花篮设计图</span>
+                        <span class="lang-en">Flower Basket Design Image</span>
+                    </p>
+                </div>
+            </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 图 1 -->
+                <div class="card-hover bg-gray-50 p-4 rounded-lg shadow-md">
+                    <img src="https://placehold.co/600x400/dbeafe/3b82f6?text=现场照片+1" 
+                         alt="卡片正面" 
+                         class="w-full rounded-md mb-4"
+                         onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=Image+Not+Found';">
+                    <p class="text-gray-700">
+                        <span class="lang-zh">卡片正面</span>
+                        <span class="lang-en">Card Front</span>
+                    </p>
+                </div>
+                <!-- 图 2 -->
+                <div class="card-hover bg-gray-50 p-4 rounded-lg shadow-md">
+                    <img src="https://placehold.co/600x400/dbeafe/3b82f6?text=现场照片+2" 
+                         alt="卡片背面" 
+                         class="w-full rounded-md mb-4"
+                         onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=Image+Not+Found';">
+                    <p class="text-gray-700">
+                        <span class="lang-zh">卡片背面</span>
+                        <span class="lang-en">Card Back</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 外部链接模块 -->
+        <section id="links" class="section-container">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
+                <span class="lang-zh">社交媒体</span>
+                <span class="lang-en">Social</span>
+            </h2>
+            <div class="mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 邦邦Bilibili -->
+                <a href="https://space.bilibili.com/171818544" target="_blank" class="card-hover flex items-center bg-white p-6 rounded-lg shadow-md space-x-8">
+                    <img src="assets/images/bangdream_offical.jpg" 
+                         alt="邦官方" 
+                         class="w-24 h-24 object-cover rounded"
+                         onerror="this.onerror=null;this.src='https://placehold.co/150x150/e0f2fe/0891b2?text=Image+Not+Found';">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900">
+                            <span class="lang-zh">官方Bilibili</span>
+                            <span class="lang-en">Official Bilibili</span>
+                        </h3>
+                        <p class="text-gray-600 mt-1">
+                            <span class="lang-zh">点击跳转官方B站账号</span>
+                            <span class="lang-en">Click to go to<br>the official account</span>
+                        </p>
+                    </div>
+                </a>
+                <!-- 链接 2: 社交媒体 -->
+                <a href="assets/images/SEUbangdreamclub_offical.jpg" target="_blank" class="card-hover flex items-center bg-white p-6 rounded-lg shadow-md space-x-8">
+                    <img src="assets/images/SEUbangdream_club.jpg" 
+                         alt="社交媒体" 
+                         class="w-24 h-24 object-cover rounded"
+                         onerror="this.onerror=null;this.src='https://placehold.co/150x150/e0e7ff/4338ca?text=Image+Not+Found';">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900">
+                            <span class="lang-zh">加入我们</span>
+                            <span class="lang-en">Join Us</span>
+                        </h3>
+                        <p class="text-gray-600 mt-1">
+                            <span class="lang-zh">欢迎加入<br>东南大学邦邦同好会</span>
+                            <span class="lang-en">Welcome to<br>SEU Bang Dream Club</span>
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </section>
     </main>
 
+    <!-- 5. 底部 License -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 <span class="lang-zh">东南大学邦邦同好会</span><span class="lang-en">SEU Bang Dream Club</span>. All Rights Reserved.</p>
+            <p class="mt-2 text-sm text-gray-400">
+                <span class="lang-zh">本项目采用 <a href="https://opensource.org/licenses/MIT" target="_blank" class="underline hover:text-white">MIT 许可证</a> 进行授权。</span>
+                <span class="lang-en">This project is licensed under the <a href="https://opensource.org/licenses/MIT" target="_blank" class="underline hover:text-white">MIT License</a>.</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- 6. 浮动音乐播放器 -->
+    <!-- MODIFIED: Player is now draggable, shrinkable, and better positioned -->
+    <div id="music-player" class="fixed bottom-8 right-5 md:bottom-5 bg-white/80 backdrop-blur-md shadow-xl rounded-full p-3 flex items-center space-x-3 text-gray-700 transition-transform duration-300 ease-in-out scale-50 hover:scale-100 transform-origin-bottom-right cursor-grab">
+        <!-- MODIFIED: Added `autoplay` and `muted` for autoplay policy -->
+        <audio id="background-audio" loop autoplay>
+            <source src="assets/audios/kzn_music.flac" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <button id="play-pause-btn" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-200 transition-colors">
+            <i id="play-icon" class="fa-solid fa-play text-xl"></i>
+            <i id="pause-icon" class="fa-solid fa-pause text-xl hidden"></i>
+        </button>
+        <button id="mute-unmute-btn" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-200 transition-colors">
+            <i id="volume-icon" class="fa-solid fa-volume-high text-xl"></i>
+            <i id="mute-icon" class="fa-solid fa-volume-xmark text-xl hidden"></i>
+        </button>
+    </div>
+
+    <!-- NEW: Lightbox / Modal -->
+    <!-- MODIFIED: Lightbox is now scrollable on mobile -->
+    <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-80 hidden items-start justify-center z-50 p-4 pt-16 overflow-y-auto md:items-center md:pt-4">
+        <span id="close-lightbox" class="absolute top-5 right-8 text-white text-5xl font-bold cursor-pointer hover:text-gray-300 transition-colors">&times;</span>
+        <div class="text-center">
+            <!-- MODIFIED: Corrected image class and adjusted max height -->
+            <img id="lightbox-img" class="max-w-[90vw] max-h-[70vh] mx-auto rounded-lg shadow-2xl">
+            <div id="download-container" class="mt-6 space-x-4">
+                <!-- Download buttons will be injected here by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- 语言切换逻辑 ---
+            const langSwitchBtn = document.getElementById('lang-switch-btn');
+            const htmlEl = document.documentElement;
+            let currentLang = 'zh';
+            const zhElements = document.querySelectorAll('.lang-zh');
+            const enElements = document.querySelectorAll('.lang-en');
+            function setLanguage(lang) {
+                htmlEl.lang = lang === 'zh' ? 'zh-CN' : 'en';
+                zhElements.forEach(el => el.style.display = lang === 'zh' ? 'inline' : 'none');
+                enElements.forEach(el => el.style.display = lang === 'en' ? 'inline' : 'none');
+                currentLang = lang;
+            }
+            langSwitchBtn.addEventListener('click', () => setLanguage(currentLang === 'zh' ? 'en' : 'zh'));
+            setLanguage(currentLang);
+
+            // --- Carousel and Lightbox Logic ---
+            const carouselSlides = document.querySelectorAll('.carousel-slide');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeLightboxBtn = document.getElementById('close-lightbox');
+            const downloadContainer = document.getElementById('download-container');
+
+            // --- 重要: 请在这里替换为您自己的图片路径 ---
+            const slidesData = [
+                {
+                    id: 'A',
+                    lowRes: 'assets/images/ppp_shanghai.jpg',
+                    highRes: 'assets/images/ppp_shanghai.jpg'
+                },
+                {
+                    id: 'B',
+                    lowRes: 'assets/images/ppp_10_low.jpg',
+                    highRes: 'assets/images/ppp_10_high.jpg'
+                }
+            ];
+
+            let currentSlide = 0;
+
+            function showSlide(index) {
+                carouselSlides.forEach((slide, i) => {
+                    slide.classList.toggle('hidden', i !== index);
+                });
+                currentSlide = index;
+            }
+
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // 防止点击按钮时触发灯箱
+                showSlide((currentSlide - 1 + carouselSlides.length) % carouselSlides.length);
+            });
+
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // 防止点击按钮时触发灯箱
+                showSlide((currentSlide + 1) % carouselSlides.length);
+            });
+
+            // 点击图片打开灯箱
+            carouselSlides.forEach((slide, index) => {
+                slide.addEventListener('click', () => {
+                    const slideInfo = slidesData[index];
+                    lightbox.style.display = 'flex';
+                    lightboxImg.src = slideInfo.highRes; // 灯箱里直接显示高清图
+
+                    downloadContainer.innerHTML = ''; // 清空旧按钮
+
+                    if (slideInfo.id === 'A') {
+                        const btn = `<a href="${slideInfo.highRes}" class="lightbox-btn" download="Event_Image_A.jpg"><i class="fa-solid fa-download mr-2"></i><span class="lang-zh">下载图片</span><span class="lang-en">Download</span></a>`;
+                        downloadContainer.insertAdjacentHTML('beforeend', btn);
+                    } else if (slideInfo.id === 'B') {
+                        const btnLow = `<a href="${slideInfo.lowRes}" class="lightbox-btn" download="Event_Image_B_Low.jpg"><i class="fa-solid fa-download mr-2"></i><span class="lang-zh">下载低清版</span><span class="lang-en">Download Low-Res</span></a>`;
+                        const btnHigh = `<a href="${slideInfo.highRes}" class="lightbox-btn" download="Event_Image_B_High.jpg"><i class="fa-solid fa-download mr-2"></i><span class="lang-zh">下载高清版</span><span class="lang-en">Download High-Res</span></a>`;
+                        downloadContainer.insertAdjacentHTML('beforeend', btnLow);
+                        downloadContainer.insertAdjacentHTML('beforeend', btnHigh);
+                    }
+                    // 确保下载按钮的语言也同步切换
+                    setLanguage(currentLang);
+                });
+            });
+
+            // 关闭灯箱
+            const closeLightbox = () => lightbox.style.display = 'none';
+            closeLightboxBtn.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+            
+            // 初始化轮播
+            showSlide(0);
+
+            // --- 音乐播放器逻辑 ---
+            const musicPlayer = document.getElementById('music-player');
+            const audio = document.getElementById('background-audio');
+            const playPauseBtn = document.getElementById('play-pause-btn');
+            const playIcon = document.getElementById('play-icon');
+            const pauseIcon = document.getElementById('pause-icon');
+            const muteUnmuteBtn = document.getElementById('mute-unmute-btn');
+            const volumeIcon = document.getElementById('volume-icon');
+            const muteIcon = document.getElementById('mute-icon');
+            let isAudioInitialized = false;
+
+            // 音乐初始化函数：在用户首次交互时播放并取消静音
+            const initializeAudio = () => {
+                // 如果已经初始化过（有声且在播放），就直接返回
+                if (audio.muted === false && !audio.paused) return;
+                // 尝试播放（在某些情况下，即使是静音播放也可能需要用户交互来启动）
+                // 并且取消静音
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // 播放成功后，取消静音
+                        audio.muted = false;
+                        console.log("音频已在用户交互后成功播放并取消静音。");
+                        // 更新所有图标状态
+                        // updatePlayPauseIcon();
+                        // updateMuteIcon();
+                        // 【重要】移除所有用于初始化的监听器，避免重复触发
+                        document.body.removeEventListener('click', initializeAudio);
+                        document.body.removeEventListener('touchstart', initializeAudio);
+                        if (prevBtn) prevBtn.removeEventListener('click', initializeAudio);
+                        if (nextBtn) nextBtn.removeEventListener('click', initializeAudio);
+                    }).catch(error => {
+                        console.error("在用户交互后播放音频失败:", error);
+                    });
+                }
+                // 【重要】用 { once: true } 选项，这个监听器在执行一次后会自动移除，无需手动管理
+            };
+
+            // 监听用户首次交互以启动音频
+            document.body.addEventListener('click', initializeAudio, { once: true });
+            document.body.addEventListener('touchstart', initializeAudio, { once: true });
+            window.addEventListener('scroll', initializeAudio, { once: true });
+            if (prevBtn) prevBtn.addEventListener('click', initializeAudio);
+            if (nextBtn) nextBtn.addEventListener('click', initializeAudio);
+
+            // 尝试静音自动播放（在某些浏览器上可以工作）
+            audio.play().catch(e => console.log("Muted autoplay failed, waiting for interaction."));
+
+            const updatePlayPauseIcon = () => {
+                playIcon.classList.toggle('hidden', !audio.paused);
+                pauseIcon.classList.toggle('hidden', audio.paused);
+            };
+
+            const updateMuteIcon = () => {
+                volumeIcon.classList.toggle('hidden', audio.muted);
+                muteIcon.classList.toggle('hidden', !audio.muted);
+            };
+
+            playPauseBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // 防止事件冒泡
+                if (audio.paused) {
+                    audio.play().catch(e => console.error("Audio play failed", e));
+                } else {
+                    audio.pause();
+                }
+            });
+
+            muteUnmuteBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // 防止事件冒泡
+                audio.muted = !audio.muted;
+                updateMuteIcon();
+            });
+            
+            // 监听音频本身的播放/暂停事件，以同步UI
+            audio.addEventListener('play', updatePlayPauseIcon);
+            audio.addEventListener('pause', updatePlayPauseIcon);
+            audio.addEventListener('volumechange', updateMuteIcon); // 当muted属性改变时会触发
+            
+            // 初始化图标状态
+            updatePlayPauseIcon();
+            updateMuteIcon();
+            
+            // --- MODIFIED: 全新的拖动逻辑 ---
+            makeDraggable(musicPlayer);
+
+            function makeDraggable(element) {
+                let isDragging = false;
+                let startX, startY, initialX, initialY;
+
+                const onDragStart = (e) => {
+                    // 如果点击的是按钮，则不触发拖动
+                    if (e.target.closest('button')) {
+                        return;
+                    }
+                    isDragging = true;
+                    element.style.cursor = 'grabbing';
+                    
+                    const touch = e.touches ? e.touches[0] : e;
+                    startX = touch.clientX;
+                    startY = touch.clientY;
+                    initialX = element.offsetLeft;
+                    initialY = element.offsetTop;
+
+                    // 移除 transform-origin 以便平滑拖动
+                    element.classList.remove('transform-origin-bottom-right');
+                    
+                    document.addEventListener('mousemove', onDragMove);
+                    document.addEventListener('touchmove', onDragMove, { passive: false });
+                    document.addEventListener('mouseup', onDragEnd);
+                    document.addEventListener('touchend', onDragEnd);
+                    
+                    // 阻止默认行为，如移动端的页面滚动
+                    if (e.touches) e.preventDefault();
+                };
+
+                const onDragMove = (e) => {
+                    if (!isDragging) return;
+                    if (e.touches) e.preventDefault(); // 在 touchmove 中也要阻止
+                    
+                    const touch = e.touches ? e.touches[0] : e;
+                    const deltaX = touch.clientX - startX;
+                    const deltaY = touch.clientY - startY;
+
+                    let newX = initialX + deltaX;
+                    let newY = initialY + deltaY;
+
+                    // 边界检测
+                    const screenWidth = window.innerWidth;
+                    const screenHeight = window.innerHeight;
+                    const elWidth = element.offsetWidth;
+                    const elHeight = element.offsetHeight;
+
+                    if (newX < 0) newX = 0;
+                    if (newY < 0) newY = 0;
+                    if (newX > screenWidth - elWidth) newX = screenWidth - elWidth;
+                    if (newY > screenHeight - elHeight) newY = screenHeight - elHeight;
+                    
+                    element.style.left = `${newX}px`;
+                    element.style.top = `${newY}px`;
+                    // 清除原来的 right 和 bottom 定位
+                    element.style.right = 'auto';
+                    element.style.bottom = 'auto';
+                };
+
+                const onDragEnd = () => {
+                    isDragging = false;
+                    element.style.cursor = 'grab';
+                    
+                    document.removeEventListener('mousemove', onDragMove);
+                    document.removeEventListener('touchmove', onDragMove);
+                    document.removeEventListener('mouseup', onDragEnd);
+                    document.removeEventListener('touchend', onDragEnd);
+                };
+
+                element.addEventListener('mousedown', onDragStart);
+                element.addEventListener('touchstart', onDragStart, { passive: false });
+            }
+        });
+    </script>
 </body>
 </html>
