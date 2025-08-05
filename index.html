@@ -72,6 +72,24 @@
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* Firefox */
         }
+        /* --- MODIFIED: z-index fix for carousel buttons --- */
+        /* 确保轮播按钮的层级高于音乐播放器，以解决移动端点击问题 */
+        #prev-btn, #next-btn {
+            z-index: 30;
+        }
+        
+        /* --- MODIFIED: z-index for music player --- */
+        /* 为音乐播放器设置一个明确的、较低的z-index */
+        #music-player {
+            z-index: 20; 
+            user-select: none; /* 防止拖动时选中文本 */
+        }
+        #music-player button, #music-player i {
+            pointer-events: auto; /* 确保播放器内部的按钮可以被点击 */
+        }
+        #music-player i {
+             pointer-events: none; /* 让事件穿透到父级按钮 */
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -265,8 +283,10 @@
     <!-- 6. 浮动音乐播放器 -->
     <!-- MODIFIED: Player is now draggable, shrinkable, and better positioned -->
     <div id="music-player" class="fixed bottom-8 right-5 md:bottom-5 bg-white/80 backdrop-blur-md shadow-xl rounded-full p-3 flex items-center space-x-3 text-gray-700 transition-transform duration-300 ease-in-out scale-50 hover:scale-100 transform-origin-bottom-right cursor-grab">
-        <audio id="background-audio" loop>
+        <!-- MODIFIED: Added `autoplay` and `muted` for autoplay policy -->
+        <audio id="background-audio" loop autoplay muted>
             <source src="assets/audios/kzn_music.flac" type="audio/mpeg">
+            Your browser does not support the audio element.
         </audio>
         <button id="play-pause-btn" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-200 transition-colors">
             <i id="play-icon" class="fa-solid fa-play text-xl"></i>
@@ -393,109 +413,140 @@
             const volumeIcon = document.getElementById('volume-icon');
             const muteIcon = document.getElementById('mute-icon');
 
-            // MODIFIED: Attempt to autoplay music on page load
-            const playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.then(_ => {
-                    // Autoplay started successfully
-                    playIcon.classList.add('hidden');
-                    pauseIcon.classList.remove('hidden');
+            let isAudioInitialized = true;
+
+            // 音乐初始化函数：在用户首次交互时播放并取消静音
+            const initializeAudio = () => {
+                if (isAudioInitialized) return;
+
+                audio.play().then(() => {
+                    audio.muted = false; // 成功播放后取消静音
+                    updatePlayPauseIcon();
+                    updateMuteIcon();
+                    isAudioInitialized = true;
+                    // 成功后移除监听器
+                    document.body.removeEventListener('click', initializeAudio);
+                    document.body.removeEventListener('touchstart', initializeAudio);
                 }).catch(error => {
-                    // Autoplay was prevented by the browser.
-                    console.log("Autoplay was prevented by the browser.");
+                    console.log("Audio playback failed until user interaction:", error);
                 });
-            }
+            };
 
-            playPauseBtn.addEventListener('click', () => {
-                if (audio.paused) {
-                    audio.play().catch(e => console.error("Audio play failed", e));
-                    playIcon.classList.add('hidden');
-                    pauseIcon.classList.remove('hidden');
-                } else {
-                    audio.pause();
-                    playIcon.classList.remove('hidden');
-                    pauseIcon.classList.add('hidden');
-                }
-            });
+            // 监听用户首次交互以启动音频
+            document.body.addEventListener('click', initializeAudio, { once: true });
+            document.body.addEventListener('touchstart', initializeAudio, { once: true });
+            
+            // 尝试静音自动播放（在某些浏览器上可以工作）
+            audio.play().catch(e => console.log("Muted autoplay failed, waiting for interaction."));
 
-            muteUnmuteBtn.addEventListener('click', () => {
-                audio.muted = !audio.muted;
+            const updatePlayPauseIcon = () => {
+                playIcon.classList.toggle('hidden', !audio.paused);
+                pauseIcon.classList.toggle('hidden', audio.paused);
+            };
+
+            const updateMuteIcon = () => {
                 volumeIcon.classList.toggle('hidden', audio.muted);
                 muteIcon.classList.toggle('hidden', !audio.muted);
+            };
+
+            playPauseBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // 防止事件冒泡
+                if (audio.paused) {
+                    audio.play().catch(e => console.error("Audio play failed", e));
+                } else {
+                    audio.pause();
+                }
+                updatePlayPauseIcon();
             });
 
-            // MODIFIED: Make the music player draggable
+            muteUnmuteBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // 防止事件冒泡
+                audio.muted = !audio.muted;
+                updateMuteIcon();
+            });
+            
+            // 监听音频本身的播放/暂停事件，以同步UI
+            audio.onplay = updatePlayPauseIcon;
+            audio.onpause = updatePlayPauseIcon;
+            
+            // 初始化图标状态
+            updatePlayPauseIcon();
+            updateMuteIcon();
+            
+            // --- MODIFIED: 全新的拖动逻辑 ---
             makeDraggable(musicPlayer);
 
-            function makeDraggable(elmnt) {
-                let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-                
-                elmnt.onmousedown = dragMouseDown;
-                elmnt.ontouchstart = dragMouseDown;
+            function makeDraggable(element) {
+                let isDragging = false;
+                let startX, startY, initialX, initialY;
 
-                function dragMouseDown(e) {
-                    // Do not drag if a button was clicked
+                const onDragStart = (e) => {
+                    // 如果点击的是按钮，则不触发拖动
                     if (e.target.closest('button')) {
                         return;
                     }
-                    e = e || window.event;
-                    e.preventDefault();
+                    isDragging = true;
+                    element.style.cursor = 'grabbing';
                     
-                    pos3 = e.clientX || e.touches[0].clientX;
-                    pos4 = e.clientY || e.touches[0].clientY;
+                    const touch = e.touches ? e.touches[0] : e;
+                    startX = touch.clientX;
+                    startY = touch.clientY;
+                    initialX = element.offsetLeft;
+                    initialY = element.offsetTop;
+
+                    // 移除 transform-origin 以便平滑拖动
+                    element.classList.remove('transform-origin-bottom-right');
                     
-                    document.onmouseup = closeDragElement;
-                    document.ontouchend = closeDragElement;
-                    document.onmousemove = elementDrag;
-                    document.ontouchmove = elementDrag;
-
-                    elmnt.classList.remove('cursor-grab');
-                    elmnt.classList.add('cursor-grabbing');
-                    elmnt.classList.remove('transform-origin-bottom-right');
-                }
-
-                function elementDrag(e) {
-                    e = e || window.event;
-                    e.preventDefault();
+                    document.addEventListener('mousemove', onDragMove);
+                    document.addEventListener('touchmove', onDragMove, { passive: false });
+                    document.addEventListener('mouseup', onDragEnd);
+                    document.addEventListener('touchend', onDragEnd);
                     
-                    const currentX = e.clientX || e.touches[0].clientX;
-                    const currentY = e.clientY || e.touches[0].clientY;
+                    // 阻止默认行为，如移动端的页面滚动
+                    if (e.touches) e.preventDefault();
+                };
 
-                    pos1 = pos3 - currentX;
-                    pos2 = pos4 - currentY;
-                    pos3 = currentX;
-                    pos4 = currentY;
+                const onDragMove = (e) => {
+                    if (!isDragging) return;
+                    if (e.touches) e.preventDefault(); // 在 touchmove 中也要阻止
                     
-                    let newTop = elmnt.offsetTop - pos2;
-                    let newLeft = elmnt.offsetLeft - pos1;
+                    const touch = e.touches ? e.touches[0] : e;
+                    const deltaX = touch.clientX - startX;
+                    const deltaY = touch.clientY - startY;
 
-                    // Constrain movement within the viewport
-                    const viewportWidth = window.innerWidth;
-                    const viewportHeight = window.innerHeight;
-                    const elmntWidth = elmnt.offsetWidth;
-                    const elmntHeight = elmnt.offsetHeight;
+                    let newX = initialX + deltaX;
+                    let newY = initialY + deltaY;
 
-                    if (newLeft < 0) newLeft = 0;
-                    if (newTop < 0) newTop = 0;
-                    if (newLeft + elmntWidth > viewportWidth) newLeft = viewportWidth - elmntWidth;
-                    if (newTop + elmntHeight > viewportHeight) newTop = viewportHeight - elmntHeight;
+                    // 边界检测
+                    const screenWidth = window.innerWidth;
+                    const screenHeight = window.innerHeight;
+                    const elWidth = element.offsetWidth;
+                    const elHeight = element.offsetHeight;
 
-                    elmnt.style.top = newTop + "px";
-                    elmnt.style.left = newLeft + "px";
-                    elmnt.style.bottom = 'auto';
-                    elmnt.style.right = 'auto';
-                }
+                    if (newX < 0) newX = 0;
+                    if (newY < 0) newY = 0;
+                    if (newX > screenWidth - elWidth) newX = screenWidth - elWidth;
+                    if (newY > screenHeight - elHeight) newY = screenHeight - elHeight;
+                    
+                    element.style.left = `${newX}px`;
+                    element.style.top = `${newY}px`;
+                    // 清除原来的 right 和 bottom 定位
+                    element.style.right = 'auto';
+                    element.style.bottom = 'auto';
+                };
 
-                function closeDragElement() {
-                    document.onmouseup = null;
-                    document.ontouchend = null;
-                    document.onmousemove = null;
-                    document.ontouchmove = null;
+                const onDragEnd = () => {
+                    isDragging = false;
+                    element.style.cursor = 'grab';
+                    
+                    document.removeEventListener('mousemove', onDragMove);
+                    document.removeEventListener('touchmove', onDragMove);
+                    document.removeEventListener('mouseup', onDragEnd);
+                    document.removeEventListener('touchend', onDragEnd);
+                };
 
-                    elmnt.classList.remove('cursor-grabbing');
-                    elmnt.classList.add('cursor-grab');
-                    elmnt.classList.add('transform-origin-bottom-right');
-                }
+                element.addEventListener('mousedown', onDragStart);
+                element.addEventListener('touchstart', onDragStart, { passive: false });
             }
         });
     </script>
