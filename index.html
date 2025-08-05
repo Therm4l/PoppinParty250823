@@ -284,7 +284,7 @@
     <!-- MODIFIED: Player is now draggable, shrinkable, and better positioned -->
     <div id="music-player" class="fixed bottom-8 right-5 md:bottom-5 bg-white/80 backdrop-blur-md shadow-xl rounded-full p-3 flex items-center space-x-3 text-gray-700 transition-transform duration-300 ease-in-out scale-50 hover:scale-100 transform-origin-bottom-right cursor-grab">
         <!-- MODIFIED: Added `autoplay` and `muted` for autoplay policy -->
-        <audio id="background-audio" loop autoplay muted>
+        <audio id="background-audio" loop autoplay>
             <source src="assets/audios/kzn_music.flac" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
@@ -412,11 +412,12 @@
             const muteUnmuteBtn = document.getElementById('mute-unmute-btn');
             const volumeIcon = document.getElementById('volume-icon');
             const muteIcon = document.getElementById('mute-icon');
-
             let isAudioInitialized = false;
 
             // 音乐初始化函数：在用户首次交互时播放并取消静音
             const initializeAudio = () => {
+                // 如果已经初始化过（有声且在播放），就直接返回
+                if (audio.muted === false && !audio.paused) return;
                 // 尝试播放（在某些情况下，即使是静音播放也可能需要用户交互来启动）
                 // 并且取消静音
                 const playPromise = audio.play();
@@ -426,8 +427,13 @@
                         audio.muted = false;
                         console.log("音频已在用户交互后成功播放并取消静音。");
                         // 更新所有图标状态
-                        updatePlayPauseIcon();
-                        updateMuteIcon();
+                        // updatePlayPauseIcon();
+                        // updateMuteIcon();
+                        // 【重要】移除所有用于初始化的监听器，避免重复触发
+                        document.body.removeEventListener('click', initializeAudio);
+                        document.body.removeEventListener('touchstart', initializeAudio);
+                        if (prevBtn) prevBtn.removeEventListener('click', initializeAudio);
+                        if (nextBtn) nextBtn.removeEventListener('click', initializeAudio);
                     }).catch(error => {
                         console.error("在用户交互后播放音频失败:", error);
                     });
@@ -438,7 +444,10 @@
             // 监听用户首次交互以启动音频
             document.body.addEventListener('click', initializeAudio, { once: true });
             document.body.addEventListener('touchstart', initializeAudio, { once: true });
-            
+            window.addEventListener('scroll', initializeAudio, { once: true });
+            if (prevBtn) prevBtn.addEventListener('click', initializeAudio);
+            if (nextBtn) nextBtn.addEventListener('click', initializeAudio);
+
             // 尝试静音自动播放（在某些浏览器上可以工作）
             audio.play().catch(e => console.log("Muted autoplay failed, waiting for interaction."));
 
@@ -459,7 +468,6 @@
                 } else {
                     audio.pause();
                 }
-                updatePlayPauseIcon();
             });
 
             muteUnmuteBtn.addEventListener('click', (e) => {
