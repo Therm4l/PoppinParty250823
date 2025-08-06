@@ -90,6 +90,121 @@
         #music-player i {
              pointer-events: none; /* 让事件穿透到父级按钮 */
         }
+        
+        /* Message Board Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes sparkle {
+            0% { transform: scale(1) rotate(0deg); opacity: 0.7; }
+            50% { transform: scale(1.5) rotate(180deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 0.7; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .animate-heartbeat {
+            animation: heartbeat 2s infinite ease-in-out;
+        }
+        
+        .animate-bounce-subtle {
+            animation: bounce-subtle 2s infinite ease-in-out;
+        }
+        
+        
+        /* Shooting stars */
+        .shooting-stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 20;
+        }
+        
+        .shooting-star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+            animation: shooting 3s linear infinite;
+            opacity: 0;
+        }
+        
+        .shooting-star-1 {
+            top: 10%;
+            left: -10px;
+            animation-delay: 0s;
+        }
+        
+        .shooting-star-2 {
+            top: 25%;
+            left: -10px;
+            animation-delay: 0.5s;
+        }
+        
+        .shooting-star-3 {
+            top: 40%;
+            left: -10px;
+            animation-delay: 1s;
+        }
+        
+        .shooting-star-4 {
+            top: 55%;
+            left: -10px;
+            animation-delay: 1.5s;
+        }
+        
+        .shooting-star-5 {
+            top: 70%;
+            left: -10px;
+            animation-delay: 2s;
+        }
+        
+        .shooting-star-6 {
+            top: 85%;
+            left: -10px;
+            animation-delay: 2.5s;
+        }
+        
+        @keyframes shooting {
+            0% {
+                transform: translateX(0) translateY(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(500px) translateY(500px);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -224,7 +339,55 @@
             </div>
         </section>
 
-        <!-- 4. 外部链接模块 -->
+        <!-- 4. 留言板模块 -->
+        <section id="message-board" class="section-container">
+            <h2 class="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 mb-8 relative z-10 animate-pulse">
+                <span class="lang-zh">留言板</span>
+                <span class="lang-en">Message Board</span>
+            </h2>
+            <div class="max-w-2xl mx-auto rounded-2xl p-8 relative overflow-hidden shadow-2xl" 
+                 style="background: url('assets/images/mylove.jpg') center/cover no-repeat; 
+                        backdrop-filter: blur(1px);">
+                <!-- Shooting stars -->
+                <div class="shooting-stars-container">
+                    <div class="shooting-star shooting-star-1"></div>
+                    <div class="shooting-star shooting-star-2"></div>
+                    <div class="shooting-star shooting-star-3"></div>
+                    <div class="shooting-star shooting-star-4"></div>
+                    <div class="shooting-star shooting-star-5"></div>
+                    <div class="shooting-star shooting-star-6"></div>
+                </div>
+                
+                
+                <!-- Decorative elements -->
+                <div class="absolute inset-0 bg-gradient-to-br from-pink-100/30 to-purple-100/30 backdrop-blur-sm"></div>
+                
+                <!-- Decorative border -->
+                <div class="absolute inset-0 border-4 border-dashed border-pink-300/50 rounded-2xl pointer-events-none"></div>
+                <div class="absolute inset-2 border-2 border-dotted border-purple-300/50 rounded-2xl pointer-events-none"></div>
+                
+                <!-- Message display area -->
+                <div id="message-content" class="text-center py-6 mb-6 min-h-[140px] flex items-center justify-center relative z-10 backdrop-blur-[2px] bg-white/30 rounded-xl shadow-inner animate-heartbeat">
+                    <p class="text-gray-700 text-lg">Loading messages...</p>
+                </div>
+                
+                <!-- Navigation buttons -->
+                <div class="flex justify-center space-x-6 relative z-10">
+                    <button id="prev-message" class="bg-gradient-to-r from-pink-400 to-purple-500 hover:from-pink-500 hover:to-purple-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center animate-bounce-subtle">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        <span class="lang-zh">上一条</span>
+                        <span class="lang-en">Previous</span>
+                    </button>
+                    <button id="next-message" class="bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center animate-bounce-subtle">
+                        <span class="lang-zh">下一条</span>
+                        <span class="lang-en">Next</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 外部链接模块 -->
         <section id="links" class="section-container">
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
                 <span class="lang-zh">社交媒体</span>
@@ -560,6 +723,104 @@
                 element.addEventListener('mousedown', onDragStart);
                 element.addEventListener('touchstart', onDragStart, { passive: false });
             }
+
+            // --- Message Board Logic ---
+            const messageContent = document.getElementById('message-content');
+            const prevMessageBtn = document.getElementById('prev-message');
+            const nextMessageBtn = document.getElementById('next-message');
+
+            // Default messages
+            let messages = [
+                {
+                    words: "期待PPP的现场演出！已经准备好尖叫了！",
+                    author: "粉丝小明"
+                },
+                {
+                    words: "Poppin'Party的音乐总是能带给我力量，希望能在现场感受到这份热情！",
+                    author: "Bang Dream爱好者"
+                },
+                {
+                    words: "感谢组织方的努力，让我们能在现场见证这个难忘的时刻！",
+                    author: "活动参与者"
+                },
+                {
+                    words: "已经买了周边商品，期待在现场买到更多限定商品！",
+                    author: "收藏家"
+                }
+            ];
+
+            // Try to load messages from data.json
+            function loadMessages() {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', 'data.json', true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            try {
+                                const data = JSON.parse(xhr.responseText);
+                                if (data && data.length > 0) {
+                                    messages = data;
+                                }
+                            } catch (e) {
+                                console.error('Error parsing data.json:', e);
+                            }
+                        } else {
+                            console.error('Error loading data.json: Status', xhr.status);
+                        }
+                        // Initialize message board with either loaded or default messages
+                        displayMessage(currentMessageIndex);
+                    }
+                };
+                xhr.onerror = function() {
+                    console.error('Error loading data.json');
+                    // Initialize message board with default messages
+                    displayMessage(currentMessageIndex);
+                };
+                try {
+                    xhr.send();
+                } catch (error) {
+                    console.error('Error sending request for data.json:', error);
+                    // Initialize message board with default messages
+                    displayMessage(currentMessageIndex);
+                }
+            }
+
+            let currentMessageIndex = 0;
+
+            function displayMessage(index) {
+                const message = messages[index];
+                messageContent.innerHTML = `
+                    <div class="text-center">
+                        <p class="text-gray-700 text-lg mb-2 italic">"${message.words}"</p>
+                        <p class="text-gray-500 text-sm">- ${message.author}</p>
+                    </div>
+                `;
+            }
+
+            prevMessageBtn.addEventListener('click', () => {
+                currentMessageIndex = (currentMessageIndex - 1 + messages.length) % messages.length;
+                displayMessage(currentMessageIndex);
+                
+                // Add animation effect
+                messageContent.classList.add('animate-fadeIn');
+                setTimeout(() => {
+                    messageContent.classList.remove('animate-fadeIn');
+                }, 500);
+            });
+
+            nextMessageBtn.addEventListener('click', () => {
+                currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+                displayMessage(currentMessageIndex);
+                
+                // Add animation effect
+                messageContent.classList.add('animate-fadeIn');
+                setTimeout(() => {
+                    messageContent.classList.remove('animate-fadeIn');
+                }, 500);
+            });
+
+            // Load messages and initialize message board
+            loadMessages();
         });
     </script>
 </body>
