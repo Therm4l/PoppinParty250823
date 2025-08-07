@@ -58,8 +58,8 @@
         /* 滑动解锁模块样式 */
         #slider-container {
             position: relative;
-            height: 4rem; /* 64px */
-            width: 20rem; /* 320px */
+            height: 6rem;
+            width: 25rem;
             margin: 4rem auto 0; /* mt-16 and centered */
         }
 
@@ -71,18 +71,25 @@
         #start-slider-btn:hover { transform: scale(1.1); }
 
         #slider-track {
-            position: absolute; inset: 0;
+            position: absolute;
+            width: 20rem;
+            height: 3rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             background-color: rgba(0, 0, 0, 0.3);
             border: 2px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(3px);
             transition: opacity 0.3s ease;
+            overflow: visible;
         }
 
         /* MODIFIED: Handle starts from left */
         #slider-handle {
             position: absolute; top: 0;
-            left: 0;
-            width: 4rem; /* 64px */
+            left: -2rem;
+            width: 6rem; /* 64px */
             height: 100%;
             cursor: grab;
             transition: left 0.2s ease;
@@ -149,14 +156,15 @@
                     </button>
                     
                     <!-- 2. 滑动轨道 (默认隐藏) -->
-                    <div id="slider-track" class="rounded-full flex items-center justify-center text-gray-300 opacity-0 hidden">
-                        <!-- MODIFIED: Text hint -->
+                    <div id="slider-track" class="rounded-full flex items-center justify-center text-gray-300 opacity-0 hidden relative">
                         <span id="slider-text" class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            滑动进入
+                            Slide to enter
                         </span>
-                        <!-- MODIFIED: Handle starts from left -->
-                        <div id="slider-handle" class="rounded-full flex items-center justify-center">
-                            <img src="assets/images/logo.png" alt="slider handle" class="h-full w-full object-cover rounded-full">
+                        
+                        <div id="handle-wrapper" class="absolute top-0 left-0 h-full">
+                            <div id="slider-handle" class="relative h-full flex items-center justify-center cursor-grab transition-all duration-200 ease-in-out">
+                                <img src="assets/images/logo.png" alt="slider handle" class="h-16 w-16 object-contain">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -188,7 +196,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const sliderText = document.getElementById('slider-text');
     const texts = ["滑动进入", "Slide to enter"];
     let textIndex = 0;
-    const intervalDuration = 4000;
+    const intervalDuration = 5000;
+    const initialOffset = 32;
 
     let isDragging = false;
     let startX = 0;
@@ -230,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 边界检测
         const handleWidth = sliderHandle.offsetWidth;
-        const maxDrag = trackRect.width - handleWidth;
+        const maxDrag = trackRect.width + initialOffset - handleWidth;
         if (deltaX < 0) deltaX = 0;
         if (deltaX > maxDrag) deltaX = maxDrag;
         
@@ -240,12 +249,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // 步骤4：结束拖动
     const endDrag = (e) => {
         if (!isDragging) return;
+        
         isDragging = false;
         sliderHandle.style.cursor = 'grab';
         sliderHandle.style.transition = 'left 0.2s ease, background-color 0.3s ease';
 
         const handleWidth = sliderHandle.offsetWidth;
-        const maxDrag = trackRect.width - handleWidth;
+        const maxDrag = trackRect.width + initialOffset - handleWidth;
         const currentLeft = sliderHandle.offsetLeft;
 
         // 检查是否滑动到最右侧
@@ -263,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
         } else {
             // 滑动未完成，弹回左侧原位
-            sliderHandle.style.left = '0px';
+            sliderHandle.style.left = `-${initialOffset}px`;
         }
     };
     
