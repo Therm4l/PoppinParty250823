@@ -1,0 +1,15 @@
+{
+  "web": {
+    "writing": ["爱美", "大桥彩香", "伊藤彩沙"],
+    "testing": ["爱美", "大桥彩香", "伊藤彩沙"]
+  },
+  "artist": ["爱美"],
+  "flower_basket": {
+    "organizer": ["爱美"],
+    "participants": ["爱美", "大桥彩香", "伊藤彩沙"]
+  },
+  "free_gift": {
+    "cards": ["爱美", "大桥彩香"],
+    "badges": ["伊藤彩沙"]
+  }
+}

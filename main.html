@@ -233,6 +233,14 @@
                         <span class="lang-zh">相关链接</span>
                         <span class="lang-en">Links</span>
                     </a>
+                    <a href="#message-board" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                        <span class="lang-zh">留言板</span>
+                        <span class="lang-en">Message Board</span>
+                    </a>
+                    <a href="#credits" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                        <span class="lang-zh">致谢</span>
+                        <span class="lang-en">Acknowledgements</span>
+                    </a>
                     <button id="lang-switch-btn" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-3 py-1 rounded-full text-xs transition-colors">
                         <span class="lang-zh">EN</span>
                         <span class="lang-en">中文</span>
@@ -273,71 +281,144 @@
                 <div class="carousel-slide hidden">
                     <img src="assets/images/ppp_10_preview.jpg" alt="活动主视觉 B" class="w-full h-full object-cover">
                 </div>
-                <!-- Prev/Next Buttons -->
-                <button id="prev-btn" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/50 hover:bg-white/80 rounded-full w-10 h-10 flex items-center justify-center text-gray-800 transition opacity-0 group-hover:opacity-100">
+
+                <!-- === MODIFIED: 全新样式的翻页按钮 === -->
+                <button id="prev-btn" 
+                        class="absolute top-1/2 left-4 transform -translate-y-1/2 
+                            w-12 h-12 rounded-full flex items-center justify-center
+                            bg-gradient-to-r from-pink-500 to-purple-500 text-white 
+                            shadow-lg opacity-80 hover:opacity-100 
+                            transition-all duration-300 ease-in-out 
+                            hover:scale-110 hover:shadow-xl z-30">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
-                <button id="next-btn" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/50 hover:bg-white/80 rounded-full w-10 h-10 flex items-center justify-center text-gray-800 transition opacity-0 group-hover:opacity-100">
+                <button id="next-btn" 
+                        class="absolute top-1/2 right-4 transform -translate-y-1/2 
+                            w-12 h-12 rounded-full flex items-center justify-center 
+                            bg-gradient-to-l from-pink-500 to-purple-500 text-white 
+                            shadow-lg opacity-80 hover:opacity-100 
+                            transition-all duration-300 ease-in-out 
+                            hover:scale-110 hover:shadow-xl z-30">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
+                <!-- === 修改结束 === -->
+                
             </div>
         </section>
 
-        <!-- 3. 实物模块 (现场图集) -->
+
+        <!-- 3. 实物模块 (现场图集) - 重构版 -->
         <section id="gallery" class="section-container bg-white">
+            <!-- 主标题 -->
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
                 <span class="lang-zh">花篮与无料</span>
-                <span class="lang-en">Flower Basket & Free Gift</span>
+                <span class="lang-en">Flower Basket & Free Gifts</span>
             </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- 图 1 -->
-                <div class="card-hover bg-gray-50 p-4 rounded-lg shadow-md">
-                    <img src="https://placehold.co/600x400/dbeafe/3b82f6?text=现场照片+1" 
-                         alt="主视觉图" 
-                         class="w-full rounded-md mb-4"
-                         onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=Image+Not+Found';">
-                    <p class="text-gray-700">
-                        <span class="lang-zh">主视觉图</span>
-                        <span class="lang-en">Main Visual Image</span>
-                    </p>
-                </div>
-                <!-- 图 2 -->
-                <div class="card-hover bg-gray-50 p-4 rounded-lg shadow-md">
-                    <img src="https://placehold.co/600x400/dbeafe/3b82f6?text=现场照片+2" 
-                         alt="花篮设计图" 
-                         class="w-full rounded-md mb-4"
-                         onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=Image+Not+Found';">
-                    <p class="text-gray-700">
-                        <span class="lang-zh">花篮设计图</span>
-                        <span class="lang-en">Flower Basket Design Image</span>
-                    </p>
+
+            <!-- === 分组 1: 花篮 (2张图) === -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold text-center text-gray-800 mb-8 border-b-2 pb-2">
+                    <span class="lang-zh">💐 花篮</span>
+                    <span class="lang-en">💐 Flower Basket</span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- 图 1.1 -->
+                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
+                        <img src="assets/images/flower_basket_visual.jpg" 
+                            data-lightbox-src="assets/images/flower_basket_visual_large.jpg"
+                            alt="花篮主视觉图" 
+                            class="w-full rounded-md mb-4"
+                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=花篮主视觉图';">
+                        <p class="text-gray-700 text-center">
+                            <span class="lang-zh">主视觉图</span>
+                            <span class="lang-en">Main Visual</span>
+                        </p>
+                    </div>
+                    <!-- 图 1.2 -->
+                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
+                        <img src="assets/images/flower_basket_design.jpg" 
+                            data-lightbox-src="assets/images/flower_basket_design_large.jpg"
+                            alt="花篮设计图" 
+                            class="w-full rounded-md mb-4"
+                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=花篮设计图';">
+                        <p class="text-gray-700 text-center">
+                            <span class="lang-zh">设计图</span>
+                            <span class="lang-en">Design</span>
+                        </p>
+                    </div>
                 </div>
             </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- 图 1 -->
-                <div class="card-hover bg-gray-50 p-4 rounded-lg shadow-md">
-                    <img src="https://placehold.co/600x400/dbeafe/3b82f6?text=现场照片+1" 
-                         alt="卡片正面" 
-                         class="w-full rounded-md mb-4"
-                         onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=Image+Not+Found';">
-                    <p class="text-gray-700">
-                        <span class="lang-zh">卡片正面</span>
-                        <span class="lang-en">Card Front</span>
-                    </p>
+
+            <!-- === 分组 2: 无料A (2张图) === -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold text-center text-gray-800 mb-8 border-b-2 pb-2">
+                    <span class="lang-zh">✉️ 无料 A (卡片)</span>
+                    <span class="lang-en">✉️ Free Gift A (Cards)</span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- 图 2.1 -->
+                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
+                        <img src="assets/images/card_front.jpg" 
+                            data-lightbox-src="assets/images/card_front_large.jpg"
+                            alt="卡片正面" 
+                            class="w-full rounded-md mb-4"
+                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/fecaca/991b1b?text=卡片正面';">
+                        <p class="text-gray-700 text-center">
+                            <span class="lang-zh">卡片正面</span>
+                            <span class="lang-en">Card Front</span>
+                        </p>
+                    </div>
+                    <!-- 图 2.2 -->
+                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
+                        <img src="assets/images/card_back.jpg" 
+                            data-lightbox-src="assets/images/card_back_large.jpg"
+                            alt="卡片背面" 
+                            class="w-full rounded-md mb-4"
+                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/fecaca/991b1b?text=卡片背面';">
+                        <p class="text-gray-700 text-center">
+                            <span class="lang-zh">卡片背面</span>
+                            <span class="lang-en">Card Back</span>
+                        </p>
+                    </div>
                 </div>
-                <!-- 图 2 -->
-                <div class="card-hover bg-gray-50 p-4 rounded-lg shadow-md">
-                    <img src="https://placehold.co/600x400/dbeafe/3b82f6?text=现场照片+2" 
-                         alt="卡片背面" 
-                         class="w-full rounded-md mb-4"
-                         onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=Image+Not+Found';">
-                    <p class="text-gray-700">
-                        <span class="lang-zh">卡片背面</span>
-                        <span class="lang-en">Card Back</span>
-                    </p>
+            </div>
+
+            <!-- === 分组 3: 无料B (6张图) === -->
+            <div>
+                <h3 class="text-2xl font-semibold text-center text-gray-800 mb-8 border-b-2 pb-2">
+                    <span class="lang-zh">🌟 无料 B (徽章)</span>
+                    <span class="lang-en">🌟 Free Gift B (Badges)</span>
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <!-- 图 3.1 - 3.6 -->
+                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
+                        <img src="assets/images/ksm.jpg" data-lightbox-src="assets/images/ksm.jpg" alt="徽章 1" class="w-full rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+1';">
+                        <p class="text-gray-700 text-center"><span class="lang-zh">徽章 1</span><span class="lang-en">Badge 1</span></p>
+                    </div>
+                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
+                        <img src="assets/images/tae.jpg" data-lightbox-src="assets/images/tae.jpg" alt="徽章 2" class="w-full rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+2';">
+                        <p class="text-gray-700 text-center"><span class="lang-zh">徽章 2</span><span class="lang-en">Badge 2</span></p>
+                    </div>
+                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
+                        <img src="assets/images/rimi.jpg" data-lightbox-src="assets/images/rimi.jpg" alt="徽章 3" class="w-full rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+3';">
+                        <p class="text-gray-700 text-center"><span class="lang-zh">徽章 3</span><span class="lang-en">Badge 3</span></p>
+                    </div>
+                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
+                        <img src="assets/images/saaya.jpg" data-lightbox-src="assets/images/saaya.jpg" alt="徽章 4" class="w-full rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+4';">
+                        <p class="text-gray-700 text-center"><span class="lang-zh">徽章 4</span><span class="lang-en">Badge 4</span></p>
+                    </div>
+                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
+                        <img src="assets/images/ars.jpg" data-lightbox-src="assets/images/ars.jpg" alt="徽章 5" class="w-full rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+5';">
+                        <p class="text-gray-700 text-center"><span class="lang-zh">徽章 5</span><span class="lang-en">Badge 5</span></p>
+                    </div>
+                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
+                        <img src="assets/images/POPIPA.jpg" data-lightbox-src="assets/images/POPIPA.jpg" alt="徽章 6" class="w-full rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+6';">
+                        <p class="text-gray-700 text-center"><span class="lang-zh">徽章 6</span><span class="lang-en">Badge 6</span></p>
+                    </div>
                 </div>
             </div>
         </section>
+
 
         <!-- 4. 留言板模块 -->
         <section id="message-board" class="section-container">
@@ -387,7 +468,131 @@
             </div>
         </section>
 
-        <!-- 5. 外部链接模块 -->
+        <!-- 5. 致谢名单模块 (仅添加中英文翻译) -->
+        <section id="credits" class="section-container py-16">
+            <!-- 标题 -->
+            <h2 class="text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500 mb-12 relative z-10 animate-pulse">
+                <span class="lang-zh">致谢</span>
+                <span class="lang-en">Acknowledgements</span>
+            </h2>
+
+            <!-- 主要容器 -->
+            <div class="max-w-4xl mx-auto rounded-2xl p-6 md:p-10 relative overflow-hidden shadow-2xl" 
+                style="background: url('assets/images/mylove.jpg') center/cover no-repeat;">
+                
+                <!-- 流星效果 -->
+                <div class="shooting-stars-container">
+                    <div class="shooting-star"></div>
+                    <div class="shooting-star" style="animation-delay: 1s; animation-duration: 4s;"></div>
+                    <div class="shooting-star" style="animation-delay: 2s; animation-duration: 3.5s;"></div>
+                    <div class="shooting-star" style="animation-delay: 3s; animation-duration: 5s;"></div>
+                    <div class="shooting-star" style="animation-delay: 4.5s; animation-duration: 4.2s;"></div>
+                </div>
+                
+                <!-- 装饰性渐变和模糊遮罩 -->
+                <div class="absolute inset-0 bg-gradient-to-br from-pink-100/20 to-purple-100/20 backdrop-blur-sm"></div>
+                
+                <!-- 装饰性边框 -->
+                <div class="absolute inset-0 border-4 border-dashed border-pink-300/40 rounded-2xl pointer-events-none"></div>
+                <div class="absolute inset-2 border-2 border-dotted border-purple-300/40 rounded-2xl pointer-events-none"></div>
+
+                <!-- 致谢内容网格布局 -->
+                <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8 text-white text-shadow-md">
+                    
+                    <!-- 网页组 -->
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold border-b-2 border-pink-400/50 pb-2">
+                            <span class="lang-zh">网页</span>
+                            <span class="lang-en">Website</span>
+                        </h3>
+                        <div>
+                            <h4 class="text-lg font-semibold text-purple-200">
+                                <span class="lang-zh">网页编写</span>
+                                <span class="lang-en">Development</span>
+                            </h4>
+                            <p id="credits-web-writing" class="pl-4">Loading...</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-purple-200">
+                                <span class="lang-zh">网页测试</span>
+                                <span class="lang-en">Testing</span>
+                            </h4>
+                            <p id="credits-web-testing" class="pl-4">Loading...</p>
+                        </div>
+                    </div>
+
+                    <!-- 画师组 -->
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold border-b-2 border-pink-400/50 pb-2">
+                            <span class="lang-zh">画师</span>
+                            <span class="lang-en">Artist</span>
+                        </h3>
+                        <div>
+                            <p id="credits-artist" class="pl-4">Loading...</p>
+                        </div>
+                    </div>
+
+                    <!-- 花篮组 -->
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold border-b-2 border-pink-400/50 pb-2">
+                            <span class="lang-zh">花篮</span>
+                            <span class="lang-en">Flower Basket</span>
+                        </h3>
+                        <div>
+                            <h4 class="text-lg font-semibold text-purple-200">
+                                <span class="lang-zh">主催</span>
+                                <span class="lang-en">Organizer</span>
+                            </h4>
+                            <p id="credits-flower-basket-organizer" class="pl-4">Loading...</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-purple-200">
+                                <span class="lang-zh">参与</span>
+                                <span class="lang-en">Participants</span>
+                            </h4>
+                            <p id="credits-flower-basket-participants" class="pl-4">Loading...</p>
+                        </div>
+                    </div>
+
+                    <!-- 无料组 -->
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold border-b-2 border-pink-400/50 pb-2">
+                            <span class="lang-zh">无料</span>
+                            <span class="lang-en">Free Gifts</span>
+                        </h3>
+                        <div>
+                            <h4 class="text-lg font-semibold text-purple-200">
+                                <span class="lang-zh">卡片</span>
+                                <span class="lang-en">Cards</span>
+                            </h4>
+                            <p id="credits-free-gift-cards" class="pl-4">Loading...</p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-purple-200">
+                                <span class="lang-zh">徽章</span>
+                                <span class="lang-en">Badges</span>
+                            </h4>
+                            <p id="credits-free-gift-badges" class="pl-4">Loading...</p>
+                        </div>
+                    </div>
+
+                    <!-- 特别感谢 (横跨两栏) -->
+                    <div class="md:col-span-2 text-center mt-8 pt-6 border-t-2 border-dashed border-white/30">
+                        <h3 class="text-2xl font-bold mb-4">
+                            <span class="lang-zh">特别感谢</span>
+                            <span class="lang-en">Special Thanks</span>
+                        </h3>
+                        <p class="text-lg italic">
+                            <span class="lang-zh">感谢每一位同好会的成员，<br>感谢每一位热爱邦多利的你！</span>
+                            <span class="lang-en">Thanks to every member of the club,<br>and to everyone who loves BanG Dream!</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 6. 外部链接模块 -->
         <section id="links" class="section-container">
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
                 <span class="lang-zh">社交媒体</span>
@@ -432,7 +637,7 @@
         </section>
     </main>
 
-    <!-- 5. 底部 License -->
+    <!-- 7. 底部 License -->
     <footer class="bg-gray-800 text-white py-8">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p>&copy; 2025 <span class="lang-zh">东南大学邦邦同好会</span><span class="lang-en">SEU Bang Dream Club</span>. All Rights Reserved.</p>
@@ -443,7 +648,7 @@
         </div>
     </footer>
 
-    <!-- 6. 浮动音乐播放器 -->
+    <!-- 8. 浮动音乐播放器 -->
     <!-- MODIFIED: Player is now draggable, shrinkable, and better positioned -->
     <div id="music-player" class="fixed bottom-8 right-5 md:bottom-5 bg-white/80 backdrop-blur-md shadow-xl rounded-full p-3 flex items-center space-x-3 text-gray-700 transition-transform duration-300 ease-in-out scale-50 hover:scale-100 transform-origin-bottom-right cursor-grab">
         <!-- MODIFIED: Added `autoplay` and `muted` for autoplay policy -->
@@ -565,6 +770,47 @@
             
             // 初始化轮播
             showSlide(0);
+
+            // --- Gallery Lightbox Logic ---
+            function initializeGalleryLightbox() {
+                // 获取所有画廊项目和灯箱元素
+                const galleryItems = document.querySelectorAll('.gallery-item');
+                const lightbox = document.getElementById('lightbox'); // 复用页面上已有的灯箱
+                const lightboxImg = document.getElementById('lightbox-img');
+                const downloadContainer = document.getElementById('download-container');
+
+                // 确保灯箱元素存在
+                if (!lightbox || !lightboxImg || galleryItems.length === 0) {
+                    console.warn('Lightbox or gallery items not found. Gallery preview is disabled.');
+                    return;
+                }
+                
+                // 为每个画廊项目添加点击事件
+                galleryItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        const imgElement = item.querySelector('img');
+                        if (!imgElement) return;
+
+                        // 获取高清图的路径，如果data属性不存在，则使用src作为备用
+                        const highResSrc = imgElement.dataset.lightboxSrc || imgElement.src;
+                        
+                        // 更新灯箱图片源并显示灯箱
+                        lightboxImg.src = highResSrc;
+                        lightbox.style.display = 'flex'; // 或者 'block'，取决于你的灯箱样式
+
+                        // (可选) 清空或隐藏主视觉图灯箱里的下载按钮
+                        if (downloadContainer) {
+                            downloadContainer.innerHTML = ''; // 清空下载按钮，因为这些图没有下载链接
+                        }
+                    });
+                });
+
+                // 注意：关闭灯箱的逻辑（点击 '×' 或背景）应该已经存在于你的JS中，
+                // 因为主视觉图轮播也使用同一个灯箱，所以这里无需重复编写关闭逻辑。
+            }
+
+            // 调用函数来初始化画廊的灯箱功能
+            initializeGalleryLightbox();
 
             // --- 音乐播放器逻辑 ---
             const musicPlayer = document.getElementById('music-player');
@@ -752,7 +998,7 @@
             // Try to load messages from data.json
             function loadMessages() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', 'data.json', true);
+                xhr.open('GET', 'assets/data/message_board.json', true);
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4) {
                         if (xhr.status === 200) {
@@ -821,6 +1067,59 @@
 
             // Load messages and initialize message board
             loadMessages();
+
+            // --- Credits List Logic (Refactored) ---
+            function loadCredits() {
+                fetch('assets/data/credits.json')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(creditsData => {
+                        // Helper function to update a list of names
+                        const updateCreditList = (elementId, names) => {
+                            const element = document.getElementById(elementId);
+                            if (element && Array.isArray(names)) {
+                                // Join the names with a comma and a space
+                                element.textContent = names.join(', ');
+                            } else if (element) {
+                                element.textContent = "Data error";
+                                console.warn(`Data for ${elementId} is not an array.`);
+                            }
+                        };
+
+                        // Populate each list based on the new JSON structure
+                        // Web
+                        updateCreditList('credits-web-writing', creditsData.web.writing);
+                        updateCreditList('credits-web-testing', creditsData.web.testing);
+
+                        // Artist
+                        updateCreditList('credits-artist', creditsData.artist);
+
+                        // Flower Basket
+                        updateCreditList('credits-flower-basket-organizer', creditsData.flower_basket.organizer);
+                        updateCreditList('credits-flower-basket-participants', creditsData.flower_basket.participants);
+
+                        // Free Gift
+                        updateCreditList('credits-free-gift-cards', creditsData.free_gift.cards);
+                        updateCreditList('credits-free-gift-badges', creditsData.free_gift.badges);
+
+                    })
+                    .catch(error => {
+                        console.error('无法加载致谢名单 (credits.json):', error);
+                        // On error, update all target elements to show an error message
+                        const allCreditElements = document.querySelectorAll('[id^="credits-"]');
+                        allCreditElements.forEach(el => {
+                            el.textContent = '加载失败';
+                        });
+                    });
+            }
+
+            // 调用函数来加载名单 (这行代码应该已经在你的脚本里了)
+            loadCredits();
+
         });
     </script>
 </body>
