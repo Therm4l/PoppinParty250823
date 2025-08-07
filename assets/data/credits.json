@@ -1,9 +1,9 @@
 {
   "web": {
     "writing": [
-      { "name": "三墨📧", "email": "tang18048@outlook.com"},
-      { "name": "HUYA📧", "email": "1261098896@qq.com"},
-      { "name": "愿篠📧", "email": "1356808843@qq.com"}
+      { "name": "三墨 📧", "email": "tang18048@outlook.com"},
+      { "name": "HUYA 📧", "email": "1261098896@qq.com"},
+      { "name": "愿篠 📧", "email": "1356808843@qq.com"}
     ],
     "testing": [
       { "name": "Denebora" },
@@ -12,11 +12,11 @@
     ]
   },
   "artist": [
-    { "name": "黑桃酱"}
+    { "name": "黑桃酱 📧", "email": "1437636938@qq.com" }
   ],
   "flower_basket": {
     "organizer": [
-      { "name": "猫阿姨📧", "email": "bobby_the_drifter@outlook.com" }
+      { "name": "猫阿姨 📧", "email": "bobby_the_drifter@outlook.com" }
     ],
     "participants": [
       { "name": "UI" },
