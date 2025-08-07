@@ -474,7 +474,7 @@
                 <div class="absolute inset-2 border-2 border-dotted border-purple-300/50 rounded-2xl pointer-events-none"></div>
                 
                 <!-- Message display area -->
-                <div id="message-content" class="text-center py-4 mb-6 min-h-[200px] max-h-[200px] overflow-y-auto flex items-center justify-center relative z-10 backdrop-blur-[2px] bg-white/30 rounded-xl shadow-inner animate-heartbeat">
+                <div id="message-content" class="text-center py-4 mb-6 min-h-[200px] max-h-[200px] overflow-y-auto flex items-start justify-center relative z-10 backdrop-blur-[2px] bg-white/30 rounded-xl shadow-inner animate-heartbeat">
                     <div class="w-full flex items-center justify-center">
                         <p class="text-gray-700 text-lg">Loading messages...</p>
                     </div>
@@ -1075,7 +1075,7 @@
             function displayMessage(index) {
                 const message = filteredMessages[index];
                 messageContent.innerHTML = `
-                    <div class="w-full flex items-center justify-center">
+                    <div class="w-full flex items-start justify-center pt-9">
                         <div class="text-center px-4">
                             <p class="text-gray-700 text-lg mb-2 italic">"${message.words}"</p>
                             <p class="text-gray-500 text-sm">- ${message.author}</p>
