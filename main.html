@@ -450,7 +450,7 @@
                 <!-- Search Module -->
                 <div class="mb-6 relative z-10 backdrop-blur-[2px] bg-white/30 rounded-xl shadow-inner p-4">
                     <div class="flex flex-col sm:flex-row">
-                        <input type="text" id="search-input" placeholder="搜索留言者..." 
+                        <input type="text" id="search-input" placeholder="搜索留言者..." data-en-placeholder="Search by author..."
                                class="flex-grow px-4 py-2 rounded-lg sm:rounded-r-none border-0 focus:ring-2 focus:ring-pink-500 focus:outline-none mb-2 sm:mb-0">
                         <div class="flex">
                             <button id="search-btn" class="flex-grow sm:flex-grow-0 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-lg sm:rounded-r-lg hover:from-pink-600 hover:to-purple-600 transition-all">
@@ -713,10 +713,21 @@
             let currentLang = 'zh';
             const zhElements = document.querySelectorAll('.lang-zh');
             const enElements = document.querySelectorAll('.lang-en');
+            const searchInput = document.getElementById('search-input');
             function setLanguage(lang) {
                 htmlEl.lang = lang === 'zh' ? 'zh-CN' : 'en';
                 zhElements.forEach(el => el.style.display = lang === 'zh' ? 'inline' : 'none');
                 enElements.forEach(el => el.style.display = lang === 'en' ? 'inline' : 'none');
+                
+                // Update search input placeholder based on language
+                if (searchInput) {
+                    if (lang === 'en' && searchInput.dataset.enPlaceholder) {
+                        searchInput.placeholder = searchInput.dataset.enPlaceholder;
+                    } else {
+                        searchInput.placeholder = '搜索留言者...';
+                    }
+                }
+                
                 currentLang = lang;
             }
             langSwitchBtn.addEventListener('click', () => setLanguage(currentLang === 'zh' ? 'en' : 'zh'));
