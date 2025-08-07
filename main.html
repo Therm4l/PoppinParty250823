@@ -441,17 +441,19 @@
                 
                 <!-- Search Module -->
                 <div class="mb-6 relative z-10 backdrop-blur-[2px] bg-white/30 rounded-xl shadow-inner p-4">
-                    <div class="flex">
+                    <div class="flex flex-col sm:flex-row">
                         <input type="text" id="search-input" placeholder="搜索留言者..." 
-                               class="flex-grow px-4 py-2 rounded-l-lg border-0 focus:ring-2 focus:ring-pink-500 focus:outline-none">
-                        <button id="search-btn" class="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-r-lg hover:from-pink-600 hover:to-purple-600 transition-all">
-                            <span class="lang-zh">搜索</span>
-                            <span class="lang-en">Search</span>
-                        </button>
-                        <button id="reset-btn" class="ml-2 bg-gradient-to-r from-gray-500 to-gray-600 text-white px-4 py-2 rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all">
-                            <span class="lang-zh">重置</span>
-                            <span class="lang-en">Reset</span>
-                        </button>
+                               class="flex-grow px-4 py-2 rounded-lg sm:rounded-r-none border-0 focus:ring-2 focus:ring-pink-500 focus:outline-none mb-2 sm:mb-0">
+                        <div class="flex">
+                            <button id="search-btn" class="flex-grow sm:flex-grow-0 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-lg sm:rounded-r-lg hover:from-pink-600 hover:to-purple-600 transition-all">
+                                <span class="lang-zh">搜索</span>
+                                <span class="lang-en">Search</span>
+                            </button>
+                            <button id="reset-btn" class="ml-2 flex-grow sm:flex-grow-0 bg-gradient-to-r from-gray-500 to-gray-600 text-white px-4 py-2 rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all">
+                                <span class="lang-zh">重置</span>
+                                <span class="lang-en">Reset</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
@@ -464,7 +466,7 @@
                 <div class="absolute inset-2 border-2 border-dotted border-purple-300/50 rounded-2xl pointer-events-none"></div>
                 
                 <!-- Message display area -->
-                <div id="message-content" class="text-center py-6 mb-6 min-h-[200px] max-h-[200px] overflow-y-auto flex items-center justify-center relative z-10 backdrop-blur-[2px] bg-white/30 rounded-xl shadow-inner animate-heartbeat">
+                <div id="message-content" class="text-center py-6 mb-6 min-h-[200px] max-h-[200px] overflow-y-auto flex items-center justify-start relative z-10 backdrop-blur-[2px] bg-white/30 rounded-xl shadow-inner animate-heartbeat">
                     <p class="text-gray-700 text-lg">Loading messages...</p>
                 </div>
                 
@@ -1052,7 +1054,7 @@
             function displayMessage(index) {
                 const message = filteredMessages[index];
                 messageContent.innerHTML = `
-                    <div class="text-center">
+                    <div class="text-center px-4">
                         <p class="text-gray-700 text-lg mb-2 italic">"${message.words}"</p>
                         <p class="text-gray-500 text-sm">- ${message.author}</p>
                     </div>
