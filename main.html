@@ -237,10 +237,6 @@
                         <span class="lang-zh">活动图集</span>
                         <span class="lang-en">Gallery</span>
                     </a>
-                    <a href="#links" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                        <span class="lang-zh">相关链接</span>
-                        <span class="lang-en">Links</span>
-                    </a>
                     <a href="#message-board" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
                         <span class="lang-zh">留言板</span>
                         <span class="lang-en">Message Board</span>
@@ -248,6 +244,10 @@
                     <a href="#credits" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
                         <span class="lang-zh">致谢</span>
                         <span class="lang-en">Acknowledgements</span>
+                    </a>
+                    <a href="#links" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                        <span class="lang-zh">相关链接</span>
+                        <span class="lang-en">Links</span>
                     </a>
                     <button id="lang-switch-btn" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-3 py-1 rounded-full text-xs transition-colors">
                         <span class="lang-zh">EN</span>
@@ -450,14 +450,14 @@
                 <!-- Search Module -->
                 <div class="mb-6 relative z-10 backdrop-blur-[2px] bg-white/30 rounded-xl shadow-inner p-4">
                     <div class="flex flex-col sm:flex-row">
-                        <input type="text" id="search-input" placeholder="搜索留言者..." 
-                               class="flex-grow px-4 py-2 rounded-lg sm:rounded-r-none border-0 focus:ring-2 focus:ring-pink-500 focus:outline-none mb-2 sm:mb-0">
+                        <input type="text" id="search-input" placeholder="搜索留言者..." data-en-placeholder="Search by author..."
+                               class="flex-grow px-4 py-2 rounded-lg border-0 focus:ring-2 focus:ring-pink-500 focus:outline-none mb-2 sm:mb-0 min-w-0 sm:mr-2">
                         <div class="flex">
-                            <button id="search-btn" class="flex-grow sm:flex-grow-0 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-lg sm:rounded-r-lg hover:from-pink-600 hover:to-purple-600 transition-all">
+                            <button id="search-btn" class="flex-grow sm:flex-grow-0 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-lg sm:rounded-r-lg hover:from-pink-600 hover:to-purple-600 transition-all whitespace-nowrap">
                                 <span class="lang-zh">搜索</span>
                                 <span class="lang-en">Search</span>
                             </button>
-                            <button id="reset-btn" class="ml-2 flex-grow sm:flex-grow-0 bg-gradient-to-r from-gray-500 to-gray-600 text-white px-4 py-2 rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all">
+                            <button id="reset-btn" class="ml-2 flex-grow sm:flex-grow-0 bg-gradient-to-r from-gray-500 to-gray-600 text-white px-4 py-2 rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all whitespace-nowrap">
                                 <span class="lang-zh">重置</span>
                                 <span class="lang-en">Reset</span>
                             </button>
@@ -474,8 +474,10 @@
                 <div class="absolute inset-2 border-2 border-dotted border-purple-300/50 rounded-2xl pointer-events-none"></div>
                 
                 <!-- Message display area -->
-                <div id="message-content" class="text-center py-4 mb-6 min-h-[200px] max-h-[200px] overflow-y-auto flex items-start justify-start relative z-10 backdrop-blur-[2px] bg-white/30 rounded-xl shadow-inner animate-heartbeat">
-                    <p class="text-gray-700 text-lg">Loading messages...</p>
+                <div id="message-content" class="text-center py-4 mb-6 min-h-[200px] max-h-[200px] overflow-y-auto flex items-start justify-center relative z-10 backdrop-blur-[2px] bg-white/30 rounded-xl shadow-inner animate-heartbeat">
+                    <div class="w-full flex items-center justify-center">
+                        <p class="text-gray-700 text-lg">Loading messages...</p>
+                    </div>
                 </div>
                 
                 <!-- Navigation buttons -->
@@ -713,10 +715,21 @@
             let currentLang = 'zh';
             const zhElements = document.querySelectorAll('.lang-zh');
             const enElements = document.querySelectorAll('.lang-en');
+            const searchInput = document.getElementById('search-input');
             function setLanguage(lang) {
                 htmlEl.lang = lang === 'zh' ? 'zh-CN' : 'en';
                 zhElements.forEach(el => el.style.display = lang === 'zh' ? 'inline' : 'none');
                 enElements.forEach(el => el.style.display = lang === 'en' ? 'inline' : 'none');
+                
+                // Update search input placeholder based on language
+                if (searchInput) {
+                    if (lang === 'en' && searchInput.dataset.enPlaceholder) {
+                        searchInput.placeholder = searchInput.dataset.enPlaceholder;
+                    } else {
+                        searchInput.placeholder = '搜索留言者...';
+                    }
+                }
+                
                 currentLang = lang;
             }
             langSwitchBtn.addEventListener('click', () => setLanguage(currentLang === 'zh' ? 'en' : 'zh'));
@@ -1000,7 +1013,7 @@
             const messageContent = document.getElementById('message-content');
             const prevMessageBtn = document.getElementById('prev-message');
             const nextMessageBtn = document.getElementById('next-message');
-            const searchInput = document.getElementById('search-input');
+            // const searchInput = document.getElementById('search-input');
             const searchBtn = document.getElementById('search-btn');
             const resetBtn = document.getElementById('reset-btn');
 
@@ -1062,9 +1075,11 @@
             function displayMessage(index) {
                 const message = filteredMessages[index];
                 messageContent.innerHTML = `
-                    <div class="text-center px-4 pt-2">
-                        <p class="text-gray-700 text-lg mb-2 italic">"${message.words}"</p>
-                        <p class="text-gray-500 text-sm">- ${message.author}</p>
+                    <div class="w-full flex items-start justify-center pt-9">
+                        <div class="text-center px-4">
+                            <p class="text-gray-700 text-lg mb-2 italic">"${message.words}"</p>
+                            <p class="text-gray-500 text-sm">- ${message.author}</p>
+                        </div>
                     </div>
                 `;
             }
