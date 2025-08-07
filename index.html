@@ -84,8 +84,6 @@
             left: 0;
             width: 4rem; /* 64px */
             height: 100%;
-            background-color: #fff;
-            color: #3b82f6;
             cursor: grab;
             transition: left 0.2s ease;
         }
@@ -106,6 +104,20 @@
         }
         .page-fade-out {
             animation: fade-out 0.5s ease-out forwards;
+        }
+
+        @keyframes text-glow {
+            0%, 100% { color: #d1d5db; text-shadow: none; } /* Tailwind gray-300 */
+            50% { color: #fff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); }
+        }
+
+        @keyframes text-fade-in-out {
+            0%, 100% { opacity: 1; transform: translateY(0); }
+            50% { opacity: 0; transform: translateY(-5px); }
+        }
+
+        #slider-text {
+            animation: text-glow 3s ease-in-out infinite, text-fade-in-out 3s ease-in-out infinite;
         }
     </style>
 </head>
@@ -139,10 +151,12 @@
                     <!-- 2. 滑动轨道 (默认隐藏) -->
                     <div id="slider-track" class="rounded-full flex items-center justify-center text-gray-300 opacity-0 hidden">
                         <!-- MODIFIED: Text hint -->
-                        <p>Slide to enter</p>
+                        <span id="slider-text" class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            滑动进入
+                        </span>
                         <!-- MODIFIED: Handle starts from left -->
                         <div id="slider-handle" class="rounded-full flex items-center justify-center">
-                            <i class="fa-solid fa-angles-right text-2xl"></i>
+                            <img src="assets/images/logo.png" alt="slider handle" class="h-full w-full object-cover rounded-full">
                         </div>
                     </div>
                 </div>
@@ -171,6 +185,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const sliderTrack = document.getElementById('slider-track');
     const sliderHandle = document.getElementById('slider-handle');
     const mainContent = document.querySelector('main');
+    const sliderText = document.getElementById('slider-text');
+    const texts = ["滑动进入", "Slide to enter"];
+    let textIndex = 0;
+    const intervalDuration = 4000;
 
     let isDragging = false;
     let startX = 0;
@@ -185,6 +203,12 @@ document.addEventListener('DOMContentLoaded', function() {
             startBtn.style.display = 'none';
             sliderTrack.style.opacity = '1';
         }, 300);
+
+        setInterval(() => {
+            textIndex = (textIndex + 1) % texts.length;
+            sliderText.textContent = texts[textIndex];
+        }, intervalDuration);
+
     });
 
     // 步骤2：开始拖动
@@ -229,8 +253,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // 滑动成功
             console.log('Unlocked!');
             sliderHandle.style.left = `${maxDrag}px`; // 吸附到最右边
-            sliderHandle.style.backgroundColor = '#22c55e'; // 变绿
-            sliderHandle.querySelector('i').className = 'fa-solid fa-check text-white';
+            // sliderHandle.style.backgroundColor = '#22c55e'; // 变绿
+            // sliderHandle.querySelector('i').className = 'fa-solid fa-check text-white';
             
             mainContent.classList.add('page-fade-out');
             setTimeout(() => {
