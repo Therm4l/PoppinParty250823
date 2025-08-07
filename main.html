@@ -43,6 +43,14 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
+        /* 为致谢名单中的可点击链接添加样式 */
+        .credit-link {
+            @apply text-purple-300 underline decoration-dotted underline-offset-4 transition-colors duration-300;
+        }
+
+        .credit-link:hover {
+            @apply text-pink-300 decoration-solid;
+        }
         /* Hide elements by default for language switching */
         .lang-en {
             display: none;
@@ -1137,7 +1145,7 @@
             // Load messages and initialize message board
             loadMessages();
 
-            // --- Credits List Logic (Refactored) ---
+            // --- Credits List Logic (支持邮件链接) ---
             function loadCredits() {
                 fetch('assets/data/credits.json')
                     .then(response => {
@@ -1147,38 +1155,52 @@
                         return response.json();
                     })
                     .then(creditsData => {
-                        // Helper function to update a list of names
-                        const updateCreditList = (elementId, names) => {
-                            const element = document.getElementById(elementId);
-                            if (element && Array.isArray(names)) {
-                                // Join the names with a comma and a space
-                                element.textContent = names.join(', ');
-                            } else if (element) {
-                                element.textContent = "Data error";
-                                console.warn(`Data for ${elementId} is not an array.`);
+                        // Helper function to render a list of names, some with links
+                        const renderCreditList = (elementId, peopleArray) => {
+                            const container = document.getElementById(elementId);
+                            if (!container || !Array.isArray(peopleArray)) {
+                                if(container) container.textContent = "Data Error";
+                                return;
                             }
+
+                            // Clear "Loading..." text
+                            container.innerHTML = '';
+
+                            // Build the list with links and text
+                            peopleArray.forEach((person, index) => {
+                                // 1. Create the element for the person
+                                let personElement;
+                                if (person.email) {
+                                    // If email exists, create an anchor tag
+                                    personElement = document.createElement('a');
+                                    personElement.href = `mailto:${person.email}`;
+                                    personElement.className = 'credit-link';
+                                    personElement.textContent = person.name;
+                                } else {
+                                    // Otherwise, create a simple text node
+                                    personElement = document.createTextNode(person.name);
+                                }
+                                container.appendChild(personElement);
+
+                                // 2. Add a separator, but not for the last person
+                                if (index < peopleArray.length - 1) {
+                                    const separator = document.createTextNode(', ');
+                                    container.appendChild(separator);
+                                }
+                            });
                         };
 
-                        // Populate each list based on the new JSON structure
-                        // Web
-                        updateCreditList('credits-web-writing', creditsData.web.writing);
-                        updateCreditList('credits-web-testing', creditsData.web.testing);
-
-                        // Artist
-                        updateCreditList('credits-artist', creditsData.artist);
-
-                        // Flower Basket
-                        updateCreditList('credits-flower-basket-organizer', creditsData.flower_basket.organizer);
-                        updateCreditList('credits-flower-basket-participants', creditsData.flower_basket.participants);
-
-                        // Free Gift
-                        updateCreditList('credits-free-gift-cards', creditsData.free_gift.cards);
-                        updateCreditList('credits-free-gift-badges', creditsData.free_gift.badges);
-
+                        // Populate each list using the new render function
+                        renderCreditList('credits-web-writing', creditsData.web.writing);
+                        renderCreditList('credits-web-testing', creditsData.web.testing);
+                        renderCreditList('credits-artist', creditsData.artist);
+                        renderCreditList('credits-flower-basket-organizer', creditsData.flower_basket.organizer);
+                        renderCreditList('credits-flower-basket-participants', creditsData.flower_basket.participants);
+                        renderCreditList('credits-free-gift-cards', creditsData.free_gift.cards);
+                        renderCreditList('credits-free-gift-badges', creditsData.free_gift.badges);
                     })
                     .catch(error => {
                         console.error('无法加载致谢名单 (credits.json):', error);
-                        // On error, update all target elements to show an error message
                         const allCreditElements = document.querySelectorAll('[id^="credits-"]');
                         allCreditElements.forEach(el => {
                             el.textContent = '加载失败';
@@ -1186,7 +1208,7 @@
                     });
             }
 
-            // 调用函数来加载名单 (这行代码应该已经在你的脚本里了)
+            // 调用函数 (这行代码应该已经在你的脚本里了)
             loadCredits();
 
         });

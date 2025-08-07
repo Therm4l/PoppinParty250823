@@ -1,15 +1,57 @@
 {
   "web": {
-    "writing": ["爱美", "大桥彩香", "伊藤彩沙"],
-    "testing": ["爱美", "大桥彩香", "伊藤彩沙"]
+    "writing": [
+      { "name": "三墨", "email": "tang18048@outlook.com"},
+      { "name": "HUYA", "email": "1261098896@qq.com"},
+      { "name": "愿篠", "email": "1356808843@qq.com"}
+    ],
+    "testing": [
+      { "name": "Denebora" },
+      { "name": "一画Yui"},
+      { "name": "猫阿姨" }
+    ]
   },
-  "artist": ["爱美"],
+  "artist": [
+    { "name": "黑桃酱"}
+  ],
   "flower_basket": {
-    "organizer": ["爱美"],
-    "participants": ["爱美", "大桥彩香", "伊藤彩沙"]
+    "organizer": [
+      { "name": "猫阿姨", "email": "bobby_the_drifter@outlook.com" }
+    ],
+    "participants": [
+      { "name": "UI" },
+      { "name": "zyc" },
+      { "name": "Easy" },
+      { "name": "HUYA" },
+      { "name": "yayooo" },
+      { "name": "Cos1ne" },
+      { "name": "leaobim" },
+      { "name": "westcast" },
+      { "name": "Denebora" },
+      { "name": "Mayonaka" },
+      { "name": "朔晴" },
+      { "name": "鱼尾" },
+      { "name": "三墨" },
+      { "name": "牛牛" },
+      { "name": "祭梦" },
+      { "name": "亚纳奇" },
+      { "name": "格式塔" },
+      { "name": "高級植物" },
+      { "name": "色色学博士" },
+      { "name": "傲娇小有咲" },
+      { "name": "魂穿女王座" },
+      { "name": "ksm是小猫" },
+      { "name": "哈普SAMA" },
+      { "name": "耀空Luminy" }
+    ]
   },
   "free_gift": {
-    "cards": ["爱美", "大桥彩香"],
-    "badges": ["伊藤彩沙"]
+    "cards": [
+      { "name": "三墨" },
+      { "name": "猫阿姨" }
+    ],
+    "badges": [
+      { "name": "Denebora"}
+    ]
   }
 }
