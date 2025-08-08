@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>欢迎 - SEU Bang Dream Club</title>
+    <title>欢迎 - SEU BanG Dream Club</title>
 
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -142,10 +142,10 @@
         <div class="overlay h-full w-full flex flex-col items-center justify-center p-4 relative z-10">
             <div class="text-center text-white">
                 <h1 class="text-4xl md:text-6xl font-bold text-shadow mb-3">
-                    Memory of Poppin' Party Global LIVE 2025 in Shanghai
+                    Poppin' Party <br class="hidden md:block"> Global LIVE 2025 <br> in Shanghai
                 </h1>
                 <p class="text-lg md:text-2xl text-shadow">
-                    Presented by SEU Bang Dream Club
+                    A Fan Site by SEU BanG Dream Club
                 </p>
 
                 <!-- MODIFIED: 滑动解锁模块 -->
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
         starsContainer.appendChild(star);
     }
 
-    // --- MODIFIED: 滑动解锁逻辑 (从左到右版本) ---
+    // --- MODIFIED: 滑动解锁逻辑 ---
     const startBtn = document.getElementById('start-slider-btn');
     const sliderTrack = document.getElementById('slider-track');
     const sliderHandle = document.getElementById('slider-handle');
@@ -220,6 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     });
 
+    // --- 剩余的拖动逻辑 (startDrag, onDrag, endDrag) 保持完全不变 ---
     // 步骤2：开始拖动
     const startDrag = (e) => {
         e.preventDefault();
@@ -258,13 +259,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const maxDrag = trackRect.width + initialOffset - handleWidth;
         const currentLeft = sliderHandle.offsetLeft;
 
-        // 检查是否滑动到最右侧
         if (currentLeft >= maxDrag - 5) {
             // 滑动成功
             console.log('Unlocked!');
-            sliderHandle.style.left = `${maxDrag}px`; // 吸附到最右边
-            // sliderHandle.style.backgroundColor = '#22c55e'; // 变绿
-            // sliderHandle.querySelector('i').className = 'fa-solid fa-check text-white';
+            sliderHandle.style.left = `${maxDrag}px`; 
             
             mainContent.classList.add('page-fade-out');
             setTimeout(() => {
@@ -272,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 500);
             
         } else {
-            // 滑动未完成，弹回左侧原位
+            // 滑动未完成，弹回
             sliderHandle.style.left = `-${initialOffset}px`;
         }
     };

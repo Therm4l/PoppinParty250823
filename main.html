@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEU Bang Dream Club for PPP Live in Shanghai, 2025</title>
+    <title>SEU BanG Dream Club for PPP Live in Shanghai, 2025</title>
     
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -224,13 +224,13 @@
                 <div class="flex-shrink-0">
                     <h1 class="text-xl font-bold text-gray-900">
                         <span class="lang-zh">东南大学邦邦同好会</span>
-                        <span class="lang-en">SEU Bang Dream Club</span>
+                        <span class="lang-en">SEU BanG Dream Club</span>
                     </h1>
                 </div>
                 <!-- MODIFIED: Nav links container for mobile scroll -->
                 <div class="flex items-center space-x-4 overflow-x-auto whitespace-nowrap mobile-nav-scrollbar-hide ml-4 flex-shrink">
                     <a href="#info" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                        <span class="lang-zh">活动介绍</span>
+                        <span class="lang-zh">活动简介</span>
                         <span class="lang-en">Info</span>
                     </a>
                     <a href="#gallery" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
@@ -246,8 +246,8 @@
                         <span class="lang-en">Acknowledgements</span>
                     </a>
                     <a href="#links" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                        <span class="lang-zh">相关链接</span>
-                        <span class="lang-en">Links</span>
+                        <span class="lang-zh">社交媒体</span>
+                        <span class="lang-en">Social</span>
                     </a>
                     <button id="lang-switch-btn" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-3 py-1 rounded-full text-xs transition-colors">
                         <span class="lang-zh">EN</span>
@@ -315,117 +315,127 @@
         </section>
 
 
-        <!-- 3. 实物模块 (现场图集) - 重构版 -->
-        <section id="gallery" class="section-container bg-white">
-            <!-- 主标题 -->
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
+        <!-- 3. 实物模块 (现场图集) - 优化版 -->
+        <section id="gallery" class="section-container py-16">
+
+            <!-- 主标题 (应用了渐变和脉冲效果) -->
+            <h2 class="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 mb-8 relative z-10 animate-pulse">
                 <span class="lang-zh">花篮与无料</span>
                 <span class="lang-en">Flower Basket & Free Gifts</span>
             </h2>
 
-            <!-- === 分组 1: 花篮 (2张图) === -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-semibold text-center text-gray-800 mb-8 border-b-2 pb-2">
-                    <span class="lang-zh">💐 花篮</span>
-                    <span class="lang-en">💐 Flower Basket</span>
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- 图 1.1 -->
-                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
-                        <img src="assets/images/flower_basket_visual.jpg" 
-                            data-lightbox-src="assets/images/flower_basket_visual_large.jpg"
-                            alt="花篮主视觉图" 
-                            class="w-full rounded-md mb-4"
-                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=花篮主视觉图';">
-                        <p class="text-gray-700 text-center">
-                            <span class="lang-zh">主视觉图</span>
-                            <span class="lang-en">Main Visual</span>
-                        </p>
-                    </div>
-                    <!-- 图 1.2 -->
-                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
-                        <img src="assets/images/flower_basket_design.jpg" 
-                            data-lightbox-src="assets/images/flower_basket_design_large.jpg"
-                            alt="花篮设计图" 
-                            class="w-full rounded-md mb-4"
-                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=花篮设计图';">
-                        <p class="text-gray-700 text-center">
-                            <span class="lang-zh">设计图</span>
-                            <span class="lang-en">Design</span>
-                        </p>
+            <!-- 主要容器 (添加了边框和 relative 定位) -->
+            <div class="max-w-5xl mx-auto rounded-2xl p-6 md:p-10 relative">
+
+                <!-- 装饰性边框 -->
+                <div class="absolute inset-0 border-4 border-dashed border-pink-300/50 rounded-2xl pointer-events-none"></div>
+                <div class="absolute inset-2 border-2 border-dotted border-purple-300/50 rounded-2xl pointer-events-none"></div>
+                
+                <!-- === 分组 1: 花篮 === -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold text-center text-gray-800 mb-8 border-b-2 border-pink-400/50 pb-2">
+                        <span class="lang-zh">花篮</span>
+                        <span class="lang-en">Flower Basket</span>
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- 图 1.1 -->
+                        <div class="gallery-item card-hover bg-white p-4 rounded-lg shadow-lg cursor-pointer transition-transform duration-300">
+                            <img src="assets/images/flower_basket_visual.jpg" 
+                                data-lightbox-src="assets/images/flower_basket_visual_large.jpg"
+                                alt="花篮主视觉图" 
+                                class="w-full rounded-md mb-4 aspect-video object-cover"
+                                onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=花篮主视觉图';">
+                            <p class="text-gray-700 text-center font-medium">
+                                <span class="lang-zh">主视觉图</span>
+                                <span class="lang-en">Main Visual</span>
+                            </p>
+                        </div>
+                        <!-- 图 1.2 -->
+                        <div class="gallery-item card-hover bg-white p-4 rounded-lg shadow-lg cursor-pointer transition-transform duration-300">
+                            <img src="assets/images/flower_basket_design.jpg" 
+                                data-lightbox-src="assets/images/flower_basket_design_large.jpg"
+                                alt="花篮设计图" 
+                                class="w-full rounded-md mb-4 aspect-video object-cover"
+                                onerror="this.onerror=null;this.src='https://placehold.co/600x400/dbeafe/3b82f6?text=花篮设计图';">
+                            <p class="text-gray-700 text-center font-medium">
+                                <span class="lang-zh">设计图</span>
+                                <span class="lang-en">Design</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- === 分组 2: 无料A (2张图) === -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-semibold text-center text-gray-800 mb-8 border-b-2 pb-2">
-                    <span class="lang-zh">✉️ 无料 A (卡片)</span>
-                    <span class="lang-en">✉️ Free Gift A (Cards)</span>
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- 图 2.1 -->
-                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
-                        <img src="assets/images/card_front.jpg" 
-                            data-lightbox-src="assets/images/card_front_large.jpg"
-                            alt="卡片正面" 
-                            class="w-full rounded-md mb-4"
-                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/fecaca/991b1b?text=卡片正面';">
-                        <p class="text-gray-700 text-center">
-                            <span class="lang-zh">卡片正面</span>
-                            <span class="lang-en">Card Front</span>
-                        </p>
-                    </div>
-                    <!-- 图 2.2 -->
-                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
-                        <img src="assets/images/card_back.jpg" 
-                            data-lightbox-src="assets/images/card_back_large.jpg"
-                            alt="卡片背面" 
-                            class="w-full rounded-md mb-4"
-                            onerror="this.onerror=null;this.src='https://placehold.co/600x400/fecaca/991b1b?text=卡片背面';">
-                        <p class="text-gray-700 text-center">
-                            <span class="lang-zh">卡片背面</span>
-                            <span class="lang-en">Card Back</span>
-                        </p>
+                <!-- === 分组 2: 无料A (卡片) === -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold text-center text-gray-800 mb-8 border-b-2 border-pink-400/50 pb-2">
+                        <span class="lang-zh">无料 A (卡片)</span>
+                        <span class="lang-en">Free Gift A (Cards)</span>
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- 图 2.1 -->
+                        <div class="gallery-item card-hover bg-white p-4 rounded-lg shadow-lg cursor-pointer transition-transform duration-300">
+                            <img src="assets/images/card_front.jpg" 
+                                data-lightbox-src="assets/images/card_front_large.jpg"
+                                alt="卡片正面" 
+                                class="w-full rounded-md mb-4 aspect-video object-cover"
+                                onerror="this.onerror=null;this.src='https://placehold.co/600x400/fecaca/991b1b?text=卡片正面';">
+                            <p class="text-gray-700 text-center font-medium">
+                                <span class="lang-zh">卡片正面</span>
+                                <span class="lang-en">Card Front</span>
+                            </p>
+                        </div>
+                        <!-- 图 2.2 -->
+                        <div class="gallery-item card-hover bg-white p-4 rounded-lg shadow-lg cursor-pointer transition-transform duration-300">
+                            <img src="assets/images/card_back.jpg" 
+                                data-lightbox-src="assets/images/card_back_large.jpg"
+                                alt="卡片背面" 
+                                class="w-full rounded-md mb-4 aspect-video object-cover"
+                                onerror="this.onerror=null;this.src='https://placehold.co/600x400/fecaca/991b1b?text=卡片背面';">
+                            <p class="text-gray-700 text-center font-medium">
+                                <span class="lang-zh">卡片背面</span>
+                                <span class="lang-en">Card Back</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- === 分组 3: 无料B (6张图) === -->
-            <div>
-                <h3 class="text-2xl font-semibold text-center text-gray-800 mb-8 border-b-2 pb-2">
-                    <span class="lang-zh">🌟 无料 B (徽章)</span>
-                    <span class="lang-en">🌟 Free Gift B (Badges)</span>
-                </h3>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
-                    <!-- 图 3.1 - 3.6 -->
-                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
-                        <img src="assets/images/ksm.jpg" data-lightbox-src="assets/images/ksm.jpg" alt="徽章 1" class="w-full rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+1';">
-                        <p class="text-gray-700 text-center"><span class="lang-zh">徽章 1</span><span class="lang-en">Badge 1</span></p>
-                    </div>
-                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
-                        <img src="assets/images/tae.jpg" data-lightbox-src="assets/images/tae.jpg" alt="徽章 2" class="w-full rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+2';">
-                        <p class="text-gray-700 text-center"><span class="lang-zh">徽章 2</span><span class="lang-en">Badge 2</span></p>
-                    </div>
-                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
-                        <img src="assets/images/rimi.jpg" data-lightbox-src="assets/images/rimi.jpg" alt="徽章 3" class="w-full rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+3';">
-                        <p class="text-gray-700 text-center"><span class="lang-zh">徽章 3</span><span class="lang-en">Badge 3</span></p>
-                    </div>
-                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
-                        <img src="assets/images/saaya.jpg" data-lightbox-src="assets/images/saaya.jpg" alt="徽章 4" class="w-full rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+4';">
-                        <p class="text-gray-700 text-center"><span class="lang-zh">徽章 4</span><span class="lang-en">Badge 4</span></p>
-                    </div>
-                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
-                        <img src="assets/images/ars.jpg" data-lightbox-src="assets/images/ars.jpg" alt="徽章 5" class="w-full rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+5';">
-                        <p class="text-gray-700 text-center"><span class="lang-zh">徽章 5</span><span class="lang-en">Badge 5</span></p>
-                    </div>
-                    <div class="gallery-item card-hover bg-gray-50 p-4 rounded-lg shadow-md cursor-pointer">
-                        <img src="assets/images/POPIPA.jpg" data-lightbox-src="assets/images/POPIPA.jpg" alt="徽章 6" class="w-full rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+6';">
-                        <p class="text-gray-700 text-center"><span class="lang-zh">徽章 6</span><span class="lang-en">Badge 6</span></p>
+                <!-- === 分组 3: 无料B (徽章) === -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-center text-gray-800 mb-8 border-b-2 border-pink-400/50 pb-2">
+                        <span class="lang-zh">无料 B (徽章)</span>
+                        <span class="lang-en">Free Gift B (Badges)</span>
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                        <!-- 图 3.1 - 3.6 -->
+                        <div class="gallery-item card-hover bg-white p-4 rounded-lg shadow-lg cursor-pointer transition-transform duration-300">
+                            <img src="assets/images/ksm.jpg" data-lightbox-src="assets/images/ksm.jpg" alt="徽章 1" class="w-full rounded-md mb-4 aspect-square object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+1';">
+                            <p class="text-gray-700 text-center font-medium"><span class="lang-zh">户山香澄</span><span class="lang-en">Toyama Kasumi</span></p>
+                        </div>
+                        <div class="gallery-item card-hover bg-white p-4 rounded-lg shadow-lg cursor-pointer transition-transform duration-300">
+                            <img src="assets/images/tae.jpg" data-lightbox-src="assets/images/tae.jpg" alt="徽章 2" class="w-full rounded-md mb-4 aspect-square object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+2';">
+                            <p class="text-gray-700 text-center font-medium"><span class="lang-zh">花园多惠</span><span class="lang-en">Hanazono Tae</span></p>
+                        </div>
+                        <div class="gallery-item card-hover bg-white p-4 rounded-lg shadow-lg cursor-pointer transition-transform duration-300">
+                            <img src="assets/images/rimi.jpg" data-lightbox-src="assets/images/rimi.jpg" alt="徽章 3" class="w-full rounded-md mb-4 aspect-square object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+3';">
+                            <p class="text-gray-700 text-center font-medium"><span class="lang-zh">牛込里美</span><span class="lang-en">Ushigome Rimi</span></p>
+                        </div>
+                        <div class="gallery-item card-hover bg-white p-4 rounded-lg shadow-lg cursor-pointer transition-transform duration-300">
+                            <img src="assets/images/saaya.jpg" data-lightbox-src="assets/images/saaya.jpg" alt="徽章 4" class="w-full rounded-md mb-4 aspect-square object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+4';">
+                            <p class="text-gray-700 text-center font-medium"><span class="lang-zh">山吹沙绫</span><span class="lang-en">Yamabuki Sāya</span></p>
+                        </div>
+                        <div class="gallery-item card-hover bg-white p-4 rounded-lg shadow-lg cursor-pointer transition-transform duration-300">
+                            <img src="assets/images/ars.jpg" data-lightbox-src="assets/images/ars.jpg" alt="徽章 5" class="w-full rounded-md mb-4 aspect-square object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+5';">
+                            <p class="text-gray-700 text-center font-medium"><span class="lang-zh">市谷有咲</span><span class="lang-en">Ichigaya Arisa</span></p>
+                        </div>
+                        <div class="gallery-item card-hover bg-white p-4 rounded-lg shadow-lg cursor-pointer transition-transform duration-300">
+                            <img src="assets/images/POPIPA.jpg" data-lightbox-src="assets/images/POPIPA.jpg" alt="徽章 6" class="w-full rounded-md mb-4 aspect-square object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cffafe/155e75?text=徽章+6';">
+                            <p class="text-gray-700 text-center font-medium"><span class="lang-zh">Popipa</span><span class="lang-en">Popipa</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
+
 
 
         <!-- 4. 留言板模块 -->
@@ -607,7 +617,7 @@
                     <!-- 特别感谢 (横跨两栏) -->
                     <div class="md:col-span-2 text-center mt-8 pt-6 border-t-2 border-dashed border-white/30">
                         <h3 class="text-2xl font-bold mb-4">
-                            <span class="lang-zh">特别感谢</span>
+                            <span class="lang-zh">特别鸣谢</span>
                             <span class="lang-en">Special Thanks</span>
                         </h3>
                         <p class="text-lg italic">
@@ -657,7 +667,7 @@
                         </h3>
                         <p class="text-gray-600 mt-1">
                             <span class="lang-zh">欢迎加入<br>东南大学邦邦同好会</span>
-                            <span class="lang-en">Welcome to<br>SEU Bang Dream Club</span>
+                            <span class="lang-en">Welcome to<br>SEU BanG Dream Club</span>
                         </p>
                     </div>
                 </a>
