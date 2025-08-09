@@ -142,7 +142,6 @@
             10% { opacity: 1; }
             100% { transform: translateX(500px) translateY(500px); opacity: 0; }
         }
-        
         /*歌曲列表*/
         .body_left>.body_list{
             width: 100%;
@@ -165,6 +164,7 @@
         .body_list>ul>li>.list_name{
             width: 50%;
             height: 100%;
+            overflow: hidden;
         }
         .body_list>ul>li>.list_time{
             width: 20%;
@@ -196,6 +196,7 @@
         .body_list>ul>li>.list_singer{
             width: 20%;
             height: 100%;
+            overflow: hidden; /* 添加滚动动画 */
         }
         .body_list>ul>li>.list_number{
             width: 50px;
@@ -464,7 +465,7 @@
             </div>
             
             <div class="foot">
-                <div class="foot_in flex items-center justify-between space-x-4">
+                <div class="foot_in flex items-center justify-between space-x-4 flex-wrap">
                     <div class="flex items-center space-x-8">
                         <a  class="music_pre"></a>
                         <a  class="music_play "></a>
@@ -472,7 +473,6 @@
                     </div>
                     <div class="music_progress flex-grow w-1/2">
                         <div class="music_progress_top flex justify-between">
-                            <span class="music_progress_name"></span>
                             <span class="music_progress_time">00:00/00:00</span>
                         </div>
                         <div class="music_progress_bottom">

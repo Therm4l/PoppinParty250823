@@ -14,7 +14,6 @@ $(function (argument) {
 			dateType: "json",
 			success:function (data) {
 				player.musiclist = data;
-				console.log(data);
 				var musiclist = $(".body_list ul");
 				//遍历获取的数据
 				$.each(data,function(index,ele) {
@@ -120,7 +119,6 @@ $(function (argument) {
 			}
 			$(this).addClass("music_mode"+modeIndex);
 		});
-
 		//监听歌曲上的播放按钮点击事件
 		var $mussicplay = $(".music_play");
 		$(".body_list").on("click",".list_menu_play",function() {

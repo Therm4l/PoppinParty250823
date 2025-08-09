@@ -68,22 +68,26 @@
 			})
 		},
 		//根据时间找到歌词索引
-		currentIndex:function(currentTime) {
-			if(currentTime>=this.times[this.index]){
-				this.index++;
-				// this.times.shift();//删除数组最前面的一个元素
-			}
-			return this.index-1;
-		},
+		currentIndex: function(currentTime) {
+			// 如果当前时间在 times 数组范围内，使用二分查找
+			if (this.times.length > 0) {
+				var low = 0;
+				var high = this.times.length - 1;
+				var result = -1;
 
-		//寻找索引czk
-		indexSeekTo:function(value) {
-			for(var i = 0;i<this.times.length-1;i++){
-				if(value<this.times[i]){
-						this.index = i-1;
-						return ;
+				while (low <= high) {
+					var mid = Math.floor((low + high) / 2);
+					if (this.times[mid] <= currentTime) {
+						result = mid;
+						low = mid + 1;
+					} else {
+						high = mid - 1;
+					}
 				}
+				this.index = result; // 更新内部索引
+				return this.index;
 			}
+			return -1;
 		}
 	}
 	Lyric.prototype.init.prototype = Lyric.prototype;
