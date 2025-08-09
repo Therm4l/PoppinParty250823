@@ -1,0 +1,73 @@
+[{
+    "name": "告白气球",
+    "singer": "周杰伦",
+    "album": "周杰伦的床边故事",
+    "time": "03:35",
+    "link_url": "assets/source/告白气球.mp3",
+    "cover": "assets/source/告白气球.jpg",
+    "link_lrc": "assets/source/告白气球.txt"
+  },
+  {
+    "name": "As long AS Love Me",
+    "singer": "Justin Bieber",
+    "album": "NOW That's What I Call Music! 44",
+    "time": "03:49",
+    "link_url": "assets/source/AslongASLoveMe.mp3",
+    "cover": "assets/source/AslongASLoveMe.jpg",
+    "link_lrc": "assets/source/AslongASLoveMe.txt"
+  },
+  {
+    "name": "Something Just Like This",
+    "singer": "Chainsmokers",
+    "album": "Something Just Like This",
+    "time": "04:07",
+    "link_url": "assets/source/SomethingJustLikeThis.mp3",
+    "cover": "assets/source/SomethingJustLikeThis.jpg",
+    "link_lrc": "assets/source/SomethingJustLikeThis.txt"
+  },
+  {
+    "name": "Your Song",
+    "singer": "Lady Gaga",
+    "album": "Your Song",
+    "time": "04:16",
+    "link_url": "assets/source/YourSong.mp3",
+    "cover": "assets/source/YourSong.jpg",
+    "link_lrc": "assets/source/YourSong.txt"
+  },
+  {
+    "name": "凉凉",
+    "singer": "杨宗纬/张碧晨",
+    "album": "凉凉",
+    "time": "05:00",
+    "link_url": "assets/source/凉凉.mp3",
+    "cover": "assets/source/凉凉.jpg",
+    "link_lrc": "assets/source/凉凉.txt"
+  },
+  {
+    "name": "说散就散",
+    "singer": "袁娅维",
+    "album": "说散就散",
+    "time": "04:02",
+    "link_url": "assets/source/说散就散.mp3",
+    "cover": "assets/source/说散就散.jpg",
+    "link_lrc": "assets/source/说散就散.txt"
+  },
+  {
+    "name": "演员",
+    "singer": "薛之谦",
+    "album": "绅士",
+    "time": "04:21",
+    "link_url": "assets/source/演员.mp3",
+    "cover": "assets/source/演员.jpg",
+    "link_lrc": "assets/source/演员.txt"
+  },
+  {
+    "name": "输了你赢了世界又如何",
+    "singer": "林俊杰",
+    "album": "梦想的声音《第二季》",
+    "time": "04:43",
+    "link_url": "assets/source/输了你赢了世界又如何.mp3",
+    "cover": "assets/source/输了你赢了世界又如何.jpg",
+    "link_lrc": "assets/source/输了你赢了世界又如何.txt"
+  }
+]

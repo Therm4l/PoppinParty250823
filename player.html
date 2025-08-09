@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 你可以在这里为新页面设置一个不同的标题 -->
+    <title>新页面 - SEU BanG Dream Club</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script type="text/javascript"  src = "assets/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript"  src = "assets/js/player.js"></script>
+	<script type="text/javascript"  src = "assets/js/progress.js"></script>
+	<script type="text/javascript"  src = "assets/js/lyric.js"></script>
+	<script type="text/javascript"  src = "assets/js/index.js"></script>
+    <!-- 复制了所有原有的 <style> 标签内容 -->
+    <style>
+        /* Custom styles */
+        body{
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Light gray background */
+        }
+        h1, h2 {
+            font-weight: 700;
+        }
+        .section-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #3b82f6; /* Blue-500 */
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .lang-en {
+            display: none;
+        }
+        .carousel-slide {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .lightbox-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: #3b82f6;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s;
+        }
+        .lightbox-btn:hover {
+            background-color: #2563eb;
+        }
+        .mobile-nav-scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .mobile-nav-scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        #prev-btn, #next-btn {
+            z-index: 30;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes sparkle {
+            0% { transform: scale(1) rotate(0deg); opacity: 0.7; }
+            50% { transform: scale(1.5) rotate(180deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 0.7; }
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .animate-heartbeat {
+            animation: heartbeat 2s infinite ease-in-out;
+        }
+        .animate-bounce-subtle {
+            animation: bounce-subtle 2s infinite ease-in-out;
+        }
+        .shooting-stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 20;
+        }
+        .shooting-star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+            animation: shooting 3s linear infinite;
+            opacity: 0;
+        }
+        .shooting-star-1 { top: 10%; left: -10px; animation-delay: 0s; }
+        .shooting-star-2 { top: 25%; left: -10px; animation-delay: 0.5s; }
+        .shooting-star-3 { top: 40%; left: -10px; animation-delay: 1s; }
+        .shooting-star-4 { top: 55%; left: -10px; animation-delay: 1.5s; }
+        .shooting-star-5 { top: 70%; left: -10px; animation-delay: 2s; }
+        .shooting-star-6 { top: 85%; left: -10px; animation-delay: 2.5s; }
+        @keyframes shooting {
+            0% { transform: translateX(0) translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateX(500px) translateY(500px); opacity: 0; }
+        }
+        
+        /*歌曲列表*/
+        .body_left>.body_list{
+            width: 100%;
+            height: 100%;
+        }
+        .body_list>ul>li{
+            list-style: none;
+            width: 100%;
+            height: 50px;
+            border-bottom: 1px solid black;
+            box-sizing: border-box;
+            user-select:none;
+        }
+        .body_list>ul>li>div{
+            float: left;
+            line-height: 50px;
+            color: black;
+            /*opacity: 0.5;*/
+        }
+        .body_list>ul>li>.list_name{
+            width: 50%;
+            height: 100%;
+        }
+        .body_list>ul>li>.list_time{
+            width: 20%;
+            height: 100%;
+        }
+        .list_time>.list_menu{
+            margin-top: 7px;
+            float: right;
+            margin-right: 5px;
+            display: none;
+        }
+        .list_time>.list_menu>a{
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background: url("assets/images/player/icon_list_menu.png") no-repeat 0 0;
+            margin-right: 5px;
+            opacity: 0.5;
+        }
+        .list_time>.list_menu>a:hover{
+            opacity: 1;
+        }
+        .list_menu>a:nth-child(1){
+            background-position: 0px 0px;
+        }
+        .list_time>.list_menu>.list_menu_play2{
+            background-position: -80px -200px;
+        }
+        .body_list>ul>li>.list_singer{
+            width: 20%;
+            height: 100%;
+        }
+        .body_list>ul>li>.list_number{
+            width: 50px;
+            height: 100%;
+            text-align: center;
+        }
+        .body_list>ul>li>.list_number2{
+            color:transparent !important;
+            background:url("assets/images/player/wave_black.gif") no-repeat 0 center;
+        }
+        .body_right>.song_info{
+            text-align: center;
+            color: black;
+            line-height: 30px;
+        }
+        .body_right>.song_info>.song_info_pic{
+            display: inline-block;
+            background: url("assets/images/player/album_cover_player.png") no-repeat 0 0;
+            width: 201px;
+            height: 180px;
+            text-align: left;
+
+        }
+        .song_info_pic>img{
+            width: 180px;
+            height: 190px;
+        }
+
+        .song_info>div>a{
+            text-decoration: none;
+            color: black;
+            opacity: 0.5;
+        }
+        .song_info>div>a:hover{
+            opacity: 1;
+        }
+
+        /*右边歌词信息*/
+        .body_right .song_lyric_content{
+            height: 300px;
+            overflow: hidden;
+            margin-top: 30px;
+        }
+        .song_lyric_content .song_lyric{
+            list-style: none;
+            line-height: 30px;
+            text-align: center;
+            color: black;
+            
+            font-weight: bold;
+            
+        }
+        .song_lyric_content .song_lyric .cur{
+            color: #FF3377;
+        }
+        .music_pre {
+            width: 19px;
+            height: 20px;
+            background: url("assets/images/player/player.png") no-repeat 0 0;
+            background-position: 0px -30px;
+        }
+        .music_play {
+            width: 21px;
+            height: 29px;
+            background: url("assets/images/player/player.png") no-repeat 0 0;
+            background-position: 0px 0px;
+            vertical-align: -5px;
+        }
+        .music_play2{
+            background: url("assets/images/player/player.png") no-repeat 0 0;
+            background-position: -30px 0;
+        }
+        .music_next {
+            width: 19px;
+            height: 20px;
+            background: url("assets/images/player/player.png") no-repeat 0 0;
+            background-position: 0px -52px;
+        }
+        .music_progress{
+            height: 40px;
+            position: relative;
+        }
+        .music_progress>.music_progress_top{
+            width: 100%;
+            height:30px;
+            color: black
+        }
+        .music_progress_top>.music_progress_name:hover{
+            opacity: 1;
+        }
+
+        /*进度条*/
+        .music_progress_bottom{
+            width: 100%;
+            height: 4px;
+            background: gray;
+            margin-top: 5px;
+            position: relative;
+            /*background: red;*/
+        }
+        .music_progress_bottom>.music_progress_line{
+            width: 0px;
+            height: 100%;
+            background: black;
+        }
+        .music_progress_line>.music_progress_dot{
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: black;
+            position: absolute;
+            top: -5px;
+            left: 0px;
+        }
+
+        /*底部5个按钮*/
+        .music_mode1 {
+            width: 26px;
+            height: 25px;
+            background: url("assets/images/player/player.png") no-repeat 0 0;
+            background-position: 0px -205px;
+        }
+        .music_mode2 {
+            width: 26px;
+            height: 20px;
+            background: url("assets/images/player/player.png") no-repeat 0 0;
+            background-position: 0px -260px;
+            margin-bottom: 5px;
+        }
+        .music_mode3 {
+            width: 26px;
+            height: 20px;
+            background: url("assets/images/player/player.png") no-repeat 0 0;
+            background-position: 0px -74px;
+        }
+        .music_mode4 {
+            width: 26px;
+            height: 25px;
+            background: url("assets/images/player/player.png") no-repeat 0 0;
+            background-position: 0px -232px;
+        }
+        .music_voice {
+            height: 40px;
+            display: flex;
+            align-items: center; /* 垂直居中对齐 */
+            gap: 8px; /* 为图标和音量条添加间隔 */
+        }
+        .music_voice>.music_voice_icon{
+            display: inline-block;
+            width: 26px;
+            height: 21px;
+            text-decoration: none;
+            background: url("assets/images/player/player.png") no-repeat 0 -144px;
+        }
+        .music_voice>.music_voice_icon2{
+            background-position: 0 -182px;
+        }
+        .music_voice>.music_voice_bottom{
+            width: 70px;
+            height: 4px;
+            background: black;
+            display: flex;
+            align-items: center;
+        }
+        .music_voice_bottom>.music_voice_line{
+            width: 70px;
+            height: 100%;
+            background: gray;
+            position: relative;
+            flex-grow: 1;
+        }
+        .music_voice_line>.music_voice_dot{
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: black;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 70px;
+        }
+    </style>
+</head>
+<body class="text-gray-800 flex flex-col min-h-screen">
+
+    <!-- 1. 顶部固定导航栏 -->
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <nav class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-gray-900">
+                        <span class="lang-zh">东南大学邦邦同好会</span>
+                        <span class="lang-en">SEU BanG Dream Club</span>
+                    </h1>
+                </div>
+                <div class="flex items-center space-x-4 overflow-x-auto whitespace-nowrap mobile-nav-scrollbar-hide ml-4 flex-shrink">
+                    <!-- 你可以根据新页面的内容调整这些链接的 href -->
+                    <a href="main.html#info" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                        <span class="lang-zh">活动简介</span>
+                        <span class="lang-en">Info</span>
+                    </a>
+                    <a href="main.html#gallery" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                        <span class="lang-zh">活动图集</span>
+                        <span class="lang-en">Gallery</span>
+                    </a>
+                    <a href="main.html#message-board" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                        <span class="lang-zh">留言板</span>
+                        <span class="lang-en">Message Board</span>
+                    </a>
+                    <a href="main.html#credits" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                        <span class="lang-zh">致谢</span>
+                        <span class="lang-en">Acknowledgements</span>
+                    </a>
+                    <a href="main.html#links" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                        <span class="lang-zh">社交媒体</span>
+                        <span class="lang-en">Social</span>
+                    </a>
+                    <a href="player.html" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                        <span class="lang-zh">播放器</span>
+                        <span class="lang-en">Player</span>
+                    </a>
+                    <button id="lang-switch-btn" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-3 py-1 rounded-full text-xs transition-colors">
+                        <span class="lang-zh">EN</span>
+                        <span class="lang-en">中文</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主内容区域 (已清空) -->
+    <main class="flex-grow", id="player">
+        <div class="section-container">
+            <div class="body_in flex flex-col md:flex-row gap-8 mb-8">
+                <div class="body_left w-full md:w-2/3">
+                    <div class="body_list">
+                        <ul>
+                            <li class="list_title">
+                                <div class="list_number"></div>
+                                <div class="list_name">歌曲</div>
+                                <div class="list_singer">歌手</div>
+                                <div class="list_time">时长</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="body_right w-full md:w-1/3">
+                    <div class="song_info">
+                        <a class="song_info_pic">
+                            <img src="assets/images/logo.png" alt="">
+                        </a>
+                        <div class="song_info_name">歌曲名称：
+                            <a></a>
+                        </div>
+                        <div class="song_info_singer">歌手名：
+                            <a ></a>
+                        </div>
+                        <div class="song_info_album">专辑名：
+                            <a ></a>
+                        </div>
+                    </div>
+                    <div class="song_lyric_content flex-grow">
+                        <div class="song_lyric"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="foot">
+                <div class="foot_in flex items-center justify-between space-x-4">
+                    <div class="flex items-center space-x-8">
+                        <a  class="music_pre"></a>
+                        <a  class="music_play "></a>
+                        <a  class="music_next"></a>
+                    </div>
+                    <div class="music_progress flex-grow w-1/2">
+                        <div class="music_progress_top flex justify-between">
+                            <span class="music_progress_name"></span>
+                            <span class="music_progress_time">00:00/00:00</span>
+                        </div>
+                        <div class="music_progress_bottom">
+                            <div class="music_progress_line">
+                                <div class="music_progress_dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4 justify-center">
+                        <a  class="music_mode1"></a>
+                        <div class="music_voice">
+                            <a  class="music_voice_icon"></a>
+                            <div class="music_voice_bottom">
+                                <div class="music_voice_line">  
+                                    <div class="music_voice_dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <audio src=""></audio>
+    </main>
+
+    <!-- 底部 License -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 <span class="lang-zh">东南大学邦邦同好会</span><span class="lang-en">SEU Bang Dream Club</span>. All Rights Reserved.</p>
+            <p class="mt-2 text-sm text-gray-400">
+                <span class="lang-zh">本项目采用 <a href="https://opensource.org/licenses/MIT" target="_blank" class="underline hover:text-white">MIT 许可证</a> 进行授权。</span>
+                <span class="lang-en">This project is licensed under the <a href="https://opensource.org/licenses/MIT" target="_blank" class="underline hover:text-white">MIT License</a>.</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- 保留了所有必要的 JS 逻辑，但移除了具体内容的交互逻辑 -->
+    <!-- 你可以根据新页面的需要，添加或删除这些JS功能 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- 语言切换逻辑 (保留) ---
+            const langSwitchBtn = document.getElementById('lang-switch-btn');
+            const htmlEl = document.documentElement;
+            let currentLang = 'zh';
+            
+            function setLanguage(lang) {
+                const zhElements = document.querySelectorAll('.lang-zh');
+                const enElements = document.querySelectorAll('.lang-en');
+                
+                htmlEl.lang = lang === 'zh' ? 'zh-CN' : 'en';
+                zhElements.forEach(el => el.style.display = lang === 'zh' ? 'inline' : 'none');
+                enElements.forEach(el => el.style.display = lang === 'en' ? 'inline' : 'none');
+                
+                currentLang = lang;
+            }
+            
+            langSwitchBtn.addEventListener('click', () => setLanguage(currentLang === 'zh' ? 'en' : 'zh'));
+            setLanguage(currentLang);
+            
+            // --- 其他页面的交互逻辑 (如轮播、留言板等) 已被移除 ---
+            // --- 你可以在这里为新页面添加专属的JS代码 ---
+
+        });
+    </script>
+</body>
+</html>
