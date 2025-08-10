@@ -167,7 +167,7 @@
             /* float: left; (已移除) */
             line-height: 50px;
             color: black;
-            text-align: center; /* 默认居中对齐 */
+            text-align: left; /* 默认居中对齐 */
         }
 
         /* 定义每一列的尺寸和行为 */
@@ -227,12 +227,18 @@
         @keyframes marquee-animation {
             from {
                 /* 从起点开始 */
-                transform: translateX(0);
+                transform: translateX(5%);
             }
             to {
                 /* 滚动到终点 (让文本末尾与容器末尾对齐) */
-                transform: translateX(calc(var(--container-width) - 100%));
+                transform: translateX(calc(var(--container-width) - 105%));
             }
+        }
+        .song_info_pic{
+            display: inline-block;
+            background: url("assets/images/player/album_cover_player.png") no-repeat 0 0;
+            width: 200px;
+            height: 180px;
         }
         .body_right > .song_info{
             text-align: center; /* 让容器内的所有内容都居中对齐 */
@@ -449,8 +455,8 @@
                                     <span class="lang-en">Song</span>
                                 </div>
                                 <div class="list_singer font-bold">
-                                    <span class="lang-zh">歌手</span>
-                                    <span class="lang-en">Artist</span>
+                                    <span class="lang-zh left">歌手</span>
+                                    <span class="lang-en left">Artist</span>
                                 </div>
                                 <div class="list_time font-bold">
                                     <span class="lang-zh">时长</span>

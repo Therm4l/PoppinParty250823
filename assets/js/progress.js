@@ -67,7 +67,6 @@
 
 				//监听鼠标抬起事件
 				$(document).mouseup(function() {
-					
 					callback(value);
 					$progress.isMove = false;
 					$(document).off("mousemove mouseup");

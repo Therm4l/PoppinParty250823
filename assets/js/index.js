@@ -50,6 +50,8 @@ $(function (argument) {
 
 		//给对应的元素赋值
 		$musicImg.attr("src",music.cover);
+		$musicImg.width(180);
+		$musicImg.height(180);
 		$musicName.text(music.name);
 		$musicSinger.text(music.singer);
 		$musicAlbum.text(music.album);
@@ -97,11 +99,11 @@ $(function (argument) {
 		progress.progressClick(function(value) {
 			// if(player.currentIndex==-1)return;
 			player.musicSeekTo(value);
-			lyric.indexSeekTo(player.audio.duration*value);
+			lyric.currentIndex(player.audio.duration*value);
 		});
 		progress.progressMove(function(value) {
 			player.musicSeekTo(value);
-			lyric.indexSeekTo(player.audio.duration*value);
+			lyric.currentIndex(player.audio.duration*value);
 		});
 	}
 	//初始化事件

@@ -43,7 +43,7 @@
 			$.each(array,function(index,ele) {
 				//处理歌词
 				var  lrc = ele.split("]")[1];
-				if(lrc.length <= 1) return true;//排除空字符串
+				if(!lrc || lrc.length <= 1) return true;//排除空字符串
 				$this.lyrics.push(lrc);
 
 				//处理时间
