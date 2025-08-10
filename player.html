@@ -199,43 +199,45 @@
         }
 
         /* --- 新增：长文本滚动 Marquee 效果 --- */
+        /* --- MODIFIED: 更健壮的长文本滚动效果 --- */
         .marquee-container {
             position: relative;
-            overflow: hidden; /* 隐藏超出部分 */
+            overflow: hidden;
             width: 100%;
             height: 100%;
             display: flex;
             align-items: center;
-
-            /* 使用遮罩创建两端的淡出效果 */
-            /* -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); */
         }
 
         .marquee-text {
-            display: inline-block; /* 允许 transform */
-            white-space: nowrap;   /* 强制不换行 */
-            will-change: transform; /* 性能优化 */
+            display: inline-block;
+            white-space: nowrap;
+            will-change: transform;
+            /* 默认状态下不播放动画 */
         }
         
-        /* 只有当 .scrolling 类被添加时，才激活滚动动画 */
+        /* 只有当 .scrolling 类被添加时，才激活动画 */
         .scrolling .marquee-text {
-            animation: marquee-animation 10s linear infinite;
+            /* 动画名称, 持续时间(由JS动态设置), 速度曲线, 延迟, 循环次数, 动画方向(来回) */
+            animation: marquee-animation linear infinite alternate;
+            animation-duration: var(--scroll-duration, 10s); /* 默认10s, 可被JS覆盖 */
         }
 
+        /* 简化的、更可靠的动画关键帧 */
         @keyframes marquee-animation {
-            0% {
-                transform: translateX(0%);
+            from {
+                /* 从起点开始 */
+                transform: translateX(0);
             }
-            10% {
-                transform: translateX(0%); /* 停留1秒 */
+            to {
+                /* 滚动到终点 (让文本末尾与容器末尾对齐) */
+                transform: translateX(calc(var(--container-width) - 100%));
             }
-            90% {
-                transform: translateX(calc(-100% + var(--container-width))); /* 滚动到末尾 */
-            }
-            100% {
-                transform: translateX(calc(-100% + var(--container-width))); /* 停在末尾 */
-            }
+        }
+        .body_right > .song_info{
+            text-align: center; /* 让容器内的所有内容都居中对齐 */
+            color: black;
+            line-height: 30px;
         }
 
         /*右边歌词信息*/
@@ -244,6 +246,7 @@
             overflow: hidden;
             margin-top: 30px;
         }
+        
         .song_lyric_content .song_lyric{
             list-style: none;
             line-height: 30px;
@@ -570,30 +573,40 @@
             
             // --- 其他页面的交互逻辑 (如轮播、留言板等) 已被移除 ---
             // --- 你可以在这里为新页面添加专属的JS代码 ---
+            // --- MODIFIED: 升级版滚动检查函数，带动态速度 ---
             function checkAndApplyScrolling() {
-                const nameElements = document.querySelectorAll(".list_name .marquee-container");
-                const singerElements = document.querySelectorAll(".list_singer .marquee-container");
-                const allElements = [...nameElements, ...singerElements];
+                const marqueeContainers = document.querySelectorAll(".marquee-container");
 
-                allElements.forEach(container => {
+                marqueeContainers.forEach(container => {
                     const textSpan = container.querySelector(".marquee-text");
                     if (!textSpan) return;
 
+                    const containerWidth = container.clientWidth;
+                    const textWidth = textSpan.scrollWidth;
+
                     // 判断文本的实际宽度是否大于其容器的宽度
-                    const isOverflowing = textSpan.scrollWidth > container.clientWidth;
+                    const isOverflowing = textWidth > containerWidth;
 
                     if (isOverflowing) {
-                        // 如果溢出，添加 .scrolling 类来激活 CSS 动画
+                        // 1. 如果溢出，添加 .scrolling 类来激活 CSS 动画
                         container.classList.add("scrolling");
-                        // 把容器宽度传给 CSS 变量，用于动画计算
-                        container.style.setProperty('--container-width', container.clientWidth + 'px');
+
+                        // 2. 计算需要滚动的距离
+                        const overflowDistance = textWidth - containerWidth;
+
+                        // 3. 根据距离计算一个合理的动画时长 (例如每100像素需要2.5秒)
+                        const duration = (overflowDistance / 100) * 2.5;
+
+                        // 4. 将计算出的时长和容器宽度设置到CSS变量中
+                        textSpan.style.setProperty('--scroll-duration', `${Math.max(3, duration)}s`); // 最短不少于3秒
+                        textSpan.style.setProperty('--container-width', `${containerWidth}px`);
                     } else {
                         // 如果不溢出，移除 .scrolling 类
                         container.classList.remove("scrolling");
                     }
                 });
             }
-
+            // --- 修改结束 ---
             // 你需要在歌曲列表加载完成后调用这个函数。
             // 你的 index.js 很可能有一个加载完成的回调，或者你可以用 MutationObserver
             // 一个简单的替代方案是延迟执行，或者在 Player 对象上找一个事件。
