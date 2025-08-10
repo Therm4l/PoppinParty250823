@@ -21,6 +21,13 @@ $(function (argument) {
 					
 					musiclist.append(music);
 				});
+
+                // --- 新增：在这里调用滚动检查函数 ---
+                if(window.checkAndApplyScrolling) {
+                    window.checkAndApplyScrolling();
+                }
+                // --- 新增结束 ---
+
 				initMusicInfo(data[0]);
 				initMusicLyric(data[0]);
 			},
@@ -29,6 +36,7 @@ $(function (argument) {
 			}
 		});
 	}
+
 
 	//初始化歌曲信息
 	function initMusicInfo(music) {
@@ -252,23 +260,40 @@ $(function (argument) {
 		
 	}
 	//创建一个音乐的函数
-	function createMusic(index,ele) {
+	function createMusic(index, ele) {
+        // --- MODIFIED: 使用新的HTML结构来支持滚动效果 ---
+        
+        // 1. 为歌曲名创建带滚动容器的HTML
+        var songNameHtml = 
+            "<div class='marquee-container'>" +
+                "<span class='marquee-text'>" + ele.name + "</span>" +
+            "</div>";
+
+        // 2. 为歌手名创建带滚动容器的HTML
+        var singerNameHtml = 
+            "<div class='marquee-container'>" +
+                "<span class='marquee-text'>" + ele.singer + "</span>" +
+            "</div>";
+
 		var li =$(
 			"			<li class=\"list_music\">"+
 			"				<div class=\"list_check\"><i></i></div>"+
 			"				<div class=\"list_number\">"+(index+1)+"</div>"+
-			"				<div class=\"list_name\">"+ele.name+
+			"				<div class=\"list_name\">"+ songNameHtml + // 在这里使用新的HTML
 			"				</div>"+
-			"				<div class=\"list_singer\">"+ele.singer+"</div>"+
+			"				<div class=\"list_singer\">"+ singerNameHtml + // 在这里使用新的HTML
+			"               </div>"+
 			"				<div class=\"list_time\">"+ele.time+
 			"					<div class=\"list_menu\">"+
 			"						<a href=\"javascript:;\" title=\"播放\" class='list_menu_play'></a>"+
 			"					</div>"+
 			"				</div>"+
 			"			</li>");
+        // --- 修改结束 ---
 
 		li.get(0).index = index;
 		li.get(0).ele = ele;
 		return li;
 	}
+
 })

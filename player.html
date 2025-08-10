@@ -147,91 +147,95 @@
             width: 100%;
             height: 100%;
         }
-        .body_list>ul>li{
+        /* --- 歌曲列表重构 (核心修改) --- */
+        .body_list > ul > li {
             list-style: none;
             width: 100%;
             height: 50px;
-            border-bottom: 1px solid black;
+            border-bottom: 1px solid #e5e7eb; /* 使用浅灰色边框 */
             box-sizing: border-box;
-            user-select:none;
+            user-select: none;
+            
+            /* 使用 Flexbox 布局！ */
+            display: flex;
+            align-items: center; /* 垂直居中 */
+            gap: 0.5rem; /* 在列之间添加一些小间距 */
         }
-        .body_list>ul>li>div{
-            float: left;
+        
+        /* 移除所有旧的 float 和 width:% 样式 */
+        .body_list > ul > li > div {
+            /* float: left; (已移除) */
             line-height: 50px;
             color: black;
-            /*opacity: 0.5;*/
+            text-align: center; /* 默认居中对齐 */
         }
-        .body_list>ul>li>.list_name{
-            width: 50%;
-            height: 100%;
-            overflow: hidden;
+
+        /* 定义每一列的尺寸和行为 */
+        .list_number {
+            flex: 0 0 40px; /* 不伸缩，固定宽度40px */
         }
-        .body_list>ul>li>.list_time{
-            width: 20%;
-            height: 100%;
+
+        .list_name {
+            flex: 1 1 0; /* 占据大部分可用空间 */
+            min-width: 0; /* Flexbox 关键 hack，允许内容收缩 */
+            text-align: left; /* 歌曲名靠左对齐更美观 */
+            padding-left: 0.5rem;
         }
-        .list_time>.list_menu{
-            margin-top: 7px;
-            float: right;
-            margin-right: 5px;
-            display: none;
+
+        .list_singer {
+            flex: 0 1 120px; /* 基础宽度120px，但可以收缩 */
+            min-width: 0;
+            text-align: left; /* 歌手名也靠左 */
         }
-        .list_time>.list_menu>a{
-            display: inline-block;
-            width: 36px;
-            height: 36px;
-            background: url("assets/images/player/icon_list_menu.png") no-repeat 0 0;
-            margin-right: 5px;
-            opacity: 0.5;
+
+        .list_time {
+            flex: 0 0 60px; /* 不伸缩，固定宽度60px */
+            padding-right: 0.5rem;
         }
-        .list_time>.list_menu>a:hover{
-            opacity: 1;
-        }
-        .list_menu>a:nth-child(1){
-            background-position: 0px 0px;
-        }
-        .list_time>.list_menu>.list_menu_play2{
-            background-position: -80px -200px;
-        }
-        .body_list>ul>li>.list_singer{
-            width: 20%;
-            height: 100%;
-            overflow: hidden; /* 添加滚动动画 */
-        }
-        .body_list>ul>li>.list_number{
-            width: 50px;
-            height: 100%;
-            text-align: center;
-        }
-        .body_list>ul>li>.list_number2{
+        
+        .body_list > ul > li > .list_number2{
             color:transparent !important;
-            background:url("assets/images/player/wave_black.gif") no-repeat 0 center;
-        }
-        .body_right>.song_info{
-            text-align: center;
-            color: black;
-            line-height: 30px;
-        }
-        .body_right>.song_info>.song_info_pic{
-            display: inline-block;
-            background: url("assets/images/player/album_cover_player.png") no-repeat 0 0;
-            width: 201px;
-            height: 180px;
-            text-align: left;
-
-        }
-        .song_info_pic>img{
-            width: 180px;
-            height: 190px;
+            background:url("assets/images/player/wave_black.gif") no-repeat center center; /* 动画居中 */
         }
 
-        .song_info>div>a{
-            text-decoration: none;
-            color: black;
-            opacity: 0.5;
+        /* --- 新增：长文本滚动 Marquee 效果 --- */
+        .marquee-container {
+            position: relative;
+            overflow: hidden; /* 隐藏超出部分 */
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+
+            /* 使用遮罩创建两端的淡出效果 */
+            /* -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); */
         }
-        .song_info>div>a:hover{
-            opacity: 1;
+
+        .marquee-text {
+            display: inline-block; /* 允许 transform */
+            white-space: nowrap;   /* 强制不换行 */
+            will-change: transform; /* 性能优化 */
+        }
+        
+        /* 只有当 .scrolling 类被添加时，才激活滚动动画 */
+        .scrolling .marquee-text {
+            animation: marquee-animation 10s linear infinite;
+        }
+
+        @keyframes marquee-animation {
+            0% {
+                transform: translateX(0%);
+            }
+            10% {
+                transform: translateX(0%); /* 停留1秒 */
+            }
+            90% {
+                transform: translateX(calc(-100% + var(--container-width))); /* 滚动到末尾 */
+            }
+            100% {
+                transform: translateX(calc(-100% + var(--container-width))); /* 停在末尾 */
+            }
         }
 
         /*右边歌词信息*/
@@ -415,8 +419,8 @@
                         <span class="lang-en">Social</span>
                     </a>
                     <a href="player.html" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                        <span class="lang-zh">播放器</span>
-                        <span class="lang-en">Player</span>
+                        <span class="lang-zh">歌单</span>
+                        <span class="lang-en">Playlist</span>
                     </a>
                     <button id="lang-switch-btn" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-3 py-1 rounded-full text-xs transition-colors">
                         <span class="lang-zh">EN</span>
@@ -434,13 +438,25 @@
                 <div class="body_left w-full md:w-2/3">
                     <div class="body_list">
                         <ul>
+                            <!-- MODIFIED: 表头也使用 Flexbox 布局 -->
                             <li class="list_title">
                                 <div class="list_number"></div>
-                                <div class="list_name">歌曲</div>
-                                <div class="list_singer">歌手</div>
-                                <div class="list_time">时长</div>
+                                <div class="list_name font-bold">
+                                    <span class="lang-zh">歌曲</span>
+                                    <span class="lang-en">Song</span>
+                                </div>
+                                <div class="list_singer font-bold">
+                                    <span class="lang-zh">歌手</span>
+                                    <span class="lang-en">Artist</span>
+                                </div>
+                                <div class="list_time font-bold">
+                                    <span class="lang-zh">时长</span>
+                                    <span class="lang-en">Duration</span>
+                                </div>
                             </li>
+                            <!-- 你的 JS 会在这里动态添加歌曲 li -->
                         </ul>
+
                     </div>
                 </div>
                 <div class="body_right w-full md:w-1/3">
@@ -448,15 +464,22 @@
                         <a class="song_info_pic">
                             <img src="assets/images/logo.png" alt="">
                         </a>
-                        <div class="song_info_name">歌曲名称：
+                        <div class="song_info_name">
+                            <span class="lang-zh">歌曲名称：</span>
+                            <span class="lang-en">Title: </span>
                             <a></a>
                         </div>
-                        <div class="song_info_singer">歌手名：
-                            <a ></a>
+                        <div class="song_info_singer">
+                            <span class="lang-zh">歌手名：</span>
+                            <span class="lang-en">Artist: </span>
+                            <a></a>
                         </div>
-                        <div class="song_info_album">专辑名：
-                            <a ></a>
+                        <div class="song_info_album">
+                            <span class="lang-zh">专辑名：</span>
+                            <span class="lang-en">Album: </span>
+                            <a></a>
                         </div>
+
                     </div>
                     <div class="song_lyric_content flex-grow">
                         <div class="song_lyric"></div>
@@ -464,14 +487,24 @@
                 </div>
             </div>
             
-            <div class="foot">
-                <div class="foot_in flex items-center justify-between space-x-4 flex-wrap">
-                    <div class="flex items-center space-x-8">
-                        <a  class="music_pre"></a>
-                        <a  class="music_play "></a>
-                        <a  class="music_next"></a>
+            <!-- === MODIFIED: 响应式底部控制栏 === -->
+            <div class="foot p-4 md:p-0">
+                <!-- 
+                  - Mobile: flex-col (垂直排列), items-center (水平居中), gap-y-4 (行间距)
+                  - Desktop (md:): flex-row (水平排列), justify-between (两端对齐)
+                -->
+                <div class="foot_in flex flex-col items-center gap-y-4 md:flex-row md:items-center md:justify-between md:gap-x-4">
+                    
+                    <!-- Row 1 (Mobile) / Left Group (Desktop): Playback Controls -->
+                    <div class="flex items-center justify-center space-x-8">
+                        <a class="music_pre"></a>
+                        <a class="music_play"></a>
+                        <a class="music_next"></a>
                     </div>
-                    <div class="music_progress flex-grow w-1/2">
+                    
+                    <!-- Row 2 (Mobile) / Center Group (Desktop): Progress Bar -->
+                    <!-- Mobile: w-full (占满整行以便居中), Desktop: w-auto & flex-grow (自动伸展) -->
+                    <div class="music_progress w-full md:w-auto md:flex-grow">
                         <div class="music_progress_top flex justify-between">
                             <span class="music_progress_time">00:00/00:00</span>
                         </div>
@@ -481,10 +514,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-4 justify-center">
-                        <a  class="music_mode1"></a>
+                    
+                    <!-- Row 3 (Mobile) / Right Group (Desktop): Mode & Volume -->
+                    <div class="flex items-center justify-center space-x-4">
+                        <a class="music_mode1"></a>
                         <div class="music_voice">
-                            <a  class="music_voice_icon"></a>
+                            <a class="music_voice_icon"></a>
                             <div class="music_voice_bottom">
                                 <div class="music_voice_line">  
                                     <div class="music_voice_dot"></div>
@@ -492,8 +527,10 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
+            <!-- === 修改结束 === -->
             <audio src=""></audio>
     </main>
 
@@ -533,6 +570,44 @@
             
             // --- 其他页面的交互逻辑 (如轮播、留言板等) 已被移除 ---
             // --- 你可以在这里为新页面添加专属的JS代码 ---
+            function checkAndApplyScrolling() {
+                const nameElements = document.querySelectorAll(".list_name .marquee-container");
+                const singerElements = document.querySelectorAll(".list_singer .marquee-container");
+                const allElements = [...nameElements, ...singerElements];
+
+                allElements.forEach(container => {
+                    const textSpan = container.querySelector(".marquee-text");
+                    if (!textSpan) return;
+
+                    // 判断文本的实际宽度是否大于其容器的宽度
+                    const isOverflowing = textSpan.scrollWidth > container.clientWidth;
+
+                    if (isOverflowing) {
+                        // 如果溢出，添加 .scrolling 类来激活 CSS 动画
+                        container.classList.add("scrolling");
+                        // 把容器宽度传给 CSS 变量，用于动画计算
+                        container.style.setProperty('--container-width', container.clientWidth + 'px');
+                    } else {
+                        // 如果不溢出，移除 .scrolling 类
+                        container.classList.remove("scrolling");
+                    }
+                });
+            }
+
+            // 你需要在歌曲列表加载完成后调用这个函数。
+            // 你的 index.js 很可能有一个加载完成的回调，或者你可以用 MutationObserver
+            // 一个简单的替代方案是延迟执行，或者在 Player 对象上找一个事件。
+            // 例如，在 index.js 加载列表的 $.each 循环后调用 window.checkAndApplyScrolling()。
+            // 为了方便，我们先在这里定义它，并做一个简单的延迟执行。
+            window.checkAndApplyScrolling = checkAndApplyScrolling;
+
+            // 稍微延迟后执行，以确保列表已渲染
+            setTimeout(() => {
+                window.checkAndApplyScrolling();
+            }, 500); 
+
+            // 当窗口大小改变时，也需要重新检查
+            window.addEventListener('resize', window.checkAndApplyScrolling);
 
         });
     </script>
