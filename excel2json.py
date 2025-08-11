@@ -6,7 +6,7 @@ import json
 # 你的 Excel 文件名
 excel_file_path = 'assets/data/popipa上海公演神秘企划（收集结果）.xlsx' 
 # 你希望生成的 JSON 文件名
-json_file_path = 'message_board.json'
+json_file_path = 'assets/data/message_board.json'
 
 # --- 代码正文：通常无需修改以下内容 ---
 
