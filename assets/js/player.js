@@ -37,7 +37,9 @@
             // modeIndex 3: 随机播放
             // modeIndex 4: 单曲循环
 			if (modeIndex === 3) {
-                index = Math.floor(Math.random() * this.musiclist.length); // 随机生成一个索引
+                do {
+                    index = Math.floor(Math.random() * this.musiclist.length); // 随机生成一个索引
+                } while (index === this.currentIndex);
             } else {
                 index = this.currentIndex + 1;
                 if (index > this.musiclist.length - 1) {

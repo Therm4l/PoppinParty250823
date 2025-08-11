@@ -15,5 +15,14 @@
     "link_url": "assets/source/Returns.mp3",
     "cover": "assets/source/Returns.jpg",
     "link_lrc": "assets/source/Returns.txt"
+  },
+  {
+    "name": "STAR BEAT!～ホシノコドウ～",
+    "singer": "Poppin'Party",
+    "album": "STAR BEAT!〜ホシノコドウ〜",
+    "time": "04:17",
+    "link_url": "assets/source/STAR BEAT!～ホシノコドウ～.mp3",
+    "cover": "assets/source/STAR BEAT!～ホシノコドウ～.jpg",
+    "link_lrc": "assets/source/STAR BEAT!～ホシノコドウ～.txt"
   }
 ]

@@ -47,6 +47,7 @@ $(function (argument) {
 		var $musicAlbum = $(".song_info_album>a");
 		var $musicProName = $(".music_progress_name");
 		var $musicProTime = $(".music_progress_time");
+		var $musicBg =$(".bg_color");
 
 		//给对应的元素赋值
 		$musicImg.attr("src",music.cover);
@@ -57,6 +58,7 @@ $(function (argument) {
 		$musicAlbum.text(music.album);
 		$musicProName.text(music.name+" / " +music.singer);
 		$musicProTime.text("00:00 / " +music.time);
+		$musicBg.css("background","url('"+music.cover+"')");
 	}
 	//初始化歌词信息
 	var lyric;
@@ -131,10 +133,12 @@ $(function (argument) {
 		});
 		//监听歌曲上的播放按钮点击事件
 		var $mussicplay = $(".music_play");
-		$(".body_list").on("click",".list_menu_play",function() {
-			var list_music = $(this).parents(".list_music");
+		$(".body_list").on("dblclick",".list_music",function() {
+			var list_music = $(this);
+			var playButton = list_music.find(".list_menu_play");
+
 			//切换自己的播放图标
-			$(this).toggleClass("list_menu_play2");
+			playButton.toggleClass("list_menu_play2");
 			//其他播放图标复原
 			list_music.siblings().find(".list_menu_play").removeClass("list_menu_play2");
 			//切换底部播放图标
@@ -143,7 +147,7 @@ $(function (argument) {
 				$mussicplay.addClass("music_play2");
 				//文字高亮
 				list_music.find("div").css("color", "gray");
-				// list_music.siblings().find("div").css("color","black");
+				list_music.siblings().find("div").css("color","black");
 			}
 			else{
 				//不播放
@@ -174,20 +178,21 @@ $(function (argument) {
 			//判断有没有播放过音乐
 			if(player.currentIndex==-1){
 				//自动触发第一首音乐的点击事件
-				$(".list_music").eq(0).find(".list_menu_play").trigger("click");
+				$(".list_music").eq(0).find(".list_menu_play").trigger("dblclick");
 			}else{
-				$(".list_music").eq(player.currentIndex).find(".list_menu_play").trigger("click");
+				$(".list_music").eq(player.currentIndex).find(".list_menu_play").trigger("dblclick");
 			}
 		})
 		//监听底部播放上一首按钮
 		$(".music_pre").click(function() {
 			// alert(player.currentIndex-1); eq为负数的话会从后面数
-			$(".list_music").eq(player.currentIndex-1).find(".list_menu_play").trigger("click");
+			$(".list_music").eq(player.currentIndex-1).find(".list_menu_play").trigger("dblclick");
 		})
 		//监听底部播放下一首按钮 需要特殊处理
 		$(".music_next").click(function() {
 			// $(".list_music").eq(player.currentIndex+1).find(".list_menu_play").trigger("click");
-			$(".list_music").eq(player.nextIndex(modeIndex)).find(".list_menu_play").trigger("click");
+			var nextIndex = player.nextIndex(modeIndex);
+			$(".list_music").eq(nextIndex).find(".list_menu_play").trigger("dblclick");
 		})
 		
 
@@ -239,7 +244,7 @@ $(function (argument) {
                     player.audio.pause();
                 } else { // 列表循环或随机播放
                     var nextIndex = player.nextIndex(modeIndex);
-                    $(".list_music").eq(nextIndex).find(".list_menu_play").trigger("click");
+                    $(".list_music").eq(nextIndex).find(".list_menu_play").trigger("dblclick");
                 }
             }
 		})
