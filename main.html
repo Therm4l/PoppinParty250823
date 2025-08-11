@@ -218,49 +218,95 @@
 <body class="text-gray-800">
 
     <!-- 1. 顶部固定导航栏 -->
+    <!-- [MODIFIED] START: 完整的、已修改的 Header 部分，可直接替换 -->
     <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
         <nav class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
+            <div class="flex items-center justify-between h-16 relative">
+                <!-- 左侧标题 (保持不变) -->
                 <div class="flex-shrink-0">
                     <h1 class="text-xl font-bold text-gray-900">
                         <span class="lang-zh">东南大学邦邦同好会</span>
                         <span class="lang-en">SEU BanG Dream Club</span>
                     </h1>
                 </div>
-                <!-- MODIFIED: Nav links container for mobile scroll -->
-                <div class="flex items-center space-x-4 overflow-x-auto whitespace-nowrap mobile-nav-scrollbar-hide ml-4 flex-shrink">
-                    <a href="#info" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+
+                <!-- 右侧导航容器 -->
+                <div>
+                    <!-- 桌面端导航 (中等屏幕以上显示) -->
+                    <div class="hidden md:flex items-center space-x-2">
+                        <a href="#info" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                            <span class="lang-zh">活动简介</span>
+                            <span class="lang-en">Info</span>
+                        </a>
+                        <a href="#gallery" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                            <span class="lang-zh">创作</span>
+                            <span class="lang-en">Crafts</span>
+                        </a>
+                        <a href="#message-board" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                            <span class="lang-zh">留言板</span>
+                            <span class="lang-en">Message Board</span>
+                        </a>
+                        <a href="#credits" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                            <span class="lang-zh">致谢</span>
+                            <span class="lang-en">Acknowledgements</span>
+                        </a>
+                        <a href="#links" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                            <span class="lang-zh">社交媒体</span>
+                            <span class="lang-en">Social</span>
+                        </a>
+                        <a href="player.html" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                            <span class="lang-zh">歌单(test)</span>
+                            <span class="lang-en">Playlist</span>
+                        </a>
+                        <button id="lang-switch-btn-desktop" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-3 py-1 rounded-full text-xs transition-colors">
+                            <span class="lang-zh">EN</span>
+                            <span class="lang-en">中文</span>
+                        </button>
+                    </div>
+
+                    <!-- 移动端菜单按钮 (仅在中等屏幕以下显示) -->
+                    <div class="md:hidden">
+                        <button id="mobile-menu-button" class="text-gray-600 hover:text-gray-900 p-2 rounded-md">
+                            <i class="fa-solid fa-ellipsis-vertical text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 移动端下拉菜单 (默认隐藏，通过 JS 控制) -->
+                <div id="mobile-menu" class="hidden md:hidden absolute top-full right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 p-2 space-y-1">
+                    <a href="#info" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
                         <span class="lang-zh">活动简介</span>
                         <span class="lang-en">Info</span>
                     </a>
-                    <a href="#gallery" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                        <span class="lang-zh">活动图集</span>
-                        <span class="lang-en">Gallery</span>
+                    <a href="#gallery" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                        <span class="lang-zh">创作</span>
+                        <span class="lang-en">Crafts</span>
                     </a>
-                    <a href="#message-board" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                    <a href="#message-board" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
                         <span class="lang-zh">留言板</span>
                         <span class="lang-en">Message Board</span>
                     </a>
-                    <a href="#credits" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                    <a href="#credits" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
                         <span class="lang-zh">致谢</span>
                         <span class="lang-en">Acknowledgements</span>
                     </a>
-                    <a href="#links" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                    <a href="#links" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
                         <span class="lang-zh">社交媒体</span>
                         <span class="lang-en">Social</span>
                     </a>
-                    <a href="player.html" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
+                    <a href="player.html" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
                         <span class="lang-zh">歌单(test)</span>
                         <span class="lang-en">Playlist</span>
                     </a>
-                    <button id="lang-switch-btn" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-3 py-1 rounded-full text-xs transition-colors">
-                        <span class="lang-zh">EN</span>
-                        <span class="lang-en">中文</span>
+                    <button id="lang-switch-btn-mobile" class="w-full text-left bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-3 py-2 rounded-md text-sm transition-colors">
+                        <span class="lang-zh">切换为 EN</span>
+                        <span class="lang-en">Switch to 中文</span>
                     </button>
                 </div>
             </div>
         </nav>
     </header>
+    <!-- [MODIFIED] END: Header 部分结束 -->
 
     <main>
         <!-- 2. 信息模块 (活动介绍) -->
@@ -725,28 +771,58 @@
         document.addEventListener('DOMContentLoaded', function() {
             // --- 语言切换逻辑 ---
             const langSwitchBtn = document.getElementById('lang-switch-btn');
+            // [替换] 原有的语言切换逻辑替换为这个新函数
             const htmlEl = document.documentElement;
             let currentLang = 'zh';
             const zhElements = document.querySelectorAll('.lang-zh');
             const enElements = document.querySelectorAll('.lang-en');
             const searchInput = document.getElementById('search-input');
+            // --- 移动端导航栏和语言切换逻辑 ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const langSwitchBtnDesktop = document.getElementById('lang-switch-btn-desktop');
+            const langSwitchBtnMobile = document.getElementById('lang-switch-btn-mobile');
             function setLanguage(lang) {
                 htmlEl.lang = lang === 'zh' ? 'zh-CN' : 'en';
-                zhElements.forEach(el => el.style.display = lang === 'zh' ? 'inline' : 'none');
-                enElements.forEach(el => el.style.display = lang === 'en' ? 'inline' : 'none');
+                // 注意：这里使用 'inline-block' 确保布局正确
+                zhElements.forEach(el => el.style.display = lang === 'zh' ? 'inline-block' : 'none');
+                enElements.forEach(el => el.style.display = lang === 'en' ? 'inline-block' : 'none');
                 
-                // Update search input placeholder based on language
                 if (searchInput) {
-                    if (lang === 'en' && searchInput.dataset.enPlaceholder) {
-                        searchInput.placeholder = searchInput.dataset.enPlaceholder;
-                    } else {
-                        searchInput.placeholder = '搜索留言者...';
-                    }
+                    searchInput.placeholder = lang === 'en' ? searchInput.dataset.enPlaceholder : '搜索留言者...';
                 }
-                
                 currentLang = lang;
             }
-            langSwitchBtn.addEventListener('click', () => setLanguage(currentLang === 'zh' ? 'en' : 'zh'));
+
+            function toggleLanguage() {
+                setLanguage(currentLang === 'zh' ? 'en' : 'zh');
+            }
+
+            // [新增] 移动端菜单的点击事件
+            mobileMenuButton.addEventListener('click', (event) => {
+                event.stopPropagation(); // 防止点击事件冒泡到window
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // [新增] 为两个语言切换按钮绑定事件
+            langSwitchBtnDesktop.addEventListener('click', toggleLanguage);
+            langSwitchBtnMobile.addEventListener('click', toggleLanguage);
+
+            // [新增] (可选但推荐) 点击页面其他地方可以关闭菜单
+            window.addEventListener('click', (event) => {
+                if (!mobileMenu.classList.contains('hidden') && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+
+            // [新增] (可选但推荐) 点击菜单中的链接后自动关闭菜单
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // [保留] 并确保调用一次，初始化页面语言
             setLanguage(currentLang);
 
             // --- Carousel and Lightbox Logic ---
