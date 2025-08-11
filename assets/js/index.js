@@ -142,7 +142,7 @@ $(function (argument) {
 			//其他播放图标复原
 			list_music.siblings().find(".list_menu_play").removeClass("list_menu_play2");
 			//切换底部播放图标
-			if($(this).hasClass("list_menu_play2")){
+			if(playButton.hasClass("list_menu_play2")){
 				//播放
 				$mussicplay.addClass("music_play2");
 				//文字高亮
