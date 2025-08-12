@@ -126,6 +126,21 @@
         #slider-text {
             animation: text-glow 3s ease-in-out infinite, text-fade-in-out 3s ease-in-out infinite;
         }
+        /* 1. 定义颜色变化的动画 */
+        @keyframes custom-color-pulse {
+            0% { color: #FF3377; } 
+            16.6% { color: #FF55BB; }
+            33.3% { color: #AA66DD; }
+            50% { color: #0077DD; } 
+            66.7% { color: #FF5522; }  
+            83.3% { color: #FFCC11; }  
+            100% { color: #FF3377; } 
+        }
+        /* 2. 应用这个动画到你的 h1 标签上 */
+        .animated-color {
+            animation: custom-color-pulse 12s infinite,
+               pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
     </style>
 </head>
 <body class="bg-gray-900">
@@ -142,7 +157,7 @@
         <div class="overlay h-full w-full flex flex-col items-center justify-center p-4 relative z-10">
             <div class="text-center text-white">
                 <img src="assets/images/Poppin'Party_logo.svg" alt="Logo" class="w-40 md:w-72 h-auto mx-auto mb-4 md:mb-6">
-                <h1 class="text-4xl md:text-6xl font-bold text-shadow mb-3 text-[#FF3377]">
+                <h1 class="text-4xl md:text-6xl font-bold text-shadow mb-3 text-[#f86ba0] animated-color">
                     Poppin' Party <br class="hidden md:block"> Global LIVE 2025 <br> in Shanghai
                 </h1>
                 <p class="text-lg md:text-2xl text-shadow text-[#FFDDEE]">
