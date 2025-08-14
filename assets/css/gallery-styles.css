@@ -1,0 +1,100 @@
+/* --- 全局 --- */
+html, body {
+    height: 100%;
+    /* for touch screen */
+    touch-action: none; 
+    /* 确保页面不可滚动，由我们自己的逻辑控制 */
+    overflow: hidden;
+}
+
+main {
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+}
+
+/* --- 3D Gallery Section --- */
+#gallery-section {
+    background-color: #f8fafc; /* 正常颜色背景 */
+    transform-style: preserve-3d;
+}
+
+#drag-container, #spin-container {
+    position: relative;
+    display: flex;
+    margin: auto;
+    transform-style: preserve-3d;
+    transform: rotateX(-10deg);
+}
+
+#drag-container img {
+    transform-style: preserve-3d;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    -webkit-box-reflect: below 10px linear-gradient(transparent, transparent, #0002);
+    cursor: pointer;
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+#drag-container img:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    transform: translateY(-5px) scale(1.02);
+}
+
+#ground {
+    width: 900px;
+    height: 900px;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotateX(90deg);
+    background: -webkit-radial-gradient(center center, farthest-side, #9993, transparent);
+}
+
+@keyframes spin {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}
+
+@keyframes spinRevert {
+    from { transform: rotateY(360deg); }
+    to { transform: rotateY(0deg); }
+}
+
+/* --- Repo Post Section --- */
+.repo-slider {
+    width: 100%;
+    height: 100%;
+    padding: 0 50px; /* 为导航按钮留出空间 */
+}
+
+.repo-card {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.repo-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.repo-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.repo-card-content {
+    padding: 1rem;
+}
