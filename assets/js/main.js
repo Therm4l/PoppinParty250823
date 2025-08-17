@@ -3,8 +3,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- DOM 元素 ---
     const gallerySection = document.getElementById('gallery-section');
     const repoSection = document.getElementById('repo-section');
-    const scrollSwitcher = document.getElementById('scroll-switcher');
-    const switcherIcon = scrollSwitcher.querySelector('i');
+    
+    // 【修改】获取新的侧边栏元素
+    const pageNavSidebar = document.getElementById('page-nav-sidebar');
+    const navToGalleryBtn = document.getElementById('nav-to-gallery');
+    const navToRepoBtn = document.getElementById('nav-to-repo');
+    const sidebarToggle = document.querySelector('.sidebar-toggle');
 
     const lightboxModal = document.getElementById('lightbox-modal');
     const lightboxImage = document.getElementById('lightbox-image');
@@ -12,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const repoModal = document.getElementById('repo-modal');
     const repoModalClose = document.getElementById('repo-modal-close');
-    // 【新增】获取 Swiper 按钮的引用
     const swiperNextBtn = document.querySelector('.swiper-button-next');
     const swiperPrevBtn = document.querySelector('.swiper-button-prev');
 
@@ -23,25 +26,38 @@ document.addEventListener('DOMContentLoaded', function() {
     RepoPosts.init();
 
     // --- 页面切换逻辑 ---
-        // 【修改】用这个新版本完全替换旧的 scrollToSection 函数
     function scrollToSection(section) {
         section.scrollIntoView({ behavior: 'smooth' });
     }
-
-    scrollSwitcher.addEventListener('click', () => {
-        isAtGallery = !isAtGallery;
-        scrollToSection(isAtGallery ? gallerySection : repoSection);
+    
+    // 【新增】为新的侧边栏按钮添加事件监听
+    navToGalleryBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        scrollToSection(gallerySection);
     });
+
+    navToRepoBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        scrollToSection(repoSection);
+    });
+
+    // 【新增】移动端侧边栏展开/收起逻辑
+    if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', () => {
+            pageNavSidebar.classList.toggle('open');
+        });
+    }
 
     // --- 监听滚动来更新UI ---
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.target.id === 'gallery-section' && entry.isIntersecting) {
                 isAtGallery = true;
-                switcherIcon.className = 'fa-solid fa-chevron-down';
+                // 【修改】更新新侧边栏的激活状态
+                navToGalleryBtn.classList.add('active');
+                navToRepoBtn.classList.remove('active');
                 Gallery3D.setActive(true);
                 
-                // 【修改】当图库区可见时，隐藏 Swiper 按钮
                 if (swiperNextBtn && swiperPrevBtn) {
                     swiperNextBtn.classList.add('opacity-0', 'pointer-events-none');
                     swiperPrevBtn.classList.add('opacity-0', 'pointer-events-none');
@@ -49,10 +65,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             } else if (entry.target.id === 'repo-section' && entry.isIntersecting) {
                 isAtGallery = false;
-                switcherIcon.className = 'fa-solid fa-chevron-up';
+                // 【修改】更新新侧边栏的激活状态
+                navToGalleryBtn.classList.remove('active');
+                navToRepoBtn.classList.add('active');
                 Gallery3D.setActive(false);
                 
-                // 【修改】当 Repo 区可见时，显示 Swiper 按钮
                 if (swiperNextBtn && swiperPrevBtn) {
                     swiperNextBtn.classList.remove('opacity-0', 'pointer-events-none');
                     swiperPrevBtn.classList.remove('opacity-0', 'pointer-events-none');
@@ -79,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     lightboxClose.addEventListener('click', closeLightbox);
     lightboxModal.addEventListener('click', (e) => {
-        if (e.target === lightboxModal) { // 点击背景关闭
+        if (e.target === lightboxModal) {
             closeLightbox();
         }
     });
@@ -92,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     repoModalClose.addEventListener('click', closeRepoModal);
     repoModal.addEventListener('click', (e) => {
-        if (e.target === repoModal) { // 点击背景关闭
+        if (e.target === repoModal) {
             closeRepoModal();
         }
     });

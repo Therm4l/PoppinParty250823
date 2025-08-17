@@ -5,6 +5,8 @@ const Gallery3D = (function () {
     const config = {
         radius: 320,         // 相册半径 (PC端)
         radiusMobile: 200,   // 相册半径 (移动端)
+        minRadius: 150,      // 【新增】最小缩放半径 (此值会在初始化时被动态计算覆盖)
+        maxRadius: 600,      // 【新增】最大缩放半径
         autoRotate: true,
         rotateSpeed: -60,    // 單位: s/圈
         imgWidth: 140,
@@ -31,6 +33,13 @@ const Gallery3D = (function () {
 
         // 动态加载图片
         loadImages();
+
+        // 【新增】动态计算最小半径，以防止图片重叠
+        const elementsPerRow = Math.ceil(aEle.length / config.photoRows);
+        // 公式：(周长 / 图片数) >= (图片宽度 + 间距)
+        // 推导：r >= ((图片宽度 + 间距) * 图片数) / (2 * PI)
+        const padding = 20; // 为图片之间设置20px的最小间距
+        config.minRadius = Math.ceil(((config.imgWidth + padding) * elementsPerRow) / (2 * Math.PI));
 
         ospin.style.width = config.imgWidth + "px";
         ospin.style.height = config.imgHeight + "px";
@@ -84,8 +93,9 @@ const Gallery3D = (function () {
     }
 
     function applyRuntimeTransform(obj) {
-        if (state.tY > 90) state.tY = 90;
-        if (state.tY < -90) state.tY = -90;
+        // 【修改】将垂直旋转的阈值从 90° 修改为 45°
+        if (state.tY > 45) state.tY = 45;
+        if (state.tY < -45) state.tY = -45;
         obj.style.transform = `rotateX(${-state.tY}deg) rotateY(${state.tX}deg)`;
     }
 
@@ -111,36 +121,36 @@ const Gallery3D = (function () {
         document.onpointerdown = function (e) {
             if (!state.active) return;
             clearInterval(odrag.timer);
-            let sX = e.clientX, sY = e.clientY; // Use let instead of const to reassign
+            let sX = e.clientX, sY = e.clientY;
 
             this.onpointermove = function (e) {
                 const nX = e.clientX, nY = e.clientY;
                 state.desX = nX - sX;
-                // state.desY = nY - sY; // **REMOVED**
+                state.desY = nY - sY;      // 【修改】启用垂直拖动计算
                 state.tX += state.desX * 0.1;
-                // state.tY += state.desY * 0.1; // **REMOVED**
+                state.tY += state.desY * 0.1;  // 【修改】启用垂直拖动计算
                 applyRuntimeTransform(odrag);
                 sX = nX;
                 sY = nY;
             };
 
-
             this.onpointerup = function (e) {
                 odrag.timer = setInterval(() => {
                     state.desX *= 0.95;
-                    // state.desY *= 0.95; // **REMOVED**
+                    state.desY *= 0.95;    // 【修改】启用垂直拖动惯性
                     state.tX += state.desX * 0.1;
-                    // state.tY += state.desY * 0.1; // **REMOVED**
+                    state.tY += state.desY * 0.1;  // 【修改】启用垂直拖动惯性
                     applyRuntimeTransform(odrag);
                     playSpin(false);
-                    // Condition now only checks for horizontal inertia
-                    if (Math.abs(state.desX) < 0.5) {
+
+                    // 【修改】停止条件现在同时检查水平和垂直方向的惯性
+                    if (Math.abs(state.desX) < 0.5 && Math.abs(state.desY) < 0.5) {
                         clearInterval(odrag.timer);
                         playSpin(true);
                     }
                 }, 17);
                 this.onpointermove = this.onpointerup = null;
-    };
+        };
             return false;
         };
 
@@ -148,8 +158,17 @@ const Gallery3D = (function () {
         document.onmousewheel = function (e) {
             if (!state.active) return;
             const d = e.wheelDelta / 20 || -e.detail;
-            state.radius += d;
-            updateRadius();
+            let newRadius = state.radius + d;
+
+            // 【新增】应用缩放阈值
+            if (newRadius < config.minRadius) newRadius = config.minRadius;
+            if (newRadius > config.maxRadius) newRadius = config.maxRadius;
+
+            // 仅当半径实际发生变化时才更新
+            if (state.radius !== newRadius) {
+                state.radius = newRadius;
+                updateRadius();
+            }
         };
 
         document.addEventListener('touchstart', function(e) {
@@ -166,8 +185,17 @@ const Gallery3D = (function () {
             const currentDistance = Math.hypot(touch1.pageX - touch2.pageX, touch1.pageY - touch2.pageY);
             const diff = currentDistance - lastTouchDistance;
             
-            state.radius += diff * 0.5; // 调整缩放灵敏度
-            updateRadius();
+            let newRadius = state.radius + diff * 0.5; // 调整缩放灵敏度
+
+            // 【新增】应用缩放阈值
+            if (newRadius < config.minRadius) newRadius = config.minRadius;
+            if (newRadius > config.maxRadius) newRadius = config.maxRadius;
+
+            // 仅当半径实际发生变化时才更新
+            if (state.radius !== newRadius) {
+                state.radius = newRadius;
+                updateRadius();
+            }
             
             lastTouchDistance = currentDistance;
         });

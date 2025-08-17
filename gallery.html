@@ -26,6 +26,105 @@
         .nav-link:hover { color: #3b82f6; }
         .lang-en { display: none; }
         /* 保持原框架的其他样式 */
+
+        /* --- 【新增】隐藏式侧边栏样式 --- */
+        .page-nav-container {
+            width: 15px;
+            height: 250px;
+            position: fixed;
+            right: 0; /* 定位在页面右侧 */
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #222;
+            border-radius: 15px 0 0 15px;
+            overflow: hidden;
+            transition: width 0.3s, border-radius 0.3s, height 0.3s;
+            z-index: 100;
+        }
+
+        .page-nav-container ul {
+            list-style: none; padding: 0; margin: 0; height: 100%; position: relative;
+        }
+
+        .page-nav-container li {
+            position: absolute;
+            top: var(--t);
+            transform: translateY(-50%);
+            width: 100%;
+            height: 20%;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .page-nav-container li a {
+            color: transparent;
+            transition: color 0.3s;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 当前所在区域的按钮高亮 */
+        .page-nav-container li.active a {
+            color: #fff;
+        }
+
+        /* --- 桌面端悬停效果 --- */
+        @media (min-width: 769px) {
+            .page-nav-container:hover {
+                width: 80px;
+                border-radius: 30px 0 0 30px;
+            }
+            .page-nav-container:hover li a {
+                color: #fff;
+            }
+        }
+
+        /* --- 移动端样式与交互 --- */
+        .sidebar-toggle {
+            display: none; /* 默认隐藏，仅在移动端显示 */
+        }
+
+        @media (max-width: 768px) {
+            /* 变更为右下角浮动按钮(FAB) */
+            .page-nav-container {
+                width: 45px;
+                height: 45px;
+                bottom: 3rem; /* 约 48px，增加与底部的距离 */
+                right: 1.5rem; /* 约 24px */
+                top: auto;
+                transform: none;
+                border-radius: 50%; /* 圆形 */
+            }
+
+            /* 展开后的样式 */
+            .page-nav-container.open {
+                height: 160px; /* 垂直展开 */
+                border-radius: 25px; /* 胶囊形状 */
+            }
+
+            .page-nav-container ul { display: none; }
+            .page-nav-container.open ul { display: block; }
+
+            .page-nav-container li a { color: #fff; }
+
+            .sidebar-toggle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 45px;
+                color: #fff;
+                cursor: pointer;
+                font-size: 18px;
+                transition: transform 0.3s;
+            }
+
+            .page-nav-container.open .sidebar-toggle {
+                transform: rotate(90deg); /* 展开时旋转图标 */
+            }
+        }
     </style>
 </head>
 
@@ -76,7 +175,7 @@
 
     <main class="flex-grow w-full h-screen relative">
         <section id="gallery-section" class="w-full h-full flex flex-col items-center justify-center overflow-hidden">
-            <h2 class="text-3xl font-bold text-gray-800 mb-4 absolute top-8">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">
                 <span class="lang-zh">演职人员 Gallery</span>
                 <span class="lang-en">Cast & Staff Gallery</span>
             </h2>
@@ -109,10 +208,10 @@
             </div>
         </section>
     </main>
-
-    <button id="scroll-switcher" class="fixed left-1/2 -translate-x-1/2 bottom-5 z-40 w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full shadow-lg text-2xl text-gray-700 flex items-center justify-center transition-transform hover:scale-110">
+    <!-- 去掉原有按钮 -->
+    <!-- <button id="scroll-switcher" class="fixed left-1/2 -translate-x-1/2 bottom-5 z-40 w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full shadow-lg text-2xl text-gray-700 flex items-center justify-center transition-transform hover:scale-110">
         <i class="fa-solid fa-chevron-down"></i>
-    </button>
+    </button> -->
 
     <div id="lightbox-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
         <img id="lightbox-image" src="" class="max-w-full max-h-full object-contain">
@@ -146,6 +245,24 @@
             </p>
         </div>
     </footer>
+
+    <div id="page-nav-sidebar" class="page-nav-container">
+        <div class="sidebar-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <ul>
+            <li id="nav-to-gallery" style="--t:35%;">
+                <a title="滚动到顶部画廊">
+                    <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li id="nav-to-repo" style="--t:65%;">
+                <a title="滚动到底部Repo">
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
 
     <script src="assets/data/repo_data/posts_db.js"></script>
     <script src="assets/js/gallery_3d.js"></script>
