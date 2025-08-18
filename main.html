@@ -16,12 +16,10 @@
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <link rel="stylesheet" href="assets/css/Sidebar.css">
     <style>
         /* Custom styles */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Light gray background */
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         h1, h2 {
             font-weight: 700;
         }
@@ -29,12 +27,6 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 2rem 1.5rem;
-        }
-        .nav-link {
-            transition: color 0.3s ease;
-        }
-        .nav-link:hover {
-            color: #3b82f6; /* Blue-500 */
         }
         .card-hover {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -50,10 +42,6 @@
 
         .credit-link:hover {
             @apply text-pink-300 decoration-solid;
-        }
-        /* Hide elements by default for language switching */
-        .lang-en {
-            display: none;
         }
         /* Carousel and Lightbox Styles */
         .carousel-slide {
@@ -217,96 +205,43 @@
 </head>
 <body class="text-gray-800">
 
-    <!-- 1. 顶部固定导航栏 -->
-    <!-- [MODIFIED] START: 完整的、已修改的 Header 部分，可直接替换 -->
-    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
-        <nav class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 relative">
-                <!-- 左侧标题 (保持不变) -->
-                <div class="flex-shrink-0">
-                    <h1 class="text-xl font-bold text-gray-900">
-                        <span class="lang-zh">东南大学邦邦同好会</span>
-                        <span class="lang-en">SEU BanG Dream Club</span>
-                    </h1>
-                </div>
+    <div id="header-placeholder"></div>
 
-                <!-- 右侧导航容器 -->
-                <div>
-                    <!-- 桌面端导航 (中等屏幕以上显示) -->
-                    <div class="hidden md:flex items-center space-x-2">
-                        <a href="#info" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                            <span class="lang-zh">活动简介</span>
-                            <span class="lang-en">Info</span>
-                        </a>
-                        <a href="#gallery" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                            <span class="lang-zh">创作</span>
-                            <span class="lang-en">Crafts</span>
-                        </a>
-                        <a href="#message-board" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                            <span class="lang-zh">留言板</span>
-                            <span class="lang-en">Message Board</span>
-                        </a>
-                        <a href="#credits" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                            <span class="lang-zh">致谢</span>
-                            <span class="lang-en">Acknowledgements</span>
-                        </a>
-                        <a href="#links" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                            <span class="lang-zh">社交媒体</span>
-                            <span class="lang-en">Social</span>
-                        </a>
-                        <a href="player.html" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                            <span class="lang-zh">歌单(test)</span>
-                            <span class="lang-en">Playlist</span>
-                        </a>
-                        <button id="lang-switch-btn-desktop" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-3 py-1 rounded-full text-xs transition-colors">
-                            <span class="lang-zh">EN</span>
-                            <span class="lang-en">中文</span>
-                        </button>
-                    </div>
-
-                    <!-- 移动端菜单按钮 (仅在中等屏幕以下显示) -->
-                    <div class="md:hidden">
-                        <button id="mobile-menu-button" class="text-gray-600 hover:text-gray-900 p-2 rounded-md">
-                            <i class="fa-solid fa-ellipsis-vertical text-xl"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 移动端下拉菜单 (默认隐藏，通过 JS 控制) -->
-                <div id="mobile-menu" class="hidden md:hidden absolute top-full right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 p-2 space-y-1">
-                    <a href="#info" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                        <span class="lang-zh">活动简介</span>
-                        <span class="lang-en">Info</span>
-                    </a>
-                    <a href="#gallery" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                        <span class="lang-zh">创作</span>
-                        <span class="lang-en">Crafts</span>
-                    </a>
-                    <a href="#message-board" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                        <span class="lang-zh">留言板</span>
-                        <span class="lang-en">Message Board</span>
-                    </a>
-                    <a href="#credits" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                        <span class="lang-zh">致谢</span>
-                        <span class="lang-en">Acknowledgements</span>
-                    </a>
-                    <a href="#links" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                        <span class="lang-zh">社交媒体</span>
-                        <span class="lang-en">Social</span>
-                    </a>
-                    <a href="player.html" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm">
-                        <span class="lang-zh">歌单（Waiting）</span>
-                        <span class="lang-en">Playlist(Waiting)</span>
-                    </a>
-                    <button id="lang-switch-btn-mobile" class="w-full text-left bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-3 py-2 rounded-md text-sm transition-colors">
-                        <span class="lang-zh">EN</span>
-                        <span class="lang-en">中文</span>
-                    </button>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <!-- [MODIFIED] END: Header 部分结束 -->
+    <div class="sidebar-container" id="sidebar">
+        <li style="--t:20%;">
+            <a href="#info"  class="text-gray-600 font-medium">
+                <span class="lang-zh">活动简介</span>
+                <span class="lang-en">Info</span>
+            </a>
+        </li>
+        <li style="--t:30%;">
+            <a href="#gallery" class="text-gray-600 font-medium">
+                <span class="lang-zh">创作</span>
+                <span class="lang-en">Crafts</span>
+            </a>
+        </li>
+        <li style="--t:40%;">
+            <a href="#message-board" class="text-gray-600 font-medium">
+                <span class="lang-zh">留言板</span>
+                <span class="lang-en">Message Board</span>
+            </a>
+        </li>
+        <li style="--t:50%;">
+            <a href="#credits" class="text-gray-600 font-mediumm">
+                <span class="lang-zh">致谢</span>
+                <span class="lang-en">Acknowledgements</span>
+            </a>
+        </li>
+        <li style="--t:60%;">
+            <a href="#links" class="text-gray-600 font-medium">
+                <span class="lang-zh">社交媒体</span>
+                <span class="lang-en">Social</span>
+            </a>
+        </li>
+        <div class="top"></div>
+        <div class="middle"></div>
+        <div class="bottom"></div>
+    </div>
 
     <main>
         <!-- 2. 信息模块 (活动介绍) -->
@@ -728,14 +663,9 @@
     </main>
 
     <!-- 7. 底部 License -->
+    <!-- 底部 License -->
     <footer class="bg-gray-800 text-white py-8">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p>&copy; 2025 <span class="lang-zh">东南大学邦邦同好会</span><span class="lang-en">SEU Bang Dream Club</span>. All Rights Reserved.</p>
-            <p class="mt-2 text-sm text-gray-400">
-                <span class="lang-zh">本项目采用 <a href="https://opensource.org/licenses/MIT" target="_blank" class="underline hover:text-white">MIT 许可证</a> 进行授权。</span>
-                <span class="lang-en">This project is licensed under the <a href="https://opensource.org/licenses/MIT" target="_blank" class="underline hover:text-white">MIT License</a>.</span>
-            </p>
-        </div>
+        <div id="footer-placeholder"></div>
     </footer>
 
     <!-- 8. 浮动音乐播放器 -->
@@ -768,64 +698,20 @@
             </div>
         </div>
     </div>
-
+    <script src="assets/js/init.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- 语言切换逻辑 ---
-            const langSwitchBtn = document.getElementById('lang-switch-btn');
-            // [替换] 原有的语言切换逻辑替换为这个新函数
-            const htmlEl = document.documentElement;
-            let currentLang = 'zh';
-            const zhElements = document.querySelectorAll('.lang-zh');
-            const enElements = document.querySelectorAll('.lang-en');
-            const searchInput = document.getElementById('search-input');
-            // --- 移动端导航栏和语言切换逻辑 ---
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const langSwitchBtnDesktop = document.getElementById('lang-switch-btn-desktop');
-            const langSwitchBtnMobile = document.getElementById('lang-switch-btn-mobile');
-            function setLanguage(lang) {
-                htmlEl.lang = lang === 'zh' ? 'zh-CN' : 'en';
-                // 注意：这里使用 'inline-block' 确保布局正确
-                zhElements.forEach(el => el.style.display = lang === 'zh' ? 'inline-block' : 'none');
-                enElements.forEach(el => el.style.display = lang === 'en' ? 'inline-block' : 'none');
-                
-                if (searchInput) {
-                    searchInput.placeholder = lang === 'en' ? searchInput.dataset.enPlaceholder : '搜索留言者...';
-                }
-                currentLang = lang;
-            }
-
-            function toggleLanguage() {
-                setLanguage(currentLang === 'zh' ? 'en' : 'zh');
-            }
-
-            // [新增] 移动端菜单的点击事件
-            mobileMenuButton.addEventListener('click', (event) => {
-                event.stopPropagation(); // 防止点击事件冒泡到window
-                mobileMenu.classList.toggle('hidden');
+            fetch("head.html")
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById("header-placeholder").outerHTML = html;
             });
-
-            // [新增] 为两个语言切换按钮绑定事件
-            langSwitchBtnDesktop.addEventListener('click', toggleLanguage);
-            langSwitchBtnMobile.addEventListener('click', toggleLanguage);
-
-            // [新增] (可选但推荐) 点击页面其他地方可以关闭菜单
-            window.addEventListener('click', (event) => {
-                if (!mobileMenu.classList.contains('hidden') && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
-                    mobileMenu.classList.add('hidden');
-                }
+            fetch("foot.html")
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById("footer-placeholder").outerHTML = html;
+                    initPage(); 
             });
-
-            // [新增] (可选但推荐) 点击菜单中的链接后自动关闭菜单
-            document.querySelectorAll('#mobile-menu a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
-
-            // [保留] 并确保调用一次，初始化页面语言
-            setLanguage(currentLang);
 
             // --- Carousel and Lightbox Logic ---
             const carouselSlides = document.querySelectorAll('.carousel-slide');
@@ -1105,9 +991,9 @@
             const messageContent = document.getElementById('message-content');
             const prevMessageBtn = document.getElementById('prev-message');
             const nextMessageBtn = document.getElementById('next-message');
-            // const searchInput = document.getElementById('search-input');
             const searchBtn = document.getElementById('search-btn');
             const resetBtn = document.getElementById('reset-btn');
+            const searchInput = document.getElementById('search-input');
 
             // Default messages
             let messages = [
@@ -1317,6 +1203,38 @@
 
             // 调用函数 (这行代码应该已经在你的脚本里了)
             loadCredits();
+            
+
+            const sidebar = document.getElementById("sidebar");
+            const links = sidebar.querySelectorAll("a");
+            // 点击侧边栏展开/收起
+            sidebar.addEventListener('click', function (e) {
+                if (e.target.tagName.toLowerCase() !== "a" && e.target.tagName.toLowerCase() !== "span" && window.innerWidth < 768) {
+                    sidebar.classList.toggle("expanded");
+                }
+            });
+
+            links.forEach(link => {
+                link.addEventListener("click", function(e) {
+                    if (!sidebar.classList.contains("expanded")) {
+                        e.preventDefault();
+                        sidebar.classList.toggle("expanded");
+                    }
+                });
+            });
+
+            document.addEventListener("click", function(e) {
+                if (!sidebar.contains(e.target)) {
+                    sidebar.classList.remove("expanded");
+                }
+            });
+
+            // 点击页面其他地方时收起
+            // window.addEventListener('click', (event) => {
+            //     if (!sidebar.classList.contains('expanded') && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+            //         sidebar.classList.remove('expanded');
+            //     }
+            // });
 
         });
     </script>

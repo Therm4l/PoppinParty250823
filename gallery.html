@@ -16,165 +16,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
 
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="assets/css/gallery-styles.css">
+    <link rel="stylesheet" href="assets/css/gallery.css">
 
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        .nav-link:hover { color: #3b82f6; }
-        .lang-en { display: none; }
         /* 保持原框架的其他样式 */
-
-        /* --- 【新增】隐藏式侧边栏样式 --- */
-        .page-nav-container {
-            width: 15px;
-            height: 250px;
-            position: fixed;
-            right: 0; /* 定位在页面右侧 */
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #222;
-            border-radius: 15px 0 0 15px;
-            overflow: hidden;
-            transition: width 0.3s, border-radius 0.3s, height 0.3s;
-            z-index: 100;
-        }
-
-        .page-nav-container ul {
-            list-style: none; padding: 0; margin: 0; height: 100%; position: relative;
-        }
-
-        .page-nav-container li {
-            position: absolute;
-            top: var(--t);
-            transform: translateY(-50%);
-            width: 100%;
-            height: 20%;
-            font-size: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .page-nav-container li a {
-            color: transparent;
-            transition: color 0.3s;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        /* 当前所在区域的按钮高亮 */
-        .page-nav-container li.active a {
-            color: #fff;
-        }
-
-        /* --- 桌面端悬停效果 --- */
-        @media (min-width: 769px) {
-            .page-nav-container:hover {
-                width: 80px;
-                border-radius: 30px 0 0 30px;
-            }
-            .page-nav-container:hover li a {
-                color: #fff;
-            }
-        }
-
-        /* --- 移动端样式与交互 --- */
-        .sidebar-toggle {
-            display: none; /* 默认隐藏，仅在移动端显示 */
-        }
-
-        @media (max-width: 768px) {
-            /* 变更为右下角浮动按钮(FAB) */
-            .page-nav-container {
-                width: 45px;
-                height: 45px;
-                bottom: 3rem; /* 约 48px，增加与底部的距离 */
-                right: 1.5rem; /* 约 24px */
-                top: auto;
-                transform: none;
-                border-radius: 50%; /* 圆形 */
-            }
-
-            /* 展开后的样式 */
-            .page-nav-container.open {
-                height: 160px; /* 垂直展开 */
-                border-radius: 25px; /* 胶囊形状 */
-            }
-
-            .page-nav-container ul { display: none; }
-            .page-nav-container.open ul { display: block; }
-
-            .page-nav-container li a { color: #fff; }
-
-            .sidebar-toggle {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
-                height: 45px;
-                color: #fff;
-                cursor: pointer;
-                font-size: 18px;
-                transition: transform 0.3s;
-            }
-
-            .page-nav-container.open .sidebar-toggle {
-                transform: rotate(90deg); /* 展开时旋转图标 */
-            }
-        }
     </style>
 </head>
 
 <!-- <body class="text-gray-800 flex flex-col min-h-screen overflow-hidden"> -->
 <body class="text-gray-800 min-h-screen">
-    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
-        <nav class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 relative">
-                <div class="flex-shrink-0">
-                    <h1 class="text-xl font-bold text-gray-900">
-                        <span class="lang-zh">东南大学邦邦同好会</span>
-                        <span class="lang-en">SEU BanG Dream Club</span>
-                    </h1>
-                </div>
-                <div>
-                    <div class="hidden md:flex items-center space-x-2">
-                        <a href="main.html#info" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm"><span class="lang-zh">活动简介</span><span class="lang-en">Info</span></a>
-                        <a href="main.html#gallery" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm"><span class="lang-zh">创作</span><span class="lang-en">Crafts</span></a>
-                        <a href="main.html#message-board" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm"><span class="lang-zh">留言板</span><span class="lang-en">Message Board</span></a>
-                        <a href="main.html#credits" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm"><span class="lang-zh">致谢</span><span class="lang-en">Acknowledgements</span></a>
-                        <a href="main.html#links" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm"><span class="lang-zh">社交媒体</span><span class="lang-en">Social</span></a>
-                        <a href="player.html" class="nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm"><span class="lang-zh">歌单(test)</span><span class="lang-en">Playlist</span></a>
-                        <button id="lang-switch-btn-desktop" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-3 py-1 rounded-full text-xs transition-colors">
-                            <span class="lang-zh">EN</span>
-                            <span class="lang-en">中文</span>
-                        </button>
-                    </div>
-                    <div class="md:hidden">
-                        <button id="mobile-menu-button" class="text-gray-600 hover:text-gray-900 p-2 rounded-md">
-                            <i class="fa-solid fa-ellipsis-vertical text-xl"></i>
-                        </button>
-                    </div>
-                </div>
-                <div id="mobile-menu" class="hidden md:hidden absolute top-full right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 p-2 space-y-1">
-                    <a href="main.html#info" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm"><span class="lang-zh">活动简介</span><span class="lang-en">Info</span></a>
-                    <a href="main.html#gallery" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm"><span class="lang-zh">创作</span><span class="lang-en">Crafts</span></a>
-                    <a href="main.html#message-board" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm"><span class="lang-zh">留言板</span><span class="lang-en">Message Board</span></a>
-                    <a href="main.html#credits" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm"><span class="lang-zh">致谢</span><span class="lang-en">Acknowledgements</span></a>
-                    <a href="main.html#links" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm"><span class="lang-zh">社交媒体</span><span class="lang-en">Social</span></a>
-                    <a href="player.html" class="block nav-link text-gray-600 font-medium px-3 py-2 rounded-md text-sm"><span class="lang-zh">歌单(test)</span><span class="lang-en">Playlist</span></a>
-                    <button id="lang-switch-btn-mobile" class="w-full text-left bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-3 py-2 rounded-md text-sm transition-colors">
-                        <span class="lang-zh">切换为 EN</span><span class="lang-en">Switch to 中文</span>
-                    </button>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <div id="header-placeholder"></div>
 
     <main class="flex-grow w-full h-screen relative">
-        <section id="gallery-section" class="w-full h-full flex flex-col items-center justify-center overflow-hidden">
+        <section id="gallery-section" class="w-full h-full pt-8 pb-36 flex flex-col items-center justify-center overflow-hidden">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">
                 <span class="lang-zh">演职人员 Gallery</span>
                 <span class="lang-en">Cast & Staff Gallery</span>
@@ -185,149 +40,30 @@
                 <div id="ground"></div>
             </div>
         </section>
-
-        <section id="repo-section" class="w-full h-full bg-gray-100 pt-24 pb-12 flex flex-col">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">
-                <span class="lang-zh">参与者 Repo</span>
-                <span class="lang-en">Participant Reports</span>
-            </h2>
-            
-            <div class="max-w-4xl mx-auto w-full px-4 mb-6">
-                <div class="relative">
-                    <input type="text" id="repo-search-input" class="w-full p-3 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-                           data-placeholder-zh="按作者名称搜索..." 
-                           data-placeholder-en="Search by author name...">
-                    <i class="fa-solid fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                </div>
-                 <div id="search-results-container" class="mt-2 bg-white rounded-lg shadow-lg p-4 hidden"></div>
-            </div>
-
-            <div class="swiper-container repo-slider flex-grow">
-                <div class="swiper-wrapper" id="repo-swiper-wrapper">
-                    </div>
-            </div>
-        </section>
     </main>
-    <!-- 去掉原有按钮 -->
-    <!-- <button id="scroll-switcher" class="fixed left-1/2 -translate-x-1/2 bottom-5 z-40 w-12 h-12 bg-white/70 backdrop-blur-sm rounded-full shadow-lg text-2xl text-gray-700 flex items-center justify-center transition-transform hover:scale-110">
-        <i class="fa-solid fa-chevron-down"></i>
-    </button> -->
-
-    <div id="lightbox-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
-        <img id="lightbox-image" src="" class="max-w-full max-h-full object-contain">
-        <button id="lightbox-close" class="absolute top-5 right-5 text-white text-4xl">&times;</button>
-    </div>
-
-    <div id="repo-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
-        <div class="bg-white w-full max-w-3xl max-h-[90vh] rounded-lg shadow-xl flex flex-col">
-            <div class="p-4 border-b flex justify-between items-center">
-                <h3 id="repo-modal-title" class="text-2xl font-bold"></h3>
-                <button id="repo-modal-close" class="text-gray-500 text-3xl">&times;</button>
-            </div>
-            <div class="p-6 overflow-y-auto" id="repo-modal-content">
-                </div>
-            <div class="p-4 border-t text-right text-gray-500">
-                <p>
-                    <span class="lang-zh">作者: </span>
-                    <span class="lang-en">Author: </span>
-                    <span id="repo-modal-author" class="font-semibold"></span>
-                </p>
-            </div>
-        </div>
-    </div>
 
     <footer class="bg-gray-800 text-white py-4 absolute bottom-0 w-full z-0">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p>&copy; 2025 <span class="lang-zh">东南大学邦邦同好会</span><span class="lang-en">SEU Bang Dream Club</span>. All Rights Reserved.</p>
-            <p class="mt-2 text-sm text-gray-400">
-                <span class="lang-zh">本项目采用 <a href="https://opensource.org/licenses/MIT" target="_blank" class="underline hover:text-white">MIT 许可证</a> 进行授权。</span>
-                <span class="lang-en">This project is licensed under the <a href="https://opensource.org/licenses/MIT" target="_blank" class="underline hover:text-white">MIT License</a>.</span>
-            </p>
-        </div>
+        <div id="footer-placeholder"></div>
     </footer>
 
-    <div id="page-nav-sidebar" class="page-nav-container">
-        <div class="sidebar-toggle">
-            <i class="fa-solid fa-bars"></i>
-        </div>
-        <ul>
-            <li id="nav-to-gallery" style="--t:35%;">
-                <a title="滚动到顶部画廊">
-                    <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                </a>
-            </li>
-            <li id="nav-to-repo" style="--t:65%;">
-                <a title="滚动到底部Repo">
-                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <script src="assets/data/repo_data/posts_db.js"></script>
     <script src="assets/js/gallery_3d.js"></script>
-    <script src="assets/js/repo_posts.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/init.js"></script>   
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const htmlEl = document.documentElement;
-            let currentLang = 'zh';
-            const zhElements = document.querySelectorAll('.lang-zh');
-            const enElements = document.querySelectorAll('.lang-en');
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const langSwitchBtnDesktop = document.getElementById('lang-switch-btn-desktop');
-            const langSwitchBtnMobile = document.getElementById('lang-switch-btn-mobile');
-            
-            // 新增：需要动态改变 placeholder 的元素
-            const searchInput = document.getElementById('repo-search-input');
-
-            function setLanguage(lang) {
-                htmlEl.lang = lang === 'zh' ? 'zh-CN' : 'en';
-                zhElements.forEach(el => el.style.display = lang === 'zh' ? 'inline-block' : 'none');
-                enElements.forEach(el => el.style.display = lang === 'en' ? 'inline-block' : 'none');
-                currentLang = lang;
-
-                // 更新页面标题
-                document.title = lang === 'zh' 
-                    ? '画廊 - 东南大学邦邦同好会' 
-                    : 'Gallery - SEU BanG Dream Club';
-
-                // 更新搜索框的 placeholder
-                if(searchInput) {
-                    searchInput.placeholder = lang === 'zh' 
-                        ? searchInput.getAttribute('data-placeholder-zh')
-                        : searchInput.getAttribute('data-placeholder-en');
-                }
-            }
-
-            function toggleLanguage() {
-                setLanguage(currentLang === 'zh' ? 'en' : 'zh');
-            }
-
-            mobileMenuButton.addEventListener('click', (event) => {
-                event.stopPropagation();
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            langSwitchBtnDesktop.addEventListener('click', toggleLanguage);
-            langSwitchBtnMobile.addEventListener('click', toggleLanguage);
-
-            window.addEventListener('click', (event) => {
-                if (!mobileMenu.classList.contains('hidden') && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
-                    mobileMenu.classList.add('hidden');
-                }
-            });
-
-            document.querySelectorAll('#mobile-menu a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
-
-            setLanguage(currentLang); // 初始化页面语言
+        fetch("head.html")
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById("header-placeholder").outerHTML = html;
         });
+        fetch("foot.html")
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById("footer-placeholder").outerHTML = html;
+                initPage(); 
+        });
+        Gallery3D.init();
+    });
     </script>
 </body>
 </html>
