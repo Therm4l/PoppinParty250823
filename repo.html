@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    
+    <title>
+        <span class="lang-zh">投稿 - 东南大学邦邦同好会</span>
+        <span class="lang-en">Reports - SEU BanG Dream Club</span>
+    </title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="assets/css/repo.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        /* 保持原框架的其他样式 */
+    </style>
+</head>
+
+<body class="text-gray-800 min-h-screen">
+    <div id="header-placeholder"></div>
+
+    <main class="flex-grow w-full h-screen relative">
+        <section id="repo-section" class="w-full h-full bg-gray-100 pt-8 pb-12 flex flex-col">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">
+                <span class="lang-zh">参与者投稿</span>
+                <span class="lang-en">Participant Reports</span>
+            </h2>
+            
+            <div class="max-w-4xl mx-auto w-full px-4 mb-6">
+                <div class="relative">
+                    <input type="text" id="repo-search-input" class="w-full p-3 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+                           data-placeholder-zh="按作者名称搜索..." 
+                           data-placeholder-en="Search by author name...">
+                    <i class="fa-solid fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+                 <div id="search-results-container" class="mt-2 bg-white rounded-lg shadow-lg p-4 hidden"></div>
+            </div>
+
+            <div class="swiper-container repo-slider flex-grow">
+                <div class="swiper-wrapper" id="repo-swiper-wrapper">
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="lightbox-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
+        <img id="lightbox-image" src="" class="max-w-full max-h-full object-contain">
+        <button id="lightbox-close" class="absolute top-5 right-5 text-white text-4xl">&times;</button>
+    </div>
+
+    <div id="repo-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white w-full max-w-3xl max-h-[90vh] rounded-lg shadow-xl flex flex-col">
+            <div class="p-4 border-b flex justify-between items-center">
+                <h3 id="repo-modal-title" class="text-2xl font-bold"></h3>
+                <button id="repo-modal-close" class="text-gray-500 text-3xl">&times;</button>
+            </div>
+            <div class="p-6 overflow-y-auto" id="repo-modal-content">
+                </div>
+            <div class="p-4 border-t text-right text-gray-500">
+                <p>
+                    <span class="lang-zh">作者: </span>
+                    <span class="lang-en">Author: </span>
+                    <span id="repo-modal-author" class="font-semibold"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white py-4 absolute bottom-0 w-full z-0">
+        <div id="footer-placeholder"></div>
+    </footer>
+    
+
+    <script src="assets/data/repo_data/posts_db.js"></script>
+    <script src="assets/js/repo_posts.js"></script>
+    <script src="assets/js/init.js"></script>    
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        fetch("head.html")
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById("header-placeholder").outerHTML = html;
+        });
+        fetch("foot.html")
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById("footer-placeholder").outerHTML = html;
+                initPage(); 
+        });
+        RepoPosts.init();
+    });
+    </script>
+</body>
+</html>
