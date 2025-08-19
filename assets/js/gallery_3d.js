@@ -110,6 +110,8 @@ const Gallery3D = (function () {
             const indexInRow = i % Math.ceil(aEle.length / config.photoRows);
             const elementsPerRow = Math.ceil(aEle.length / config.photoRows);
 
+            // 通过禁用过渡效果来实现实时缩放
+            aEle[i].style.transition = 'none';
             aEle[i].style.transform = `rotateY(${indexInRow * (360 / elementsPerRow)}deg) translateZ(${state.radius}px) translateY(${yOffset}px)`;
         }
     }
