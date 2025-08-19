@@ -42,6 +42,11 @@
         </section>
     </main>
 
+    <div id="lightbox-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
+        <img id="lightbox-image" src="" class="max-w-full max-h-full object-contain">
+        <button id="lightbox-close" class="absolute top-5 right-5 text-white text-4xl">&times;</button>
+    </div>
+    
     <footer class="bg-gray-800 text-white py-4 absolute bottom-0 w-full z-0">
         <div id="footer-placeholder"></div>
     </footer>
@@ -63,6 +68,33 @@
                 initPage(); 
         });
         Gallery3D.init();
+        const lightboxModal = document.getElementById('lightbox-modal');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        document.addEventListener('galleryImageDoubleClick', function(e) {
+            lightboxImage.src = e.detail.src;
+            lightboxModal.classList.remove('hidden');
+            lightboxModal.classList.add('flex');
+        });
+
+        function closeLightbox() {
+            lightboxModal.classList.add('hidden');
+            lightboxModal.classList.remove('flex');
+            lightboxImage.src = "";
+        }
+        
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxModal.addEventListener('click', (e) => {
+            if (e.target === lightboxModal) { // 点击背景关闭
+                closeLightbox();
+            }
+        });
+        document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeLightbox();
+        }
+    });
     });
     </script>
 </body>
