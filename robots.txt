@@ -1,0 +1,25 @@
+# ===============================================================
+# robots.txt for this website
+#
+# Please read the notice below before attempting to crawl this site.
+# ===============================================================
+
+# Block all web crawlers from all content.
+User-agent: *
+Disallow: /
+
+# === Human-readable Notice / 人类可读信息 ===
+#
+# To all web crawlers and human visitors:
+#
+# The crawling of this entire website is disallowed by the rules above.
+# 根据以上规则，本站所有页面均禁止爬取。
+#
+# If you are looking for data, source code, or other resources,
+# please visit our official GitHub repository.
+# 如果您正在寻找数据、源代码或其他资源，请访问我们的官方 GitHub 仓库。
+#
+# GitHub URL: https://github.com/Therm4l/PoppinParty250823
+#
+# Thank you for your cooperation.
+# 感谢您的合作。
