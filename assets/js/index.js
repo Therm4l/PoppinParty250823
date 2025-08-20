@@ -88,8 +88,36 @@ $(function (argument) {
 		voiceProgress.progressClick(function(value) {
 			player.musicVoiceSeekTo(value);
 		});
-		voiceProgress.progressMove(function(value) {
-			player.musicVoiceSeekTo(value);
+		voiceProgress.$progressDot.mousedown(function(){
+			voiceProgress.isMove = true;
+		
+			const dotWidth = voiceProgress.$progressDot.width();
+			const lineWidth = voiceProgress.$progressBottom.width();
+			const lineOffset = voiceProgress.$progressBottom.offset().left;
+		
+			function moveHandler(ev) {
+				let left = ev.pageX - lineOffset;
+		
+				if(left < 0) left = 0;
+				if(left > lineWidth - dotWidth) left = lineWidth - dotWidth;
+		
+				voiceProgress.$progressLine.css("width", left + "px");
+				voiceProgress.$progressDot.css("left", left + "px");
+		
+				const value = left / (lineWidth - dotWidth);
+		
+				// 实时更新音量
+				player.musicVoiceSeekTo(value);
+			}
+		
+			function upHandler() {
+				voiceProgress.isMove = false;
+				$(document).off("mousemove", moveHandler);
+				$(document).off("mouseup", upHandler);
+			}
+		
+			$(document).on("mousemove", moveHandler);
+			$(document).on("mouseup", upHandler);
 		});
 
 		//获取歌曲进度条信息，创建Progress对象

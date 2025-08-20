@@ -20,21 +20,28 @@ function initPage() {
 
     function setLanguage(lang) {
         htmlEl.lang = lang === 'zh' ? 'zh-CN' : 'en';
-        zhElements.forEach(el => el.style.display = lang === 'zh' ? 'inline-block' : 'none');
-        enElements.forEach(el => el.style.display = lang === 'en' ? 'inline-block' : 'none');
         currentLang = lang;
 
-        // 更新页面标题
-        document.title = lang === 'zh' 
-            ? '画廊 - 东南大学邦邦同好会' 
-            : 'Gallery - SEU BanG Dream Club';
-
-        // 更新搜索框的 placeholder
-        if(searchInput) {
-            searchInput.placeholder = lang === 'zh' 
-                ? searchInput.getAttribute('data-placeholder-zh')
-                : searchInput.getAttribute('data-placeholder-en');
+        zhElements.forEach(el => el.style.display = lang === 'zh' ? 'inline-block' : 'none');
+        enElements.forEach(el => el.style.display = lang === 'en' ? 'inline-block' : 'none');
+        
+        // 切换 <title>
+        const titleEl = document.querySelector('title');
+        if (titleEl) {
+            const titleText = lang === 'zh'
+                ? titleEl.getAttribute('data-title-zh')
+                : titleEl.getAttribute('data-title-en');
+            if (titleText) {
+                document.title = titleText;
+            }
         }
+
+        document.querySelectorAll('input[data-placeholder-zh]').forEach(input => {
+            const placeholder = lang === 'zh'
+                ? input.getAttribute('data-placeholder-zh')
+                : input.getAttribute('data-placeholder-en');
+            if (placeholder) input.placeholder = placeholder;
+        });
     }
 
     function toggleLanguage() {

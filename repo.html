@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     
-    <title>
-        <span class="lang-zh">投稿 - 东南大学邦邦同好会</span>
-        <span class="lang-en">Reports - SEU BanG Dream Club</span>
+    <title data-title-zh="投稿 - 东南大学邦邦同好会" data-title-en="Reports - SEU BanG Dream Club">
+        投稿 - 东南大学邦邦同好会
     </title>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -88,29 +87,32 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-        fetch("head.html")
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById("header-placeholder").outerHTML = html;
-        });
-        fetch("foot.html")
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById("footer-placeholder").outerHTML = html;
+            const loadHeader = fetch("head.html")
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById("header-placeholder").innerHTML = html;
+                });
+
+            const loadFooter = fetch("foot.html")
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById("footer-placeholder").innerHTML = html;
+                });
+            Promise.all([loadHeader, loadFooter]).then(() => {
                 initPage(); 
-        });
-        RepoPosts.init();
-        const repoModal = document.getElementById('repo-modal');
-        const repoModalClose = document.getElementById('repo-modal-close');
-        function closeRepoModal() {
-            repoModal.classList.add('hidden');
-            repoModal.classList.remove('flex');
-        }
-        repoModalClose.addEventListener('click', closeRepoModal);
-        repoModal.addEventListener('click', (e) => {
-            if (e.target === repoModal) { // 点击背景关闭
-                closeRepoModal();
+                RepoPosts.init();
+            });
+            const repoModal = document.getElementById('repo-modal');
+            const repoModalClose = document.getElementById('repo-modal-close');
+            function closeRepoModal() {
+                repoModal.classList.add('hidden');
+                repoModal.classList.remove('flex');
             }
+            repoModalClose.addEventListener('click', closeRepoModal);
+            repoModal.addEventListener('click', (e) => {
+                if (e.target === repoModal) { // 点击背景关闭
+                    closeRepoModal();
+                }
         });
 
         // --- 键盘事件监听 ---

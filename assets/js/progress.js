@@ -18,20 +18,22 @@
 
 			var $progress = this;//this 指 progress对象
 
-			//监听背景的点击
 			this.$progressBottom.click(function(event) {
-				if($progress.currentIndex==-1)return ;
-				// 获取背景距离窗口默认的位置
-				var defualtLeft = $(this).offset().left;
-				//获取鼠标点击的位置
-				var eventLeft = event.pageX;
-				//设置前景宽度
-				$progress.$progressLine.css("width",eventLeft-defualtLeft);
-				$progress.$progressDot.css("left",eventLeft-defualtLeft);
+                if ($progress.currentIndex == -1) return;
 
-				//计算进度条的比例
-				var value = (eventLeft-defualtLeft) / $(this).width();
-				callback(value);
+                const dotWidth = $progress.$progressDot.width();
+                const lineWidth = $(this).width();
+                let left = event.pageX - $(this).offset().left;
+
+                // 限制 left 范围
+                if (left < 0) left = 0;
+                if (left > lineWidth - dotWidth) left = lineWidth - dotWidth;
+
+                $progress.$progressLine.css("width", left + "px");
+                $progress.$progressDot.css("left", left + "px");
+
+                const value = left / (lineWidth - dotWidth); // 0~1
+                callback(value);
 			});
 		},
 		//进度条移动
@@ -43,6 +45,7 @@
 				if($progress.currentIndex==-1)return ;
 				$progress.isMove = true;
 				var defualtLeft = $progress.$progressBottom.offset().left;// 获取背景距离窗口默认的位置
+				var dotWidth = $progress.$progressDot.width(); // 小圆点的宽度
 				
 				var value;
 				//监听文档移动事件
@@ -55,14 +58,14 @@
 					if(left<0){
 						left = 0;
 					}
-					else if(left>$progress.$progressBottom.width()){
-						left = $progress.$progressBottom.width();
+					else if(left>$progress.$progressBottom.width() - dotWidth){
+						left = $progress.$progressBottom.width() - dotWidth;
 					}
 					//设置进度条位置
 					$progress.$progressLine.css("width",left);
 					$progress.$progressDot.css("left",left);
 					//计算进度条的比例
-					value = left/$progress.$progressBottom.width();
+					value = left/($progress.$progressBottom.width() - dotWidth);
 				});
 
 				//监听鼠标抬起事件
@@ -76,14 +79,13 @@
 		//设置进度条
 		setProgress:function (value){
 			if(this.isMove)return;
-			if(value>0&&value<100){
-				this.$progressLine.css({
-					width:value+"%"
-				});
-				this.$progressDot.css({
-					left:value+"%"
-				});
-			}
+			const dotWidth = this.$progressDot.width();
+            const lineWidth = this.$progressBottom.width();
+			value = Math.max(0, Math.min(100, value));
+			const left = (lineWidth - dotWidth) * (value / 100);
+
+            this.$progressLine.css("width", left + "px");
+            this.$progressDot.css("left", left + "px");
 		},
 	}
 	Progress.prototype.init.prototype = Progress.prototype;

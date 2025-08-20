@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 你可以在这里为新页面设置一个不同的标题 -->
-    <title>
-        <span class="lang-zh">歌单 - 东南大学邦邦同好会</span>
-        <span class="lang-en">Playlist - SEU BanG Dream Club</span>
+    <title data-title-zh="歌单 - 东南大学邦邦同好会" data-title-en="Playlist - SEU BanG Dream Club">
+        歌单 - 东南大学邦邦同好会
     </title>
         
     <!-- Tailwind CSS via CDN -->
@@ -312,7 +311,7 @@
             position: relative;
             top: 50%;
             transform: translateY(-50%);
-            left: 70px;
+            left: 56px;
         }
     </style>
 </head>
@@ -432,16 +431,19 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            fetch("head.html")
-                .then(res => res.text())
-                .then(html => {
-                    document.getElementById("header-placeholder").outerHTML = html;
+            const loadHeader = fetch("head.html")
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById("header-placeholder").innerHTML = html;
             });
-            fetch("foot.html")
+
+            const loadFooter = fetch("foot.html")
                 .then(res => res.text())
                 .then(html => {
-                    document.getElementById("footer-placeholder").outerHTML = html;
-                    initPage(); 
+                    document.getElementById("footer-placeholder").innerHTML = html;
+                });
+            Promise.all([loadHeader, loadFooter]).then(() => {
+                initPage(); 
             });
 
             // --- MODIFIED: 升级版滚动检查函数，带动态速度 ---

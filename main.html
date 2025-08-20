@@ -446,7 +446,7 @@
                 <!-- Search Module -->
                 <div class="mb-6 relative z-10 backdrop-blur-[2px] bg-white/30 rounded-xl shadow-inner p-4">
                     <div class="flex flex-col sm:flex-row">
-                        <input type="text" id="search-input" placeholder="搜索留言者..." data-en-placeholder="Search by author..."
+                        <input type="text" id="search-input" data-placeholder-zh="搜索留言者..." data-placeholder-en="Search by author..."
                                class="flex-grow px-4 py-2 rounded-lg border-0 focus:ring-2 focus:ring-pink-500 focus:outline-none mb-2 sm:mb-0 min-w-0 sm:mr-2">
                         <div class="flex">
                             <button id="search-btn" class="flex-grow sm:flex-grow-0 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-lg sm:rounded-r-lg hover:from-pink-600 hover:to-purple-600 transition-all whitespace-nowrap">
@@ -701,16 +701,19 @@
     <script src="assets/js/init.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            fetch("head.html")
-                .then(res => res.text())
-                .then(html => {
-                    document.getElementById("header-placeholder").outerHTML = html;
+            const loadHeader = fetch("head.html")
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById("header-placeholder").innerHTML = html;
             });
-            fetch("foot.html")
+
+            const loadFooter = fetch("foot.html")
                 .then(res => res.text())
                 .then(html => {
-                    document.getElementById("footer-placeholder").outerHTML = html;
-                    initPage(); 
+                    document.getElementById("footer-placeholder").innerHTML = html;
+                });
+            Promise.all([loadHeader, loadFooter]).then(() => {
+                initPage(); 
             });
 
             // --- Carousel and Lightbox Logic ---
@@ -1229,14 +1232,96 @@
                 }
             });
 
-            // 点击页面其他地方时收起
-            // window.addEventListener('click', (event) => {
-            //     if (!sidebar.classList.contains('expanded') && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
-            //         sidebar.classList.remove('expanded');
-            //     }
-            // });
+            const topIndicator = sidebar.querySelector('.top');
+            const sections = [];
+            links.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    const section = document.querySelector(href);
+                    if (section) {
+                        sections.push({
+                            link: link,
+                            section: section
+                        });
+                    }
+                }
+            });
+            function updateSidebarTop() {
+                const scrollY = window.scrollY || window.pageYOffset;
+                const offset = window.innerHeight / 2;
+                let activeIndex = 0;
+
+                sections.forEach((item, index) => {
+                    const rect = item.section.getBoundingClientRect();
+                    const top = rect.top + window.scrollY;
+                    const bottom = top + rect.height;
+
+                    if (scrollY + offset >= top && scrollY + offset < bottom) {
+                        activeIndex = index;
+                    }
+                });
+
+                if ((window.innerHeight + scrollY) >= document.body.scrollHeight) {
+                    activeIndex = sections.length - 1;
+                }
+
+                const heights = ['20%', '30%', '40%', '50%', '60%'];
+                topIndicator.style.height = heights[activeIndex] || '20%';
+
+            }
+            window.addEventListener('scroll', updateSidebarTop);
+            window.addEventListener('resize', updateSidebarTop);
+            updateSidebarTop();
 
         });
+        // --- Sidebar 自动高亮和移动 top ---
+        // (function() {
+        //     const sidebar = document.querySelector('.sidebar-container');
+        //     const topIndicator = sidebar.querySelector('.top');
+        //     const links = sidebar.querySelectorAll('li a');
+        //     const sections = [];
+
+        //     // 收集每个链接对应的section
+        //     links.forEach(link => {
+        //         const href = link.getAttribute('href');
+        //         if (href && href.startsWith('#')) {
+        //             const section = document.querySelector(href);
+        //             if (section) {
+        //                 sections.push({
+        //                     link: link,
+        //                     section: section
+        //                 });
+        //             }
+        //         }
+        //     });
+
+        //     // 根据滚动位置更新 top 高度
+        //     function updateSidebarTop() {
+        //         const scrollY = window.scrollY || window.pageYOffset;
+        //         const offset = window.innerHeight / 2; // 以屏幕中间为参考
+        //         let activeIndex = 0;
+
+        //         sections.forEach((item, index) => {
+        //             const rect = item.section.getBoundingClientRect();
+        //             const top = rect.top + window.scrollY;
+        //             const bottom = top + rect.height;
+
+        //             if (scrollY + offset >= top && scrollY + offset < bottom) {
+        //                 activeIndex = index;
+        //             }
+        //         });
+
+        //         // 对应高度映射
+        //         const heights = ['20%', '30%', '40%', '50%', '60%'];
+        //         topIndicator.style.height = heights[activeIndex] || '20%';
+
+        //     }
+
+        //     window.addEventListener('scroll', updateSidebarTop);
+        //     window.addEventListener('resize', updateSidebarTop);
+        //     // 初始化一次
+        //     updateSidebarTop();
+        // })();
     </script>
 </body>
 </html>

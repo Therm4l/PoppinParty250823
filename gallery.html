@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     
-    <title>
-        <span class="lang-zh">画廊 - 东南大学邦邦同好会</span>
-        <span class="lang-en">Gallery - SEU BanG Dream Club</span>
+    <title data-title-zh="画廊 - 东南大学邦邦同好会" data-title-en="Gallery - SEU BanG Dream Club">
+        画廊 - 东南大学邦邦同好会
     </title>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -56,46 +55,50 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-        fetch("head.html")
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById("header-placeholder").outerHTML = html;
-        });
-        fetch("foot.html")
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById("footer-placeholder").outerHTML = html;
-                initPage(); 
-        });
-        Gallery3D.init();
-        const lightboxModal = document.getElementById('lightbox-modal');
-        const lightboxImage = document.getElementById('lightbox-image');
-        const lightboxClose = document.getElementById('lightbox-close');
+            const loadHeader = fetch("head.html")
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById("header-placeholder").innerHTML = html;
+                });
 
-        document.addEventListener('galleryImageDoubleClick', function(e) {
-            lightboxImage.src = e.detail.src;
-            lightboxModal.classList.remove('hidden');
-            lightboxModal.classList.add('flex');
-        });
+            const loadFooter = fetch("foot.html")
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById("footer-placeholder").innerHTML = html;
+                });
+            Promise.all([loadHeader, loadFooter]).then(() => {
+                initPage();
+                Gallery3D.init();
+            });
+            
+            const lightboxModal = document.getElementById('lightbox-modal');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxClose = document.getElementById('lightbox-close');
 
-        function closeLightbox() {
-            lightboxModal.classList.add('hidden');
-            lightboxModal.classList.remove('flex');
-            lightboxImage.src = "";
-        }
-        
-        lightboxClose.addEventListener('click', closeLightbox);
-        lightboxModal.addEventListener('click', (e) => {
-            if (e.target === lightboxModal) { // 点击背景关闭
-                closeLightbox();
+            document.addEventListener('galleryImageDoubleClick', function(e) {
+                lightboxImage.src = e.detail.src;
+                lightboxModal.classList.remove('hidden');
+                lightboxModal.classList.add('flex');
+            });
+
+            function closeLightbox() {
+                lightboxModal.classList.add('hidden');
+                lightboxModal.classList.remove('flex');
+                lightboxImage.src = "";
             }
+            
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxModal.addEventListener('click', (e) => {
+                if (e.target === lightboxModal) { // 点击背景关闭
+                    closeLightbox();
+                }
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                }
+            });
         });
-        document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeLightbox();
-        }
-    });
-    });
     </script>
 </body>
 </html>
