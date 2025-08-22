@@ -134,4 +134,4 @@ Special thanks to the three developers who built the site and to the testers for
 
 ## License
 
-This project is released under the MIT License—see the [LICENCE](LICENCE) file for details.
+This project is released under the MIT License and CC BY-NC-ND License—see the [LICENSE-MIT](LICENSE) and [LICENSE-CC](assets/LICENSE) files for details.
