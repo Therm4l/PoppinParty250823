@@ -4,7 +4,7 @@
 
 ## Introduction
 
-[Visit online](therm4l.github.io/PoppinParty250823/)
+[Visit online](https://therm4l.github.io/PoppinParty250823/)
 
 This project is a purely static front-end website created to commemorate **Poppin' Party 2025 Global LIVE Shanghai**, serving as part of the event’s free memorabilia. Built with HTML, CSS, and JavaScript, the site is hosted on GitHub Pages.
 
