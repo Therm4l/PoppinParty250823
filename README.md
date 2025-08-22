@@ -4,7 +4,7 @@
 
 ## 简介
 
-[在线访问](therm4l.github.io/PoppinParty250823/)
+[在线访问](https://therm4l.github.io/PoppinParty250823/)
 
 本项目是为纪念 **Poppin' Party 2025 Global LIVE Shanghai** 活动而制作的纯静态前端网站，作为活动纪念品（无料）的一部分。网站基于 HTML/CSS/JS 构建，并部署于 GitHub Pages。
 
