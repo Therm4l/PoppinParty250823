@@ -1,28 +1,128 @@
-[{
+[
+  {
+    "name": "Yes! BanG_Dream!",
+    "singer": "Poppin'Party",
+    "album": "Yes! BanG_Dream!",
+    "time": "05:08",
+    "link_url": "assets/source/Yes! BanG_Dream!.mp3",
+    "cover": "assets/source/Yes! BanG_Dream!.jpg",
+    "link_lrc": "assets/source/Yes! BanG_Dream!.txt"
+  },
+  {
+    "name": "キラキラだとか夢だとか ～Sing Girls～",
+    "singer": "Poppin'Party",
+    "album": "キラキラだとか夢だとか ～Sing Girls～",
+    "time": "05:05",
+    "link_url": "assets/source/キラキラだとか夢だとか ～Sing Girls～.mp3",
+    "cover": "assets/source/キラキラだとか夢だとか ～Sing Girls～.jpg",
+    "link_lrc": "assets/source/キラキラだとか夢だとか ～Sing Girls～.txt"
+  },
+  {
+    "name": "イニシャル",
+    "singer": "Poppin'Party",
+    "album": "イニシャル/夢を撃ち抜く瞬間に！",
+    "time": "04:54",
+    "link_url": "assets/source/イニシャル.mp3",
+    "cover": "assets/source/イニシャル:夢を撃ち抜く瞬間に！.jpg",
+    "link_lrc": "assets/source/イニシャル.txt"
+  },
+  {
+    "name": "Happy Happy Party!",
+    "singer": "Poppin'Party",
+    "album": "キラキラだとか夢だとか ～Sing Girls～",
+    "time": "04:43",
+    "link_url": "assets/source/Happy Happy Party!.mp3",
+    "cover": "assets/source/キラキラだとか夢だとか ～Sing Girls～.jpg",
+    "link_lrc": "assets/source/Happy Happy Party!.txt"
+  },
+  {
+    "name": "ぽっぴん'しゃっふる",
+    "singer": "Poppin'Party",
+    "album": "Yes! BanG_Dream!",
+    "time": "04:39",
+    "link_url": "assets/source/ぽっぴん'しゃっふる.mp3",
+    "cover": "assets/source/Yes! BanG_Dream!.jpg",
+    "link_lrc": "assets/source/ぽっぴん'しゃっふる.txt"
+  },
+  {
+    "name": "DOKI DOKI SCARY",
+    "singer": "Poppin'Party",
+    "album": "ポピジェニック",
+    "time": "04:00",
+    "link_url": "assets/source/DOKI DOKI SCARY.mp3",
+    "cover": "assets/source/ポピジェニック.jpg",
+    "link_lrc": "assets/source/DOKI DOKI SCARY.txt"
+  },
+  {
+    "name": "B.O.F",
+    "singer": "Poppin'Party",
+    "album": "クリスマスのうた",
+    "time": "03:38",
+    "link_url": "assets/source/B.O.F.mp3",
+    "cover": "assets/source/クリスマスのうた.jpg",
+    "link_lrc": "assets/source/B.O.F.txt"
+  },
+  {
+    "name": "Time Lapse",
+    "singer": "Poppin'Party",
+    "album": "クリスマスのうた",
+    "time": "04:09",
+    "link_url": "assets/source/Time Lapse.mp3",
+    "cover": "assets/source/クリスマスのうた.jpg",
+    "link_lrc": "assets/source/Time Lapse.txt"
+  },
+  {
+    "name": "走り始めたばかりのキミに",
+    "singer": "Poppin'Party",
+    "album": "走り始めたばかりのキミに",
+    "time": "04:19",
+    "link_url": "assets/source/走り始めたばかりのキミに.mp3",
+    "cover": "assets/source/走り始めたばかりのキミに.jpg",
+    "link_lrc": "assets/source/走り始めたばかりのキミに.txt"
+  },
+  {
+    "name": "Tomorrow’s Door",
+    "singer": "Poppin'Party",
+    "album": "ポピジェニック",
+    "time": "04:08",
+    "link_url": "assets/source/Tomorrow’s Door.mp3",
+    "cover": "assets/source/ポピジェニック.jpg",
+    "link_lrc": "assets/source/Tomorrow’s Door.txt"
+  },
+  {
+    "name": "STAR BEAT!〜ホシノコドウ〜",
+    "singer": "Poppin'Party",
+    "album": "STAR BEAT!〜ホシノコドウ〜",
+    "time": "05:19",
+    "link_url": "assets/source/STAR BEAT!～ホシノコドウ～.mp3",
+    "cover": "assets/source/STAR BEAT!～ホシノコドウ～.jpg",
+    "link_lrc": "assets/source/STAR BEAT!～ホシノコドウ～.txt"
+  },
+  {
+    "name": "ティアドロップス",
+    "singer": "Poppin'Party",
+    "album": "走り始めたばかりのキミに/ティアドロップス",
+    "time": "03:37",
+    "link_url": "assets/source/ティアドロップス.mp3",
+    "cover": "assets/source/走り始めたばかりのキミに.jpg",
+    "link_lrc": "assets/source/ティアドロップス.txt"
+  },
+  {
     "name": "ときめきエクスペリエンス！",
     "singer": "Poppin'Party",
-    "album": "ときめきエクスペリエンス！",
+    "album": "ときめきエクスペリエンス!",
     "time": "04:17",
     "link_url": "assets/source/ときめきエクスペリエンス！.mp3",
     "cover": "assets/source/ときめきエクスペリエンス！.jpg",
     "link_lrc": "assets/source/ときめきエクスペリエンス！.txt"
   },
   {
-    "name": "Returns",
+    "name": "キズナミュージック♪",
     "singer": "Poppin'Party",
-    "album": "Dreamers Go!/Returns",
-    "time": "05:24",
-    "link_url": "assets/source/Returns.mp3",
-    "cover": "assets/source/Returns.jpg",
-    "link_lrc": "assets/source/Returns.txt"
-  },
-  {
-    "name": "STAR BEAT!～ホシノコドウ～",
-    "singer": "Poppin'Party",
-    "album": "STAR BEAT!〜ホシノコドウ〜",
-    "time": "04:17",
-    "link_url": "assets/source/STAR BEAT!～ホシノコドウ～.mp3",
-    "cover": "assets/source/STAR BEAT!～ホシノコドウ～.jpg",
-    "link_lrc": "assets/source/STAR BEAT!～ホシノコドウ～.txt"
+    "album": "キズナミュージック♪",
+    "time": "5:15",
+    "link_url": "assets/source/キズナミュージック♪.mp3",
+    "cover": "assets/source/キズナミュージック♪.jpg",
+    "link_lrc": "assets/source/キズナミュージック♪.txt"
   }
 ]
