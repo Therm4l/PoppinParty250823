@@ -40,6 +40,7 @@ const Gallery3D = (function () {
         // 推导：r >= ((图片宽度 + 间距) * 图片数) / (2 * PI)
         const padding = 20; // 为图片之间设置20px的最小间距
         config.minRadius = Math.ceil(((config.imgWidth + padding) * elementsPerRow) / (2 * Math.PI));
+        if (state.radius < config.minRadius) state.radius = config.minRadius;
 
         ospin.style.width = config.imgWidth + "px";
         ospin.style.height = config.imgHeight + "px";
