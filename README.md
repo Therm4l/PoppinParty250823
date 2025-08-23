@@ -137,4 +137,4 @@
 
 ## 许可
 
-本项目采用 MIT 许可，详情请参阅 [LICENCE](LICENCE) 文件。
+本项目采用 MIT 和 CC BY-NC-ND 许可，详情请参阅 [LICENSE-MIT](LICENSE) 和 [LICENSE-CC](assets/LICENSE)。
