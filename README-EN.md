@@ -12,6 +12,7 @@ If you enjoy this project, please consider giving us a ⭐ or forking it—your 
 
 ## Updates
 
+- **2025.08.25**: Repo released.
 - **2025.08.24**: Playlist and Gallery released.
 - **2025.08.23**: First version released.
 
