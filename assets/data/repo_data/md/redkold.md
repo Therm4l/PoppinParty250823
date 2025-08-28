@@ -3,7 +3,8 @@ title: "现地记录: 8.23 Poppin' Party"
 
 date: 2025-08-26 09:13:38
 
-tags: - 所见所想
+tags: 
+  - 所见所想
 
 URL: https://redkold.github.io/2025/08/26/ppp823/
 
