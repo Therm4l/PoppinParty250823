@@ -89,6 +89,15 @@ const Gallery3D = (function () {
             "assets/data/gallery_images/DBCFC14D0BAA19ACD123BCEA13764ADA.jpg",
             "assets/data/gallery_images/F56DA345CE27DC381D291AB79AEB8449.jpeg",
             "assets/data/gallery_images/F639E01E8A63F41B9955713A1A5481D7.jpg",
+            "assets/data/gallery_images/51e5ce331963202bf147a19042b55e733546618471123189.jpg@1052w_!web-dynamic.png",
+            "assets/data/gallery_images/f5be90449be150d85d09e31b13c7d8e03546618471123189.jpg@1052w_!web-dynamic.png",
+            "assets/data/gallery_images/99bf65622a3865b8250c561655b650613546618471123189.jpg@1052w_!web-dynamic.png",
+            "assets/data/gallery_images/31bc6480ebfd950b9470e12d00b0d88c3546618471123189.jpg@1052w_!web-dynamic.png",
+            "assets/data/gallery_images/70f92d28a469c25d47dd19fb950dc71e3546618471123189.jpg@1052w_!web-dynamic.png",
+            "assets/data/gallery_images/eb2eab0b8e070ebc63b3c48928b472c33546618471123189.jpg@1052w_!web-dynamic.png",
+            "assets/data/gallery_images/b1daeb9b125bdfe7bc9ec7693f5fd3fb3546618471123189.jpg@1052w_!web-dynamic.png",
+            "assets/data/gallery_images/b192df6e64a155e678730d93b3b72b783546618471123189.jpg@1052w_!web-dynamic.png",
+            "assets/data/gallery_images/73ec1fd723ed0d5c72bd5c59124f76203546618471123189.jpg@1052w_!web-dynamic.png",
         ];
         
         imagePaths.forEach(path => {
