@@ -10,7 +10,7 @@ function getBasePath() {
         // 在这里填入你的 GitHub 仓库名！
         // 比如，如果你的仓库是 "my-website"，就返回 "/my-website"
         // 注意：前后都有斜杠，但前面那个更重要
-        return '/PoppinParty250823'; 
+        return '/PoppinParty250823/'; 
     } else {
         // 否则，我们认为是在本地环境，不需要任何前缀
         return '';
