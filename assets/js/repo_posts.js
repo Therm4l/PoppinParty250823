@@ -26,7 +26,17 @@ const RepoPosts = (function() {
     let allPosts = [];
 
     function init() {
-        allPosts = REPO_POSTS_DATA; // 从 posts_db.js 获取数据
+        // 在初始化时，处理所有帖子的路径
+        allPosts = REPO_POSTS_DATA.map(post => {
+            return {
+                ...post, // 复制帖子的所有原始属性
+                // 对每个路径属性进行处理，在前面加上 basePath
+                markdownFile: `${basePath}${post.markdownFile}`,
+                previewImage: `${basePath}${post.previewImage}`,
+                images: post.images.map(img => `${basePath}${img}`)
+            };
+        });
+        // --- 修改结束 ---
         
         generateRepoCards(allPosts);
         initializeSwiper();
