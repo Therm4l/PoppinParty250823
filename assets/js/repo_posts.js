@@ -108,36 +108,101 @@ const RepoPosts = (function() {
         resultsContainer.classList.remove('hidden');
     }
 
+    // async function showPostDetail(post) {
+    //     const modal = document.getElementById('repo-modal');
+    //     const titleEl = document.getElementById('repo-modal-title');
+    //     const contentEl = document.getElementById('repo-modal-content');
+    //     const authorEl = document.getElementById('repo-modal-author');
+
+    //     titleEl.textContent = post.title;
+    //     authorEl.textContent = post.author;
+    //     contentEl.innerHTML = '<p>加载中...</p>'; // 提示加载
+    //     modal.classList.remove('hidden');
+    //     modal.classList.add('flex');
+
+    //     try {
+    //         const response = await fetch(post.markdownFile);
+    //         if (!response.ok) throw new Error('Markdown 文件加载失败');
+    //         const markdownText = await response.text();
+            
+    //         // 解析Markdown并替换图片路径
+    //         let htmlContent = marked.parse(markdownText);
+            
+    //         // 将帖子中的所有图片添加到内容末尾
+    //         post.images.forEach(imgSrc => {
+    //             htmlContent += `<img src="${imgSrc}" class="mt-4 rounded-lg shadow-md w-full object-contain">`;
+    //         });
+            
+    //         contentEl.innerHTML = htmlContent;
+    //     } catch (error) {
+    //         contentEl.innerHTML = `<p class="text-red-500">内容加载失败: ${error.message}</p>`;
+    //     }
+    // }
+    
+    // 这是一个辅助函数，用于手动移除 YAML Front Matter
+    function stripYamlFrontMatter(text) {
+        // 正则表达式匹配以 '---' 开始和结束的 Front Matter 部分
+        // \s*     - 匹配任意空白符（包括换行）
+        // ---     - 匹配字面上的 '---'
+        // ([\s\S]*?) - 非贪婪匹配任意字符，这是 Front Matter 的内容
+        // a.s. -- 确保可以跨行匹配
+        const yamlRegex = /^---\s*[\r\n]([\s\S]*?)[\r\n]---\s*[\r\n]/;
+        
+        // 使用 replace 方法，将匹配到的 Front Matter 部分替换为空字符串
+        // 这样就只剩下后面的 Markdown 内容了
+        const content = text.replace(yamlRegex, '');
+        
+        return content;
+    }
+
     async function showPostDetail(post) {
+        // --- 新增代码：在这里初始化 markdown-it ---
+        const md = window.markdownit({
+            html: true,         // 允许 Markdown 源文件中的 HTML 标签
+            breaks: true,       // 将单个换行符 (\n) 转换为 <br>，解决你的换行问题
+            linkify: true,      // 自动将 URL 文本转换为链接
+            typographer: true,  // 启用智能排版，比如将 (c) 转换为 ©
+        }).use(window.markdownitFootnote); // 启用脚注插件
+
         const modal = document.getElementById('repo-modal');
         const titleEl = document.getElementById('repo-modal-title');
         const contentEl = document.getElementById('repo-modal-content');
         const authorEl = document.getElementById('repo-modal-author');
 
         titleEl.textContent = post.title;
-        authorEl.textContent = post.author;
-        contentEl.innerHTML = '<p>加载中...</p>'; // 提示加载
+        authorEl.textContent = `by ${post.author}`;
+        contentEl.innerHTML = '<div class="flex justify-center items-center h-32"><p class="text-gray-500">加载中...</p></div>';
         modal.classList.remove('hidden');
         modal.classList.add('flex');
 
         try {
             const response = await fetch(post.markdownFile);
-            if (!response.ok) throw new Error('Markdown 文件加载失败');
-            const markdownText = await response.text();
+            if (!response.ok) throw new Error(`文件加载失败 (状态: ${response.status})`);
             
-            // 解析Markdown并替换图片路径
-            let htmlContent = marked.parse(markdownText);
+            const rawMarkdownText = await response.text();
             
-            // 将帖子中的所有图片添加到内容末尾
-            post.images.forEach(imgSrc => {
-                htmlContent += `<img src="${imgSrc}" class="mt-4 rounded-lg shadow-md w-full object-contain">`;
-            });
+            // --- 核心修改在这里 ---
+            // 1. 调用我们自己的函数来剥离 YAML Front Matter
+            const content = stripYamlFrontMatter(rawMarkdownText);
+
+            // 2. 使用 markdown-it 实例来渲染剥离后的正文
+            let htmlContent = md.render(content);
+            // --- 修改结束 ---
+            
+            // 将帖子对象中定义的图片添加到内容末尾
+            if (post.images && post.images.length > 0) {
+                post.images.forEach(imgSrc => {
+                    htmlContent += `<img src="${imgSrc}" class="mt-4 rounded-lg shadow-md w-full object-contain">`;
+                });
+            }
             
             contentEl.innerHTML = htmlContent;
         } catch (error) {
+            console.error("加载帖子详情时出错:", error);
             contentEl.innerHTML = `<p class="text-red-500">内容加载失败: ${error.message}</p>`;
         }
     }
+
 
     return {
         init: init

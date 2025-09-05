@@ -13,13 +13,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
+    <!-- <script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script> -->
 
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="assets/css/repo.css">
+    <!-- <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gray-matter@4.0.3/browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it-footnote@4.0.0/dist/markdown-it-footnote.min.js"></script> -->
 
+    <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
+    <!-- 1. 基础库 -->
+    <script src="assets/js/jquery-1.11.1.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    
+    <!-- 2. Markdown 解析库 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/gray-matter@4.0.3/browser.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it-footnote@4.0.0/dist/markdown-it-footnote.min.js"></script>
+    <link rel="stylesheet" href="assets/css/repo.css">
+    <link rel="stylesheet" href="assets/css/typography.css">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         /* 保持原框架的其他样式 */
@@ -64,7 +76,7 @@
                 <h3 id="repo-modal-title" class="text-2xl font-bold"></h3>
                 <button id="repo-modal-close" class="text-gray-500 text-3xl">&times;</button>
             </div>
-            <div class="p-6 overflow-y-auto" id="repo-modal-content">
+            <div class="p-6 overflow-y-auto prose max-w-none" id="repo-modal-content">
                 </div>
             <div class="p-4 border-t text-right text-gray-500">
                 <p>
@@ -80,7 +92,7 @@
         <div id="footer-placeholder"></div>
     </footer>
     
-
+    <!-- 3. 你自己的业务逻辑脚本 (现在可以安全地使用上面的库了) -->
     <script src="assets/data/repo_data/posts_db.js"></script>
     <script src="assets/js/repo_posts.js"></script>
     <script src="assets/js/init.js"></script>    
