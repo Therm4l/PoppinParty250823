@@ -1,4 +1,25 @@
 // Repo Posts Module
+/**
+ * 根据当前环境获取正确的资源根路径
+ * @returns {string} - 返回路径前缀，例如在本地是 ""，在 GitHub Pages 上是 "/your-repo-name"
+ */
+function getBasePath() {
+    // window.location.hostname 是当前页面的域名
+    // 如果域名包含 'github.io'，我们就认为是在线上环境
+    if (window.location.hostname.includes('github.io')) {
+        // 在这里填入你的 GitHub 仓库名！
+        // 比如，如果你的仓库是 "my-website"，就返回 "/my-website"
+        // 注意：前后都有斜杠，但前面那个更重要
+        return '/PoppinParty250823'; 
+    } else {
+        // 否则，我们认为是在本地环境，不需要任何前缀
+        return '';
+    }
+}
+
+// 立即计算并存储根路径，避免重复计算
+const basePath = getBasePath();
+
 const RepoPosts = (function() {
 
     let swiperInstance;

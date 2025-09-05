@@ -19,7 +19,6 @@ const REPO_POSTS_DATA = [
         title: "现地记录: 8.23 Poppin' Party",
         markdownFile: "assets/data/repo_data/md/redkold.md", // 指向 .md 文件
         images: [
-            "assets/data/repo_data/images/redkold/1fcd9bb0150b30c70ba8c2cd9021d6f8_0.png" 
         ],
         previewImage: "assets/data/repo_data/images/redkold/1fcd9bb0150b30c70ba8c2cd9021d6f8_0.png" // 预览图
     }
